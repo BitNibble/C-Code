@@ -1,0 +1,45 @@
+###########################################################
+#                                                         #
+#                       MAKEFILE                          #
+#                                                         #
+# author: sergio santos                                   #
+# mail: sergio.salazar.santos@gmail.com] (year: 2012)     #
+#                                                         #
+###########################################################
+
+CC=gcc
+CXX=g++
+CFLAGS=-c -Wall -g
+LIBMATH=-lm
+
+# Directories
+SRC_DIR=src
+INC_DIR=include
+MAIN_DIR=main
+
+# Files
+PROJECT=out
+CFILES=$(wildcard $(SRC_DIR)/*.c)
+HFILES=$(wildcard $(INC_DIR)/*.h)
+
+# Object files
+OFILES=$(patsubst %.c, %.o, $(CFILES))
+
+# Targets
+.PHONY: clean run
+
+$(PROJECT): $(OFILES)
+	@echo "Linking..."
+	$(CC) $(OFILES) $(LIBMATH) -o $(PROJECT)
+
+%.o: %.c $(HFILES)
+	@echo "Compiling $<"
+	$(CC) $(CFLAGS) -I$(INC_DIR) $< -o $@
+
+clean:
+	@echo "Cleaning up..."
+	-rm -vf $(SRC_DIR)/*.o $(PROJECT)
+
+run: $(PROJECT)
+	@echo "Running $(PROJECT)..."
+	./$(PROJECT)

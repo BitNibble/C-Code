@@ -1,0 +1,151 @@
+char* PCcmd(int num){
+	char* ATstr = NULL;
+	/***PC***WITH***DEFAULTS***/
+	switch(num)
+	{
+		case 1:
+			ATstr = "cmd\r\n";
+		break;
+		case 2:
+			ATstr = "ipconfig\r\n";
+		break;
+		case 3:
+			ATstr = "ipconfig /a\r\n";
+		break;
+		case 4:
+			ATstr = "ipconfig /all | findstr DNS\r\n";
+		break;
+		case 5:
+			ATstr = "ipconfig /release\r\n";
+		break;
+		case 6:
+			ATstr = "ipconfig /renew\r\n";
+		break;
+		case 7:
+			ATstr = "ipconfig /release "Wi-F"\r\n";
+		break;
+		case 10:
+			ATstr = "ipconfig /displaydns\r\n";
+		break;
+		case 101:
+			ATstr = "ipconfig /displaydns | clip\r\n";
+		break;
+		case 102:
+			ATstr = "ipconfig /flushdns\r\n";
+		break;
+		case 103:
+			ATstr = "nslookup networkchuck.com\r\n";
+		break;
+		case 104:
+			ATstr = "nslookup networkchuck.coffeee 8.8.8.8\r\n";
+		break;
+		case 105:
+			ATstr = "nslookup -type=mx networkchuck.com\r\n";
+		case 11:
+			ATstr = "nslookup -type=txt networkchuck.com\r\n";
+		break;
+		case 12:
+			ATstr = "nslookup -type=ptr networkchuck.com\r\n";
+		break;
+		case 13:
+			ATstr = "cls\r\n";
+		break;
+		case 131:
+			ATstr = "getmac /v\r\n";
+		break;
+		case 132:
+			ATstr = "powercfg /energy\r\n";
+		break;
+		case 133:
+			ATstr = "powercfg /batteryreport\r\n";
+		break;
+		case 14:
+			ATstr = "assoc\r\n";
+		break;
+		case 141:
+			ATstr = "assoc .mp4=VLC.vlc\r\n";
+		break;
+		case 142:
+			ATstr = "chkdsk /f\r\n";
+		break;
+		case 143:
+			ATstr = "chkdsk /r\r\n";
+		break;
+		case 144:
+			ATstr = "sfc /scannow\r\n";
+		break;
+		case 145:
+			ATstr = "DISM /Online /Cleanup-Image /CheckHealth\r\n";
+		break;
+		case 146:
+			ATstr = "DISM /Online /Cleanup-Image /ScanHealth\r\n";
+		break;
+		case 147:
+			ATstr = "DISM /Online /Cleanup-Image /RestoreHealth\r\n";
+		break;
+		case 148:
+			ATstr = "tasklist | findstr script\r\n";
+		break;
+		case 15:
+			ATstr = "taskkill /f /pid 20184\r\n";
+		break;
+		case 16:
+			ATstr = "netsh wlan show wlanreport\r\n";
+		break;
+		case 17:
+			ATstr = "netsh interface show interface\r\n";
+		break;
+		case 18:
+			ATstr = "netsh interface ip show address | findstr "IP Address"\r\n";
+		break;
+		case 19:
+			ATstr = "netsh interface ip show dnsservers\r\n";
+		break;
+		case 20:
+			ATstr = "netsh advfirewall set allprofiles state off\r\n";
+		break;
+		case 21:
+			ATstr = "netsh advfirewall set allprofiles state on\r\n";
+		break;
+		case 211:
+			ATstr = "ping www.google.com\r\n";
+		break;
+		case 212:
+			ATstr = "ping -t www.google.com\r\n";
+		break;
+		case 22:
+			ATstr = "tracert www.google.com\r\n";
+		break;
+		case 23:
+			ATstr = "tracert -d www.google.com\r\n";
+		break;
+		case 24:
+			ATstr = "netstat\r\n";
+		break;
+		case 25:
+			ATstr = "netstat -af\r\n";
+		break;
+		case 26:
+			ATstr = "netstat -o\r\n";
+		break;
+		case 27:
+			ATstr = "netstat -e -t 5\r\n";
+		break;
+		case 28:
+			ATstr = "route print\r\n";
+		break;
+		case 29:
+			ATstr = "route add 192.168.40.0 mask 255.255.255.0 10.7.1.44\r\n";
+		break;
+		case 30:
+			ATstr = "route delete 192.168.40.0\r\n";
+		break;
+		case 30:
+			ATstr = "shutdown /r /fw /f /t 0\r\n";
+		break;
+		/******/
+		default:
+		break;
+	};
+	return ATstr;
+}
