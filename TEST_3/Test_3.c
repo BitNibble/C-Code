@@ -30,24 +30,23 @@
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
+void delay(int number_of_seconds);
 static FUNC func;
 
-void delay(int number_of_seconds);
-
-static unsigned int func_id = 2;
-static unsigned int test_counter = 3;
-void func_test_1(unsigned int next);
-void func_test_2(unsigned int next);
-void func_test_3(unsigned int next);
-void func_test_4(unsigned int next);
 
 int main(int argc, char *argv[]){
 // Capture arguments
 printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 func = FUNCenable();
-char* cmd;
+char* cmd = NULL;
 unsigned int choice;
 /*****************/
+char vector[100] = {0};
+char received[100] = {0};
+circbuff buffer = CIRCBUFFenable( 10, vector );
+
+buffer.puts( &buffer, "Hellosergio" );
+//printf( "string: %s", vector );
 
 while ass
 {
@@ -64,21 +63,21 @@ while ass
 		printf("Possible commands:\n"); printf("\trun - r\n"); printf("\tquit - q\n"); printf("\thelp - h\n");
 		continue;
 	}
+
 	
+
 	// RUN TESTING CONDITION:
 	if( !strcmp(cmd,"run") || !strcmp(cmd,"r") ){  // one shot testing
 /****************************************************************************************************************************/
+for(uint8_t i =9; i; i--){
+//char c = getchar();
 
-for(uint8_t i = 100; i; i--){ delay(1);
+//buffer.put(&buffer, c);
 
-func_test_1(3);
-
-func_test_2(4);
-
-func_test_3(2);
-
-func_test_4(1);
-
+//buffer.gets(&buffer,received);
+//printf( "string: %s\n", vector );
+printf( "string: %c\n", buffer.get(&buffer) );
+//printf( "string: %s\n", received );
 }
 
 /****************************************************************************************************************************/
@@ -94,38 +93,6 @@ end:
 	return 0;
 }
 /****************************************************************************************************************************/
-
-void func_test_1(unsigned int next){
-	const unsigned int id = 1; 
-	if(id == func_id){
-			printf("function %d - %d\n", test_counter, id);
-		if(test_counter){test_counter--;}else{test_counter=3;func_id=next;}
-	} 
-}
-
-void func_test_2(unsigned int next){
-	const unsigned int id = 2; 
-	if(id == func_id){
-			printf("function %d - %d\n", test_counter, id);
-		if(test_counter){test_counter--;}else{test_counter=3;func_id=next;}
-	} 
-}
-
-void func_test_3(unsigned int next){
-	const unsigned int id = 3; 
-	if(id == func_id){
-			printf("function %d - %d\n", test_counter, id);
-		if(test_counter){test_counter--;}else{test_counter=3;func_id=next;}
-	} 
-}
-
-void func_test_4(unsigned int next){
-	const unsigned int id = 4; 
-	if(id == func_id){
-			printf("function %d - %d\n", test_counter, id);
-		if(test_counter){test_counter--;}else{test_counter=3;func_id=next;}
-	} 
-}
 
 void delay(int number_of_seconds)
 {

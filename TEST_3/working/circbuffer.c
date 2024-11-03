@@ -8,46 +8,17 @@ Date: 03112024
 Comment:
     Circular Buffer
 ******************************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include "circbuffer.h"
-/******************************************************************************/
-// Get a byte from the circular buffer
-char CIRC_get(circbuff* circ) {
-	char value = *circ->par.head;
-    if (circ->par.tail != circ->par.head) {
-    	value = *circ->par.tail;
-    	circ->par.tail++;
-    	// Wrap around if necessary
-    	if (circ->par.tail == circ->par.end) {
-     	   circ->par.tail = circ->par.orig;
-    	} 
-	}
-    return value;
-}
-/******************************************************************************/
-// Put a byte into the circular buffer
-void CIRC_put(circbuff* circ, char data) {
-    char* next = circ->par.head + 1;
-    // Wrap around if necessary
-    if (circ->par.head == circ->par.end) {
-		circ->par.head = circ->par.orig;
-		next =  circ->par.head + 1;
-	}
-	*circ->par.head = data;
-	circ->par.head = next;
-	*next = 0;
-}
-/******************************************************************************/
-// Get a string from the circular buffer
-void CIRC_gets(circbuff* circ, char* str) {
-	for( *str = CIRC_get(circ); *str++; *str = CIRC_get(circ) );	// Get each character in the circular buffer
-}
-/******************************************************************************/
-// Put a string into the circular buffer
-void CIRC_puts(circbuff* circ, const char* str) {
-	for( CIRC_put( circ, *str ); *str++; CIRC_put( circ, *str ) ); // Put each character in the circular buffer
-}
+
+/*** Function Prototypes ***/
+char CIRC_get(struct circ_buf_template* circ);
+void CIRC_put(struct circ_buf_template* circ, char data);
+void CIRC_gets(struct circ_buf_template* circ, char* str);
+void CIRC_puts(struct circ_buf_template* circ, const char* str);
+
 /******************************************************************************/
 // Enable the circular buffer
 struct circ_buf_template CIRCBUFFenable(size_t size_buff, char* buff) {
@@ -67,7 +38,51 @@ struct circ_buf_template CIRCBUFFenable(size_t size_buff, char* buff) {
 
     return circ; // Return the initialized circular buffer
 }
-/*******************************************************************************/
 
+/******************************************************************************/
+// Get a byte from the circular buffer
+char CIRC_get(circbuff* circ) {
+	char value = *circ->par.head;
+    if (circ->par.tail != circ->par.head) {
+    	value = *circ->par.tail;
+    	circ->par.tail++;
+    	// Wrap around if necessary
+    	if (circ->par.tail == circ->par.end) {
+     	   circ->par.tail = circ->par.orig;
+    	} 
+	}
+    return value;
+}
+
+/******************************************************************************/
+// Put a byte into the circular buffer
+void CIRC_put(circbuff* circ, char data) {
+    char* next = circ->par.head + 1;
+    // Wrap around if necessary
+    if (circ->par.head == circ->par.end) {
+		circ->par.head = circ->par.orig;
+		next =  circ->par.head + 1;
+	}
+	*circ->par.head = data;
+	circ->par.head = next;
+	*next = 0;
+}
+
+/******************************************************************************/
+// Get a string from the circular buffer
+void CIRC_gets(circbuff* circ, char* str) {
+	for( *str = CIRC_get(circ); *str++; *str = CIRC_get(circ) );	// Get each character in the circular buffer
+}
+
+/******************************************************************************/
+// Put a string into the circular buffer
+void CIRC_puts(circbuff* circ, const char* str) {
+	for( CIRC_put( circ, *str ); *str++; CIRC_put( circ, *str ) ); // Put each character in the circular buffer
+}
+
+/******************************************************************************/
+// Interrupt handling code (if applicable)
+/******************************Comment****************************************
+*******************************************************************************/
 /***EOF***/
 
