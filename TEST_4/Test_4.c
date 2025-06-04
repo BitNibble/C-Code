@@ -50,9 +50,7 @@ typedef struct{
 	Byte* C;
 } List;
 
-void delay(int number_of_seconds);
 static FUNC func;
-
 
 int main(int argc, char *argv[]){
 // Capture arguments
@@ -63,11 +61,11 @@ char* cmd = NULL;
 /*****************/
 uint8_t vector[100] = {0};
 
-List *lst;
+List *lst = NULL;
 lst->A = (Byte*)vector;
 lst->B = (Byte*)vector+1;
 lst->C = (Byte*)NULL;
-Byte *byte;
+Byte *byte = NULL;
 byte = (Byte*)vector;
 vector[0]=10;
 vector[1]=255;
@@ -133,19 +131,5 @@ end:
 	return 0;
 }
 /****************************************************************************************************************************/
-
-void delay(int number_of_seconds)
-{
-    // Converting time into milli_seconds
-    int milli_seconds = 1000 * number_of_seconds;
-
-    // Storing start time
-    clock_t start_time = clock();
-
-    // looping till required time is not achieved
-    while (clock() < start_time + milli_seconds)
-        ;
-}
-
 /***EOF***/
 

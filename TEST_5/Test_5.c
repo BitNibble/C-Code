@@ -1,6 +1,6 @@
 /********************************************************
 * Research Environment
-* Test.c
+* Test_4.c
 * Nome: 
 *	sergio santos
 * Contacto: 
@@ -35,49 +35,36 @@ static FUNC func;
 int main(int argc, char *argv[]){
 // Capture arguments
 printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
+
 func = FUNCenable();
 char* cmd = NULL;
-unsigned int choice;
 /*****************/
-char vector[100] = {0};
-char received[100] = {0};
-circbuff buffer = CIRCBUFFenable( 10, vector );
-
-buffer.puts( &buffer, "Hellosergio" );
-//printf( "string: %s", vector );
+//uint8_t vector[100] = {0};
 
 while ass
 {
 	printf("\nEnter i Data : ");
-	
 	cmd=func.fltos(stdin);
-	choice = func.getnumv2(cmd);
-	
 	if(!strcmp(cmd,"quit") || !strcmp(cmd,"q")){
 		goto end;
 	}
-	
 	if(!strcmp(cmd,"help") || !strcmp(cmd,"h")){
 		printf("Possible commands:\n"); printf("\trun - r\n"); printf("\tquit - q\n"); printf("\thelp - h\n");
 		continue;
 	}
-
-	
-
 	// RUN TESTING CONDITION:
 	if( !strcmp(cmd,"run") || !strcmp(cmd,"r") ){  // one shot testing
 /****************************************************************************************************************************/
-for(uint8_t i =9; i; i--){
-//char c = getchar();
+//								TESTING AREA
+/****************************************************************************************************************************/
 
-//buffer.put(&buffer, c);
 
-//buffer.gets(&buffer,received);
-//printf( "string: %s\n", vector );
-printf( "string: %c\n", buffer.get(&buffer) );
-//printf( "string: %s\n", received );
-}
 
+
+
+
+
+/****************************************************************************************************************************/
 /****************************************************************************************************************************/
 		continue;
 	}
@@ -85,7 +72,6 @@ printf( "string: %c\n", buffer.get(&buffer) );
 
 /*******************************************************/
 /*******************************************************/
-
 end:
 	free(cmd);
 	return 0;
