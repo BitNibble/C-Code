@@ -2,53 +2,61 @@
 #                                                         #
 #                       MAKEFILE                          #
 #                                                         #
-# author: sergio santos                                   #
-# mail: sergio.salazar.santos@gmail.com] (year: 2012)     #
+# Author: Sergio Santos                                   #
+# Mail: sergio.salazar.santos@gmail.com (year: 2012)      #
 #                                                         #
 ###########################################################
-PWD=-I.
-CC=gcc
-CXX=g++
-AS=as
-COMPILE=-c
-WARNING=-g -Wall -Wextra
-ASSEMBLY=-S
-#LIBS=-lpthread -lrt
-LIBMATH=-lm
-#LDLIBS=-lefence -pthread
-##VARIABLES AND LISTS
 
-USERLIBINC=./user_lib/inc/
-USERLIBSRC=./user_lib/src/
-PROJECT=out
+CC = gcc
+CXX = g++
+AS = as
 
-HFILES=$(wildcard $(USERLIBINC)*.h)
-CFILES=$(wildcard *.c $(USERLIBSRC)*.c)
+CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
+LDFLAGS = -lm
 
-ALLFILES=$(wildcard *.c $(USERLIBINC)*.h $(USERLIBSRC)*.c)
+PROJECT = out
 
-OFILES=$(patsubst %.c, %.o,$(ALLFILES))
-ASMFILES=$(patsubst %.c, %.S,$(ALLFILES))
+USERLIBINC = ./user_lib/inc/
+USERLIBSRC = ./user_lib/src/
 
-##PROCEDURES HEADER
-.PHONY: clean run message
+CFILES = $(wildcard *.c $(USERLIBSRC)*.c)
+OFILES = $(CFILES:.c=.o)
 
-##PROJECT
-$(PROJECT): $(HFILES) $(OFILES)
-	@echo "PROJECT"
-	$(CC) $(WARNING) $(OFILES) $(LIBMATH) -o $@
+.PHONY: all run message clean
 
-##COMPILER
-%.o:%.c  $(HFILES) $(CFILES)
-	@echo "COMPILER"
-	$(CC) $(COMPILE) $(WARNING) $< -o $@
+## Build target
+all: $(PROJECT)
 
-##PROCEDURES
-clean:
-	-rm -vf *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT)
+$(PROJECT): $(OFILES)
+	@echo "Linking..."
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+	
+## Compile .c to .S first (assembly)
+%.S: %.c
+	@echo "Generating assembly for $<"
+	$(CC) -S $(WARNING) $< -o $@
+
+## Compile .c to .o depends on .S (so .S is generated first)
+%.o: %.c %.S
+	@echo "Compiling $< to object"
+	$(CC) -c $(WARNING) $< -o $@
+
+## Run the program
 run: $(PROJECT)
-##	chmod 775 $(PROJECT)
-	./$(PROJECT)
+	@./$(PROJECT)
+
+## Print file info
 message:
-	@echo "$(ASMFILES) -- $(OFILES) -- $(HFILES) -- $(CFILES)"
-##EOF
+	@echo "CFILES: $(CFILES)"
+	@echo "OFILES: $(OFILES)"
+	
+## Clean artifacts
+clean:
+ifeq ($(OS),Windows_NT)
+	@echo "Cleaning on Windows"
+	-del /Q *.o *.s *.ppj *.tag *.exe *.ppx out 2>nul
+	-del /Q user_lib\src\*.o 2>nul
+else
+	@echo "Cleaning on Linux/macOS"
+	-rm -vf *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT) $(USERLIBSRC)*.o
+endif
