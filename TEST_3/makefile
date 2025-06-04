@@ -30,7 +30,7 @@ all: $(PROJECT)
 $(PROJECT): $(OFILES)
 	@echo "Linking..."
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
-	
+
 ## Compile .c to .S first (assembly)
 %.S: %.c
 	@echo "Generating assembly for $<"
@@ -49,14 +49,17 @@ run: $(PROJECT)
 message:
 	@echo "CFILES: $(CFILES)"
 	@echo "OFILES: $(OFILES)"
-	
+
+## Detect OS and set RM command accordingly
+ifeq ($(OS),Windows_NT)
+	RM = del /Q
+	RMFLAGS = 2>nul
+else
+	RM = rm -vf
+	RMFLAGS =
+endif
+
 ## Clean artifacts
 clean:
-ifeq ($(OS),Windows_NT)
-	@echo "Cleaning on Windows"
-	-del /Q *.o *.s *.ppj *.tag *.exe *.ppx out 2>nul
-	-del /Q user_lib\src\*.o 2>nul
-else
-	@echo "Cleaning on Linux/macOS"
-	-rm -vf *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT) $(USERLIBSRC)*.o
-endif
+	@echo "Cleaning build files..."
+	-$(RM) *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT) $(USERLIBSRC)*.o $(RMFLAGS)
