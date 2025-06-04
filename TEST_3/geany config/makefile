@@ -13,6 +13,7 @@ AS = as
 
 CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
 LDFLAGS = -lm
+WARNING = -Wall -Wextra -Werror
 
 PROJECT = out
 
