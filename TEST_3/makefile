@@ -3,7 +3,7 @@
 #                       MAKEFILE                          #
 #                                                         #
 # author: sergio santos                                   #
-# mail: sergio.salazar.santos@gmail.com  (year: 2012)     #
+# mail: sergio.salazar.santos@gmail.com  (year: 2025)     #
 #                                                         #
 ###########################################################
 PWD=-I.
@@ -18,30 +18,32 @@ LIBMATH=-lm
 #LDLIBS=-lefence -pthread
 ##VARIABLES AND LISTS
 PROJECT=out
-HFILES=$(wildcard *.h)
-CFILES=$(wildcard *.c)
 
-OFILES=$(patsubst %.c, %.o,$(CFILES))
-ASMFILES=$(patsubst %.c, %.S,$(CFILES))
+USERLIB=./user_lib
+ALLFILES=$(wildcard *.c $(USERLIB)/*.c)
+
+OFILES=$(patsubst %.c, %.o,$(ALLFILES))
+ASMFILES=$(patsubst %.c, %.S,$(ALLFILES))
+
 ##PROCEDURES HEADER
 .PHONY: clean run message
 
 ##PROJECT
-$(PROJECT): $(HFILES) $(OFILES)
+$(PROJECT): $(ALLFILES) $(OFILES)
 	@echo "PROJECT"
 	$(CC) $(WARNING) $(OFILES) $(LIBMATH) -o $@
 
 ##COMPILER
-%.o:%.c  $(HFILES) $(CFILES)
+%.o:%.c  $(ALLFILES) $(ASMFILES)
 	@echo "COMPILER"
 	$(CC) $(COMPILE) $(WARNING) $< -o $@
 
 ##PROCEDURES
 clean:
-	-rm -vf *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT)
+	-rm -vf *.o *.s $(PROJECT)
 run: $(PROJECT)
-	chmod 775 $(PROJECT)
+##	chmod 775 $(PROJECT)
 	./$(PROJECT)
 message:
-	@echo "$(ASMFILES) -- $(OFILES) -- $(HFILES) -- $(CFILES)"
+	@echo "$(ASMFILES) -- $(OFILES) -- $(ALLFILES)"
 ##EOF

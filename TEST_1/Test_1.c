@@ -19,10 +19,10 @@
 #include <inttypes.h>
 #include <math.h>
 //#include <assert.h>
-#include "PCfunction.h"
-#include "PCficheiro.h"
-#include "explode.h"
-#include "circbuffer.h"
+#include "user_lib\PCfunction.h"
+#include "user_lib\PCficheiro.h"
+#include "user_lib\explode.h"
+#include "user_lib\circbuffer.h"
 /***Definition and Macros***/
 #define sperm ~0
 #define ass (1)
