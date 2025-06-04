@@ -17,12 +17,19 @@ ASSEMBLY=-S
 LIBMATH=-lm
 #LDLIBS=-lefence -pthread
 ##VARIABLES AND LISTS
-PROJECT=out
-HFILES=$(wildcard *.h)
-CFILES=$(wildcard *.c)
 
-OFILES=$(patsubst %.c, %.o,$(CFILES))
-ASMFILES=$(patsubst %.c, %.S,$(CFILES))
+USERLIBINC=./user_lib/inc
+USERLIBSRC=./user_lib/src
+PROJECT=out
+
+HFILES=$(wildcard $(USERLIBINC)/*.h)
+CFILES=$(wildcard *.c $(USERLIBSRC)/*.c)
+
+ALLFILES=$(wildcard *.c $(USERLIBINC)/*.h $(USERLIBSRC)/*.c)
+
+OFILES=$(patsubst %.c, %.o,$(ALLFILES))
+ASMFILES=$(patsubst %.c, %.S,$(ALLFILES))
+
 ##PROCEDURES HEADER
 .PHONY: clean run message
 
@@ -40,7 +47,7 @@ $(PROJECT): $(HFILES) $(OFILES)
 clean:
 	-rm -vf *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT)
 run: $(PROJECT)
-	chmod 775 $(PROJECT)
+##	chmod 775 $(PROJECT)
 	./$(PROJECT)
 message:
 	@echo "$(ASMFILES) -- $(OFILES) -- $(HFILES) -- $(CFILES)"

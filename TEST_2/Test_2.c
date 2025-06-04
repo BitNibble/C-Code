@@ -20,10 +20,10 @@
 #include <math.h>
 #include <time.h>
 //#include <assert.h>
-#include "user_lib\PCfunction.h"
-#include "user_lib\PCficheiro.h"
-#include "user_lib\explode.h"
-#include "user_lib\circbuffer.h"
+#include "user_lib\inc\PCfunction.h"
+#include "user_lib\inc\PCficheiro.h"
+#include "user_lib\inc\explode.h"
+#include "user_lib\inc\circbuffer.h"
 /***Definition and Macros***/
 #define sperm ~0
 #define ass (1)

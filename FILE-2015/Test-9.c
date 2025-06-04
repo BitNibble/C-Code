@@ -16,9 +16,9 @@
 #include <stdarg.h>
 #include <math.h>
 #include <inttypes.h>
-#include"PCfunction.h"
-#include"PCficheiro.h"
-#include"explode.h"
+#include"user_lib\inc\PCfunction.h"
+#include"user_lib\inc\PCficheiro.h"
+#include"user_lib\inc\explode.h"
 /***Definition and Macros***/
 #define ZERO 0
 #define ONE 1

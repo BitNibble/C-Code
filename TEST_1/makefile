@@ -3,7 +3,7 @@
 #                       MAKEFILE                          #
 #                                                         #
 # author: sergio santos                                   #
-# mail: sergio.salazar.santos@gmail.com  (year: 2025)     #
+# mail: sergio.salazar.santos@gmail.com] (year: 2012)     #
 #                                                         #
 ###########################################################
 PWD=-I.
@@ -17,10 +17,15 @@ ASSEMBLY=-S
 LIBMATH=-lm
 #LDLIBS=-lefence -pthread
 ##VARIABLES AND LISTS
+
+USERLIBINC=./user_lib/inc
+USERLIBSRC=./user_lib/src
 PROJECT=out
 
-USERLIB=./user_lib
-ALLFILES=$(wildcard *.c $(USERLIB)/*.c)
+HFILES=$(wildcard $(USERLIBINC)/*.h)
+CFILES=$(wildcard *.c $(USERLIBSRC)/*.c)
+
+ALLFILES=$(wildcard *.c $(USERLIBINC)/*.h $(USERLIBSRC)/*.c)
 
 OFILES=$(patsubst %.c, %.o,$(ALLFILES))
 ASMFILES=$(patsubst %.c, %.S,$(ALLFILES))
@@ -29,21 +34,21 @@ ASMFILES=$(patsubst %.c, %.S,$(ALLFILES))
 .PHONY: clean run message
 
 ##PROJECT
-$(PROJECT): $(ALLFILES) $(OFILES)
+$(PROJECT): $(HFILES) $(OFILES)
 	@echo "PROJECT"
 	$(CC) $(WARNING) $(OFILES) $(LIBMATH) -o $@
 
 ##COMPILER
-%.o:%.c  $(ALLFILES) $(ASMFILES)
+%.o:%.c  $(HFILES) $(CFILES)
 	@echo "COMPILER"
 	$(CC) $(COMPILE) $(WARNING) $< -o $@
 
 ##PROCEDURES
 clean:
-	-rm -vf *.o *.s $(PROJECT)
+	-rm -vf *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT)
 run: $(PROJECT)
 ##	chmod 775 $(PROJECT)
 	./$(PROJECT)
 message:
-	@echo "$(ASMFILES) -- $(OFILES) -- $(ALLFILES)"
+	@echo "$(ASMFILES) -- $(OFILES) -- $(HFILES) -- $(CFILES)"
 ##EOF

@@ -27,10 +27,10 @@
 //#include <stdio_ext.h>
 #include <math.h>
 // personal library
-#include"PCfunction.h"
-#include"PClfsm.h"
-#include"PCficheiro.h"
-//#include"ssfiledescriptor.h"
+#include"user_lib\inc\PCfunction.h"
+#include"user_lib\inc\PClfsm.h"
+#include"user_lib\inc\PCficheiro.h"
+//#include"user_lib\linux\ssfiledescriptor.h"
 /***Definition and Macros***/
 #define TRUE 1
 #define ZERO 0
