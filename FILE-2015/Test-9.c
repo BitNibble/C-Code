@@ -49,10 +49,10 @@ printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 // Local variables
 test test;
 test.testb = ftest;
-char c;
+//char c;
 char* cmd=NULL;
 unsigned int state;
-unsigned int number0;
+//unsigned int number0;
 unsigned int number1;
 unsigned int number2;
 unsigned int number3;
@@ -68,12 +68,12 @@ char string[256];
 test.testa = ftest();
 func=FUNCenable();
 
-FICHEIRO f = FICHEIROenable(&f); // one object all files
+FICHEIRO f = FICHEIROenable(); // one object all files
 
-EXPLODE port = EXPLODEenable();
-EXPLODE input = EXPLODEenable();
+//EXPLODE port = EXPLODEenable();
+//EXPLODE input = EXPLODEenable();
 
-number0 = number1 = number2 = number3 = state = 0;
+number1 = number2 = number3 = state = 0;
 
 printf(func.print("%d %d %d \n\n",1,2,test.testb()));
 
@@ -90,7 +90,7 @@ f.close();
 
 f.open("file.txt", "a+"); // Load Data from file to book vector (book[]).
 //f.open(f.self, "file.txt", "a+");
-for(i=1; str = func.fltos(f.filepointer()); i++){
+for(i=1; (str = func.fltos(f.filepointer())); i++){
 	func.strtotok(str, token, ",");
 	printf("%d Tokens: %s -> %s\n", i, token[0], token[1]);
 	number1=func.getnumv2(token[0]);

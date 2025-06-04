@@ -17,7 +17,7 @@ Comment:
 ** variable
 */
 //int errno;
-struct ficheiro *self = NULL;
+struct ficheiro self;
 //Only draw back is, can only work with one file at a time, 
 //that is sequencially, which is fine open and close one after the other.
 /**
@@ -42,27 +42,25 @@ int seekposition(int whence, long offset);
 /*
 ** Object Inicialize
 */
-FICHEIRO FICHEIROenable(struct ficheiro *this)
+FICHEIRO FICHEIROenable(void)
 {
 	/***Glocal variables assigning***/
 	errno=0;
-	self=this;
 	/***local variables***/
-	FICHEIRO f;
+	self.fp = NULL;
 	/***Local variables assigning***/
-	f.self=this;
 	//Functions pointers or Vtable to declared functions
-	f.open=FICHEIROopen;
-	f.close=FICHEIROclose;
-	f.putch=FICHEIROputc;
-	f.puts=FICHEIROputs;
-	f.read=FICHEIROread;
-	f.write=FICHEIROwrite;
-	f.rewind=FICHEIROrewind;
-	f.filepointer=FICHEIROfilepointer;
-	f.filedescriptor=FICHEIROfiledescriptor;
-	//return result
-	return f;
+	self.open=FICHEIROopen;
+	self.close=FICHEIROclose;
+	self.putch=FICHEIROputc;
+	self.puts=FICHEIROputs;
+	self.read=FICHEIROread;
+	self.write=FICHEIROwrite;
+	self.rewind=FICHEIROrewind;
+	self.filepointer=FICHEIROfilepointer;
+	self.filedescriptor=FICHEIROfiledescriptor;
+	/***Control Copy***/
+	return self;
 }
 /*
 ** procedure and function
@@ -72,112 +70,112 @@ void FICHEIROopen(const char *filename, const char *permision)
 {
 	unsigned int exit;
 	//Inicialize varibles
-	strcpy(self->filename, filename);
+	strcpy(self.filename, filename);
 	//do a checkup if exists first !
-	strcpy(self->permision, permision);
+	strcpy(self.permision, permision);
 	//procedures
 	for(exit=1; exit; ){
 		if(exit==1){
-			self->fp = fopen(self->filename, self->permision);
-			if(self->fp!=NULL){
-				printf("Opening file: %s\n", self->filename);
+			self.fp = fopen(self.filename, self.permision);
+			if(self.fp!=NULL){
+				printf("Opening file: %s\n", self.filename);
 				exit=0;
 			}else{
 				perror("Error FICHEIROopen");
-				printf("Error Opening file -> %s\n", self->filename);
-				fclose((FILE*)self->fp);
+				printf("Error Opening file -> %s\n", self.filename);
+				fclose((FILE*)self.fp);
 				exit=2;
 			}
 		}
 		if(exit==2){
-			strcpy(self->permision, "a+");//setting as default
-			self->fp = fopen(self->filename, self->permision);
-			if(self->fp!=NULL){
-				printf("ReOpening file: %s\n", self->filename);
-				strcpy(self->permision, permision);
-				fclose((FILE*)self->fp);
+			strcpy(self.permision, "a+");//setting as default
+			self.fp = fopen(self.filename, self.permision);
+			if(self.fp!=NULL){
+				printf("ReOpening file: %s\n", self.filename);
+				strcpy(self.permision, permision);
+				fclose((FILE*)self.fp);
 				exit=1;
 			}else{
 				perror("Error FICHEIROopen");
-				printf("Error ReOpening file -> %s\n", self->filename);
-				fclose((FILE*)self->fp);
+				printf("Error ReOpening file -> %s\n", self.filename);
+				fclose((FILE*)self.fp);
 				exit=0;
 			}
 		}
 	}
 	//Apart
 	#ifdef linux
-		self->fd=fileno(self->fp);
+		self.fd=fileno(self.fp);
 		#elif _WIN32
-			self->fd=_fileno(self->fp);
+			self.fd=_fileno(self.fp);
 	#endif
-	if(self->fd < 0){
+	if(self.fd < 0){
 		perror("Error FICHEIROopen");
 		printf("Numb errno: %d\n", errno);
-		self->errcode=errno;
+		self.errcode=errno;
 	}
 }
-/*FICHEIROclose*/
+/***FICHEIROclose***/
 int FICHEIROclose(void)
 {
-	if(fclose((FILE*)self->fp) != 0){
+	if(fclose((FILE*)self.fp) != 0){
         printf("Error at FICHEIROclose\n");
         return 1;
     }else
 	    return 0;
 }
-/*FICHEIROputc*/
+/***FICHEIROputc***/
 int FICHEIROputc(int c)
 {
 	int r;
-	r=fputc(c, (FILE*)self->fp);
+	r=fputc(c, (FILE*)self.fp);
 	return r;
 }
-/*FICHEIROputs*/
+/***FICHEIROputs***/
 int FICHEIROputs(const char* s)
 {
 	int r;
-	r=fputs(s, (FILE*)self->fp);
+	r=fputs(s, (FILE*)self.fp);
 	return r;
 }
 /***FICHEIROread***/
 int FICHEIROread(void *ptr, size_t size, size_t nmemb)
 {
 	int r;
-	r=fread(ptr, size, nmemb, self->fp);
+	r=fread(ptr, size, nmemb, self.fp);
 	return r;
 }
 /***FICHEIROwrite***/
 int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb)
 {
 	int r;
-	r=fwrite(ptr, size, nmemb, self->fp);
+	r=fwrite(ptr, size, nmemb, self.fp);
 	return r;
 }
-/*FICHEIROrewind*/
+/***FICHEIROrewind***/
 void FICHEIROrewind(void)
 {
-	rewind((FILE*)self->fp);
+	rewind((FILE*)self.fp);
 }
 /***FICHEIROfilepointer***/
 FILE* FICHEIROfilepointer(void)
 {
-	return (FILE*)self->fp;
+	return (FILE*)self.fp;
 }
 /***FICHEIROfiledescriptor***/
 int FICHEIROfiledescriptor(void)
 {
-	return self->fd;
+	return self.fd;
 }
 /***setposition***/
 int seekposition(int whence, long offset)
 {
 	int r;
-    r=fseek(self->fp, offset, whence);
+    r=fseek(self.fp, offset, whence);
     if(r!=0){
         printf("Error at seekposition: %d\n", errno);
     }else{
-        printf("At position: %ld\n",ftell(self->fp));
+        printf("At position: %ld\n",ftell(self.fp));
     }
 	return r;
 }
