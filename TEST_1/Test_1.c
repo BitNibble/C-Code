@@ -1,6 +1,6 @@
 /********************************************************
 * Research Environment
-* Test.c
+* Test_1.c
 * Nome: 
 *	sergio santos
 * Contacto: 
