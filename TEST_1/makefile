@@ -18,14 +18,14 @@ LIBMATH=-lm
 #LDLIBS=-lefence -pthread
 ##VARIABLES AND LISTS
 
-USERLIBINC=./user_lib/inc
-USERLIBSRC=./user_lib/src
+USERLIBINC=./user_lib/inc/
+USERLIBSRC=./user_lib/src/
 PROJECT=out
 
-HFILES=$(wildcard $(USERLIBINC)/*.h)
-CFILES=$(wildcard *.c $(USERLIBSRC)/*.c)
+HFILES=$(wildcard $(USERLIBINC)*.h)
+CFILES=$(wildcard *.c $(USERLIBSRC)*.c)
 
-ALLFILES=$(wildcard *.c $(USERLIBINC)/*.h $(USERLIBSRC)/*.c)
+ALLFILES=$(wildcard *.c $(USERLIBINC)*.h $(USERLIBSRC)*.c)
 
 OFILES=$(patsubst %.c, %.o,$(ALLFILES))
 ASMFILES=$(patsubst %.c, %.S,$(ALLFILES))
