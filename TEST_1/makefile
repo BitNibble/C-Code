@@ -16,10 +16,11 @@ LDFLAGS = -lm
 
 PROJECT = out
 
-USERLIBINC = ./user_lib/inc/
-USERLIBSRC = ./user_lib/src/
+USERLIBINC = ./user_lib/inc
+USERLIBSRC = ./user_lib/src
+WUSERLIBSRC = user_lib\src
 
-CFILES = $(wildcard *.c $(USERLIBSRC)*.c)
+CFILES = $(wildcard *.c $(USERLIBSRC)/*.c)
 OFILES = $(CFILES:.c=.o)
 
 .PHONY: all run message clean
@@ -50,16 +51,14 @@ message:
 	@echo "CFILES: $(CFILES)"
 	@echo "OFILES: $(OFILES)"
 
-## Detect OS and set RM command accordingly
-ifeq ($(OS),Windows_NT)
-	RM = del /Q
-	RMFLAGS = 2>nul
-else
-	RM = rm -vf
-	RMFLAGS =
-endif
-
 ## Clean artifacts
 clean:
+## Detect OS and set RM command accordingly
 	@echo "Cleaning build files..."
-	-$(RM) *.o *.s *.ppj *.tag *.exe *.ppx $(PROJECT) $(USERLIBSRC)*.o $(RMFLAGS)
+ifeq ($(OS),Windows_NT)
+	-del /Q *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT).exe 2>nul
+	-del /Q $(WUSERLIBSRC)\*.o 2>nul
+else
+	-rm -vf *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT).exe
+	-rm -vf $(USERLIBSRC)/*.o
+endif
