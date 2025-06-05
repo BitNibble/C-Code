@@ -61,10 +61,10 @@ char* cmd = NULL;
 /*****************/
 uint8_t vector[100] = {0};
 
-List *lst = NULL;
-lst->A = (Byte*)vector;
-lst->B = (Byte*)vector+1;
-lst->C = (Byte*)NULL;
+List lst;
+lst.A = (Byte*)vector;
+lst.B = (Byte*)vector+1;
+lst.C = (Byte*)NULL;
 Byte *byte = NULL;
 byte = (Byte*)vector;
 vector[0]=10;
@@ -97,26 +97,27 @@ printf("byte->par.b2: %d\n", byte->par.b2);
 printf("byte->par.b1: %d\n", byte->par.b1);
 printf("byte->par.b0: %d\n", byte->par.b0);
 printf("\n");
-printf("lst->A->reg: %d\n", lst->A->reg);
-printf("lst->A->par.b7: %d\n", lst->A->par.b7);
-printf("lst->A->par.b6: %d\n", lst->A->par.b6);
-printf("lst->A->par.b5: %d\n", lst->A->par.b5);
-printf("lst->A->par.b4: %d\n", lst->A->par.b4);
-printf("lst->A->par.b3: %d\n", lst->A->par.b3);
-printf("lst->A->par.b2: %d\n", lst->A->par.b2);
-printf("lst->A->par.b1: %d\n", lst->A->par.b1);
-printf("lst->A->par.b0: %d\n", lst->A->par.b0);
+printf("lst->A->reg: %d\n", lst.A->reg);
+printf("lst->A->par.b7: %d\n", lst.A->par.b7);
+printf("lst->A->par.b6: %d\n", lst.A->par.b6);
+printf("lst->A->par.b5: %d\n", lst.A->par.b5);
+printf("lst->A->par.b4: %d\n", lst.A->par.b4);
+printf("lst->A->par.b3: %d\n", lst.A->par.b3);
+printf("lst->A->par.b2: %d\n", lst.A->par.b2);
+printf("lst->A->par.b1: %d\n", lst.A->par.b1);
+printf("lst->A->par.b0: %d\n", lst.A->par.b0);
 printf("\n");
-printf("lst->B->reg: %d\n", lst->B->reg);
-printf("lst->B->par.b7: %d\n", lst->B->par.b7);
-printf("lst->B->par.b6: %d\n", lst->B->par.b6);
-printf("lst->B->par.b5: %d\n", lst->B->par.b5);
-printf("lst->B->par.b4: %d\n", lst->B->par.b4);
-printf("lst->B->par.b3: %d\n", lst->B->par.b3);
-printf("lst->B->par.b2: %d\n", lst->B->par.b2);
-printf("lst->B->par.b1: %d\n", lst->B->par.b1);
-printf("lst->B->par.b0: %d\n", lst->B->par.b0);
+printf("lst->B->reg: %d\n", lst.B->reg);
+printf("lst->B->par.b7: %d\n", lst.B->par.b7);
+printf("lst->B->par.b6: %d\n", lst.B->par.b6);
+printf("lst->B->par.b5: %d\n", lst.B->par.b5);
+printf("lst->B->par.b4: %d\n", lst.B->par.b4);
+printf("lst->B->par.b3: %d\n", lst.B->par.b3);
+printf("lst->B->par.b2: %d\n", lst.B->par.b2);
+printf("lst->B->par.b1: %d\n", lst.B->par.b1);
+printf("lst->B->par.b0: %d\n", lst.B->par.b0);
 
+if(&lst == vector) printf("Yes"); else printf("No");
 
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
