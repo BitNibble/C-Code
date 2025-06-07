@@ -38,9 +38,10 @@ printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 func = FUNCenable();
 char* cmd = NULL;
 unsigned int choice;
+(void)choice;
 /*****************/
 char vector[100] = {0};
-char received[100] = {0};
+//char received[100] = {0};
 circbuff buffer = CIRCBUFFenable( 10, vector );
 
 buffer.puts( &buffer, "Hellosergio" );

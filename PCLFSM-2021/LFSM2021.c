@@ -79,22 +79,18 @@ int main(int argc, char *argv[])
 	FUNC func=FUNCenable();
 	LFSM r = LFSMenable(MEM, 128);
 	/***************************/
-	FICHEIRO f=FICHEIROenable("file.txt");
-	f.colocarchar(&f,'A');
-	f.colocarstring(&f," qualquer coisa\n");
-	rewind(f.filepointer(&f));
-	str=func.ftos(f.filepointer(&f));
+	FICHEIRO f=FICHEIROenable();
+	f.open("file.txt", "a+");
+	f.putch('A');
+	f.puts(" qualquer coisa\n");
+	rewind(f.filepointer());
+	str=func.ftos(f.filepointer());
 	printf("string in file:\n%s\n\n",str);
 	//func.strtotok(str,token," ");
 	free(str);
-	f.close(this(&f));
-	printf("putstringtest: %s\n", func.putstr("hello world"));
-	printf("lfsmdata size: %d\n",sizeof(LFSMDATA));
+	f.close();
+	printf("lfsmdata size: %lld\n",sizeof(LFSMDATA));
 /********************************************************/
-	printf("MAYIA\n");
-	number3=func.mayia(0,1,4);
-	printf("num1: %d num2: %d magic: %d\n",1,1,number3);
-	//
 	printf("sizeeeprom: %d\n", r.sizeeeprom);
 	printf("randomize %d\n", rand());
 	/*******************************************************************************************/
@@ -105,6 +101,7 @@ int main(int argc, char *argv[])
 		number1=func.getnumv2(cmd);
 		printf("[Input ->  %s  ]\n",func.print_binary(8, number1));
         //printf("Entered numeral value: %d\n",number1);
+        
 		if(!strcmp(cmd,"quit") || !strcmp(cmd,"q")){
 			goto end;
 		}

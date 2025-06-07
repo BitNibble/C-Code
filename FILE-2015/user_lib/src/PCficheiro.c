@@ -77,12 +77,11 @@ void FICHEIROopen(const char *filename, const char *permision)
 	for(exit=1; exit; ){
 		if(exit==1){
 			self.fp = fopen(self.filename, self.permision);
-			if(self.fp!=NULL){
+			if(self.fp){
 				printf("Opening file: %s\n", self.filename);
 				exit=0;
 			}else{
-				perror("Error FICHEIROopen");
-				printf("Error Opening file -> %s\n", self.filename);
+				perror("FICHEIROopen");
 				fclose((FILE*)self.fp);
 				exit=2;
 			}
@@ -90,14 +89,13 @@ void FICHEIROopen(const char *filename, const char *permision)
 		if(exit==2){
 			strcpy(self.permision, "a+");//setting as default
 			self.fp = fopen(self.filename, self.permision);
-			if(self.fp!=NULL){
-				printf("ReOpening file: %s\n", self.filename);
+			if(self.fp){
+				printf("Re-Opening file: %s\n", self.filename);
 				strcpy(self.permision, permision);
 				fclose((FILE*)self.fp);
 				exit=1;
 			}else{
-				perror("Error FICHEIROopen");
-				printf("Error ReOpening file -> %s\n", self.filename);
+				perror("FICHEIROopen");
 				fclose((FILE*)self.fp);
 				exit=0;
 			}
@@ -110,15 +108,15 @@ void FICHEIROopen(const char *filename, const char *permision)
 			self.fd=_fileno(self.fp);
 	#endif
 	if(self.fd < 0){
-		perror("Error FICHEIROopen");
-		printf("Numb errno: %d\n", errno);
+		perror("FICHEIROopen");
+		printf("errno: %d\n", errno);
 		self.errcode=errno;
 	}
 }
 /***FICHEIROclose***/
 int FICHEIROclose(void)
 {
-	if(fclose((FILE*)self.fp) != 0){
+	if(fclose((FILE*)self.fp)){
         printf("Error at FICHEIROclose\n");
         return 1;
     }else
@@ -172,7 +170,7 @@ int seekposition(int whence, long offset)
 {
 	int r;
     r=fseek(self.fp, offset, whence);
-    if(r!=0){
+    if(r){
         printf("Error at seekposition: %d\n", errno);
     }else{
         printf("At position: %ld\n",ftell(self.fp));

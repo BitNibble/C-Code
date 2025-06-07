@@ -47,6 +47,7 @@ printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 func = FUNCenable();
 char* cmd;
 unsigned int choice;
+(void)choice;
 /*****************/
 
 while ass
