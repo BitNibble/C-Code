@@ -11,18 +11,18 @@ CC = gcc
 CXX = g++
 AS = as
 
-CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
+CFLAGS = -g -Wall -Wextra -Werror -I. -I./user_lib/inc/
 LDFLAGS = -lm
-WARNING = -Wall -Wextra -Werror
 
 PROJECT = out
 
-USERLIBINC = ./user_lib/inc
 USERLIBSRC = ./user_lib/src
 WUSERLIBSRC = user_lib\src
 
 CFILES = $(wildcard *.c $(USERLIBSRC)/*.c)
 OFILES = $(CFILES:.c=.o)
+##OFILES = $(CFILES:%.c=%.o)
+##OFILES = $(patsubst %.c,%.o,$(CFILES))
 
 .PHONY: all run message clean
 
@@ -36,12 +36,12 @@ $(PROJECT): $(OFILES)
 ## Compile .c to .S first (assembly)
 %.S: %.c
 	@echo "Generating assembly for $<"
-	$(CC) -S $(WARNING) $< -o $@
+	$(CC) -S $(CFLAGS) $< -o $@
 
 ## Compile .c to .o depends on .S (so .S is generated first)
-%.o: %.c %.S
+%.o: %.c
 	@echo "Compiling $< to object"
-	$(CC) -c $(WARNING) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 ## Run the program
 run: $(PROJECT)
@@ -60,6 +60,6 @@ ifeq ($(OS),Windows_NT)
 	-del /Q *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT).exe 2>nul
 	-del /Q $(WUSERLIBSRC)\*.o 2>nul
 else
-	-rm -vf *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT).exe
-	-rm -vf $(USERLIBSRC)/*.o
+	rm -vf *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT)
+	rm -vf $(USERLIBSRC)/*.o
 endif

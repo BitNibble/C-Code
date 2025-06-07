@@ -54,6 +54,8 @@ void* this(void* address);
 // Main Main Main Main Main Main Main Main Main Main Main Main Main Main
 int main(int argc, char *argv[])
 {
+(void)argc;
+(void)argv;
 /*
 ** Capture parameters
 */
@@ -61,7 +63,7 @@ int main(int argc, char *argv[])
 /*
 *** Local variables
 */
-char vector[256];
+//char vector[256];
 char* cmd=NULL;
 LILI l=LILIenable();
 FUNC func=FUNCenable();

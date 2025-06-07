@@ -21,30 +21,28 @@ COMMENT:
 ************************************************************************/
 #ifndef _PCFICHEIRO_H_
 	#define _PCFICHEIRO_H_
-/*
-** library
-*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include<inttypes.h>
 #include <errno.h>
-/*
-** constant and macro
-*/
+
 #define FILENAMESIZE 128
-/*
-** variable
-*/
-struct ficheiro{
-	//Local Variables
+
+typedef struct{
 	FILE *fp;
 	int fd;
 	int errcode;
 	char filename[FILENAMESIZE];
-	char permision[8];
+	char permision[4];
 	int whence;
     long offset;
+}FICHEIRO_par;
+
+typedef struct{
+	//Local Variables
+	FICHEIRO_par par;
 	// Function Pointers
 	void (*open)(const char *filename, const char *permision);
 	int (*close)(void);
@@ -55,11 +53,8 @@ struct ficheiro{
 	void (*rewind)(void);
 	FILE* (*filepointer)(void);
 	int (*filedescriptor)(void);
-};
-typedef struct ficheiro FICHEIRO;
-/*
-** procedure and function header
-*/
+}FICHEIRO;
+
 FICHEIRO FICHEIROenable(void);
 #endif
 /***EOF***/

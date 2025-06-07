@@ -191,7 +191,7 @@ unsigned int LFSMlearn(struct lfsm *r, unsigned int input, unsigned int next, un
 			data.outhl=r->hl(r->output,next);
 			data.outlh=r->lh(r->output,next);
 			printf("%d  %d  %d  %d  %d  %d\n",data.page,data.feedback,data.inhl,data.inlh,data.outhl,data.outlh);
-			for(i1=0;(i1 < r->sizeeeprom);i1++){
+			for(i1=0;i1 < r->sizeeeprom;i1++){
 				//search empty space in memory
 				if(r->mem[i1].page==EMPTY){
 					//write data to eeprom

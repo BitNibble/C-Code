@@ -43,7 +43,7 @@ struct Example
 	uint32_t* ptr;
 }test;
 
-uint8_t string[32];
+char string[32];
 
 int test_int0 = 0;
 int test_int1 = 0;
@@ -83,8 +83,10 @@ test.ptr=&test.c;
 //char c = '\0';
 char* cmd=NULL;
 uint32_t reg = 0;
+(void)reg;
 //uint32_t mask = 0;
 unsigned int number0 = 0;
+(void)number0;
 //uint32_t number1 = 0;
 //
 

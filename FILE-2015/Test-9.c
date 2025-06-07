@@ -194,8 +194,3 @@ unsigned int ftest(void)
 	return 6;
 }
 /***EOF***/
-/*
-*
-* NULL is a very important flag used in PC´s, must be used as an indicator NONE, no action, always.
-*
-*/
