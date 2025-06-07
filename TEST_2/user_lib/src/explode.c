@@ -10,7 +10,7 @@ Comment:
 ********************************************************************/
 /***Library***/
 #include <inttypes.h>
-#include"../inc/explode.h"
+#include"explode.h"
 /***Constant & Macro***/
 #ifndef ZERO
 	#define ZERO 0

@@ -21,7 +21,7 @@ LICENSE:
 COMMENT:
 	perfect
 *************************************************************************/
-#include"../inc/PClili.h"
+#include"PClili.h"
 /*
 ** constant and macro
 */

@@ -10,7 +10,7 @@ Description:
 Comment:
 	Very Stable
 *************************************************************************/
-#include"../inc/PCfunction.h"
+#include"PCfunction.h"
 /*
 ** constant and macro
 */

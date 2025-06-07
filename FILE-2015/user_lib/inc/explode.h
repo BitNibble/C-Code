@@ -13,7 +13,7 @@ Comment:
 /***Library***/
 /***Constant & Macro***/
 /***Global Variable***/
-struct expld{
+typedef struct expld {
 	/***Variable***/
 	unsigned int XI;
 	unsigned int XF;
@@ -25,12 +25,11 @@ struct expld{
 	void (*update)(struct expld* self, unsigned int x);
 	unsigned int (*mayia)(struct expld* self, unsigned int nbits);
 	struct expld (*read)(struct expld* self);
-};
-struct expld_base{
+}EXPLODE;
+typedef struct {
 	struct expld obj;
 	struct expld* ptr;
-};
-typedef struct expld EXPLODE;
+}expld_base;
 /***Header***/
 EXPLODE EXPLODEenable(void);
 #endif

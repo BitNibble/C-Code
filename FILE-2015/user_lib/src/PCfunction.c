@@ -10,7 +10,7 @@ Description:
 Comment:
 	Very Stable
 *************************************************************************/
-#include"..\inc\PCfunction.h"
+#include"PCfunction.h"
 /*
 ** constant and macro
 */
@@ -18,7 +18,7 @@ Comment:
 ** variable
 */
 char FUNCstr[256];
-char *value=NULL;
+static char *value=NULL;
 /*
 ** procedure and function header
 */
@@ -29,11 +29,9 @@ char* FUNCftoa(float n, char* res, uint8_t afterpoint);
 char* FUNCfltos(FILE* stream);
 char* FUNCftos(FILE* stream);
 int FUNCstrtotok(char* line,char* token[],const char* parser);
-char* FUNCputstr(char* str);
 int FUNCgetnum(char* x);
 unsigned int FUNCgetnumv2(char* x);
 int FUNCreadint(int nmin, int nmax);
-unsigned int FUNCmayia(unsigned int xi, unsigned int xf, unsigned int nbits);
 unsigned int FUNCpinmatch(unsigned int match, unsigned int pin, unsigned int HL);
 unsigned int FUNClh(unsigned int xi, unsigned int xf);
 unsigned int FUNChl(unsigned int xi, unsigned int xf);
@@ -59,11 +57,9 @@ FUNC FUNCenable( void )
 	func.fltos=FUNCfltos;
 	func.ftos=FUNCftos;
 	func.strtotok=FUNCstrtotok;
-	func.putstr=FUNCputstr;
 	func.getnum=FUNCgetnum;
 	func.getnumv2=FUNCgetnumv2;
 	func.readint=FUNCreadint;
-	func.mayia=FUNCmayia;
 	func.pinmatch=FUNCpinmatch;
 	func.lh=FUNClh;
 	func.hl=FUNChl;
@@ -89,7 +85,8 @@ int StringLength (const char string[])
 /***Reverse***/
 void Reverse(char s[])
 {
-	int c, i, j;
+	char c;
+	int i, j;
 	for (i = 0, j = StringLength(s)-1; i < j; i++, j--){
 		c = s[i];
 		s[i] = s[j];
@@ -129,7 +126,7 @@ char* FUNCftoa(float n, char* res, uint8_t afterpoint)
 	Reverse(res);
 	if (afterpoint > 0){
 		res[k++] = '.';
-		FUNCintinvstr( fpart * pow(10, afterpoint), res+k, afterpoint );
+		FUNCintinvstr( (double)fpart * pow((double)10, (double)afterpoint), res+k, afterpoint );
 		Reverse(res+k);
 	}	
 	return res;
@@ -163,8 +160,8 @@ char* FUNCfltos(FILE* stream)
 /***ftos***/
 char* FUNCftos(FILE* stream)
 {
-	int i, block, NBytes;
-	char caracter;
+	int i = 0, block = 0, NBytes = 0;
+	char caracter = '\0';
 	//made it a file variable so do not need to free it up all the time except on exiting program.
 	//char* value=NULL;
 	free(value);
@@ -190,21 +187,6 @@ int FUNCstrtotok(char* line, char* token[], const char* parser)
 		//printf("%d: %s\n", i, token[i]); //if no data it returns NULL
 	}
 	return i;
-}
-/***putstr***/
-char* FUNCputstr(char* str)
-{
-	unsigned int n,i; char* ptr;
-	n=strlen(str);
-	ptr = (char*)calloc(n, sizeof(char));
-	if(ptr == NULL){
-		perror("error at calloc\n");
-	}else{
-		for(i=0; i<n ; i++)
-			ptr[i] = str[i];
-		ptr[i] = '\0';
-	}
-	return ptr;
 }
 /***getnum***/
 int FUNCgetnum(char* x)
@@ -252,19 +234,6 @@ int FUNCreadint(int nmin, int nmax)
 		flag=0;
 	}
 	return num;
-}
-/***magic***/
-unsigned int FUNCmayia(unsigned int xi, unsigned int xf, unsigned int nbits)
-{
-	unsigned int mask;
-	unsigned int diff;
-	unsigned int trans;
-	mask=pow(2,nbits)-1;
-	xi=xi&mask;
-	xf=xf&mask;
-	diff=xf^xi;
-	trans=diff&xf;
-	return (trans<<nbits)|diff;
 }
 /***pinmatch***/
 unsigned int FUNCpinmatch(unsigned int match, unsigned int pin, unsigned int HL)
@@ -334,7 +303,7 @@ unsigned int FUNCbinary_decimal(unsigned int n) /* Function to convert binary to
     {
         rem = n%10;
         n/=10;
-        decimal += rem*pow(2,i);
+        decimal += rem*(1 << i);
         ++i;
     }
     return decimal;

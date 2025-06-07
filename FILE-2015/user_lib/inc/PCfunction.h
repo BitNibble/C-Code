@@ -62,11 +62,9 @@ struct func{
 	char* (*fltos)(FILE* stream);
 	char* (*ftos)(FILE* stream);
 	int (*strtotok)(char* line,char* token[],const char* parser);
-	char* (*putstr)(char* str);
 	int (*getnum)(char* x);
 	unsigned int (*getnumv2)(char* x);
 	int (*readint)(int nmin, int nmax);
-	unsigned int (*mayia)(unsigned int xi, unsigned int xf, unsigned int nbits);
 	unsigned int (*pinmatch)(unsigned int match, unsigned int pin, unsigned int HL);
 	unsigned int (*lh)(unsigned int xi, unsigned int xf);
 	unsigned int (*hl)(unsigned int xi, unsigned int xf);

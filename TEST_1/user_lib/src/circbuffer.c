@@ -10,7 +10,7 @@ Comment:
 ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "..\inc\circbuffer.h"
+#include "circbuffer.h"
 /******************************************************************************/
 // Get a byte from the circular buffer
 char CIRC_get(circbuff* circ) {

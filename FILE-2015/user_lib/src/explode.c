@@ -10,7 +10,7 @@ Comment:
 ********************************************************************/
 /***Library***/
 #include <inttypes.h>
-#include"..\inc\explode.h"
+#include"explode.h"
 /***Constant & Macro***/
 #ifndef ZERO
 	#define ZERO 0
@@ -37,6 +37,10 @@ EXPLODE EXPLODEenable( void )
 	// inic VAR
 	explode.XI = ZERO;
 	explode.XF = ZERO;
+	explode.HL = ZERO;
+	explode.LH = ZERO;
+	explode.HH = ZERO;
+	explode.LL = ZERO;
 	// function pointers
 	explode.update = EXPLODEupdate;
 	explode.mayia = EXPLODEmayia;
@@ -61,9 +65,9 @@ unsigned int EXPLODEmayia(EXPLODE* self, unsigned int nbits)
 {//magic formula
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int mask;
-	unsigned int diff;
-	unsigned int trans;
+	unsigned int mask = 0;
+	unsigned int diff = 0;
+	unsigned int trans = 0;
 	mask = EXPLODEPwr(2,nbits)-ONE;
 	self->XI &= mask;
 	self->XF &= mask;
@@ -76,7 +80,7 @@ unsigned int EXPLODEhh(EXPLODE* self)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i;
+	unsigned int i = 0;
 	i = self->XI & self->XF;
 	return i;
 }
@@ -85,7 +89,7 @@ unsigned int EXPLODEll(EXPLODE* self)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i;
+	unsigned int i = 0;
 	i = self->XI | self->XF;
 	return ~i;
 }
@@ -94,7 +98,7 @@ unsigned int EXPLODElh(EXPLODE* self)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i;
+	unsigned int i = 0;
 	i = self->XI ^ self->XF;
 	i &= self->XF;
 	return i;
@@ -104,7 +108,7 @@ unsigned int EXPLODEhl(EXPLODE* self)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i;
+	unsigned int i = 0;
 	i = self->XF ^ self->XI;
 	i &= self->XI;
 	return i;
@@ -121,7 +125,7 @@ unsigned int EXPLODEPwr(unsigned int bs, unsigned int n)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i, p;
+	unsigned int i = 0, p = 0;
 	p = ONE;
 	for (i = ONE; i <= n; ++i)
 	p = p * bs;

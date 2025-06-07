@@ -9,7 +9,7 @@ Description:  PC emulation
 Comment:
 	
 *************************************************************************/
-#include"..\inc\PCficheiro.h"
+#include"PCficheiro.h"
 
 static FICHEIRO self;
 
@@ -31,6 +31,8 @@ FICHEIRO FICHEIROenable(void)
 	errno=0;
 	/***local variables***/
 	self.par.fp = NULL;
+	self.par.fd = 0;
+	self.par.errcode=0;
 	/***Local variables assigning***/
 	//Functions pointers or Vtable to declared functions
 	self.open=FICHEIROopen;

@@ -21,7 +21,7 @@ LICENSE:
 COMMENT:
 	perfect
 *************************************************************************/
-#include"..\inc\PClili.h"
+#include"PClili.h"
 /*
 ** constant and macro
 */
@@ -183,7 +183,7 @@ void LILIremove(struct lili *l)
 			if(RMFR){
 				l->target=l->target->back;
 			}else{
-				l->target=l->target->next;
+
 			}
 			l->total--;
 			free(ptr);
