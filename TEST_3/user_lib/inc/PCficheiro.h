@@ -22,6 +22,7 @@ COMMENT:
 #ifndef _PCFICHEIRO_H_
 	#define _PCFICHEIRO_H_
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,6 +49,7 @@ typedef struct{
 	int (*close)(void);
 	int (*putch)(int c);
 	int (*puts)(const char* s);
+	void (*printf)(const char* fmt, ...);
 	int (*read)(void *ptr, size_t size, size_t nmemb);
 	int (*write)(const void *ptr, size_t size, size_t nmemb);
 	void (*rewind)(void);

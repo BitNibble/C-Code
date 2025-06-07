@@ -11,12 +11,13 @@ Comment:
 *************************************************************************/
 #include"..\inc\PCficheiro.h"
 
-FICHEIRO self;
+static FICHEIRO self;
 
 void FICHEIROopen(const char* filename, const char *permision); //inic
 int FICHEIROclose(void);
 int FICHEIROputc(int c);
 int FICHEIROputs(const char* s);
+void FICHEIROprintf(const char* fmt, ...);
 int FICHEIROread(void *ptr, size_t size, size_t nmemb);
 int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb);
 void FICHEIROrewind(void);
@@ -36,6 +37,7 @@ FICHEIRO FICHEIROenable(void)
 	self.close=FICHEIROclose;
 	self.putch=FICHEIROputc;
 	self.puts=FICHEIROputs;
+	self.printf=FICHEIROprintf;
 	self.read=FICHEIROread;
 	self.write=FICHEIROwrite;
 	self.rewind=FICHEIROrewind;
@@ -67,7 +69,7 @@ void FICHEIROopen(const char *filename, const char *permision)
 			}
 		}
 		if(exit==2){
-			strcpy(self.par.permision, "a+"); //setting as default
+			strcpy(self.par.permision, "W"); //setting as default
 			self.par.fp = fopen(self.par.filename, self.par.permision);
 			if(self.par.fp){
 				printf("Re-Opening file: %s\n", self.par.filename);
@@ -84,8 +86,8 @@ void FICHEIROopen(const char *filename, const char *permision)
 	//Apart
 	#ifdef linux
 		self.par.fd=fileno(self.par.fp);
-		#elif _WIN32
-			self.par.fd=_fileno(self.par.fp);
+	#elif _WIN32
+		self.par.fd=_fileno(self.par.fp);
 	#endif
 	if(self.par.fd < 0){
 		perror("FICHEIROopen");
@@ -97,10 +99,13 @@ void FICHEIROopen(const char *filename, const char *permision)
 int FICHEIROclose(void)
 {
 	if(fclose(self.par.fp)){
-        printf("Error at FICHEIROclose\n");
+        perror("FICHEIROclose");
         return 1;
-    }else
+    }else{
+		self.par.fp = NULL;
+		self.par.fd = 0;
 	    return 0;
+	}
 }
 /***FICHEIROputc***/
 int FICHEIROputc(int c)
@@ -116,6 +121,16 @@ int FICHEIROputs(const char* s)
 	r=fputs(s, self.par.fp);
 	return r;
 }
+
+/***FICHEIROprintf***/
+void FICHEIROprintf(const char* fmt, ...)
+{
+	va_list args;
+    va_start(args, fmt);
+	vfprintf(self.par.fp, fmt, args);
+	va_end(args);
+}
+
 /***FICHEIROread***/
 int FICHEIROread(void *ptr, size_t size, size_t nmemb)
 {
@@ -123,6 +138,7 @@ int FICHEIROread(void *ptr, size_t size, size_t nmemb)
 	r=fread(ptr, size, nmemb, self.par.fp);
 	return r;
 }
+
 /***FICHEIROwrite***/
 int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb)
 {
@@ -130,11 +146,13 @@ int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb)
 	r=fwrite(ptr, size, nmemb, self.par.fp);
 	return r;
 }
+
 /***FICHEIROrewind***/
 void FICHEIROrewind(void)
 {
 	rewind(self.par.fp);
 }
+
 /***FICHEIROfilepointer***/
 FILE* FICHEIROfilepointer(void)
 {
@@ -145,6 +163,7 @@ int FICHEIROfiledescriptor(void)
 {
 	return self.par.fd;
 }
+
 /***setposition***/
 int seekposition(int whence, long offset)
 {
