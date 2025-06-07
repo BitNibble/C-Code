@@ -24,26 +24,11 @@ COMMENT:
 /*
 ** library
 */
-// fopen perror fread fwrite feof fseek ferror fclose rewind scanf sscanf getchar scanf fscanf
 #include <stdio.h>
-// calloc free realloc malloc
 #include <stdlib.h>
-// strcpy strcmp strcat memcmp
 #include <string.h>
-// termios tcflush
-//#include <termios.h>
-// nanosleep sleep
-//#include <time.h>
-// tcflsuh read write close
-//#include <unistd.h>
-// perror
-//#include <errno.h>
-// open
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <fcntl.h>
-//#include <stdio_ext.h>
-//#include <math.h>
+#include<inttypes.h>
+#include <errno.h>
 /*
 ** constant and macro
 */
@@ -58,17 +43,23 @@ struct ficheiro{
 	int errcode;
 	char filename[FILENAMESIZE];
 	char permision[8];
+	int whence;
+    long offset;
 	// Function Pointers
-	int (*close)(struct ficheiro *f);
-	int (*colocarchar)(struct ficheiro *f, int c);
-	int (*colocarstring)(struct ficheiro *f, const char* s);
-	FILE* (*filepointer)(struct ficheiro *f);
-	int (*filedescriptor)(struct ficheiro *f);
+	void (*open)(const char *filename, const char *permision);
+	int (*close)(void);
+	int (*putch)(int c);
+	int (*puts)(const char* s);
+	int (*read)(void *ptr, size_t size, size_t nmemb);
+	int (*write)(const void *ptr, size_t size, size_t nmemb);
+	void (*rewind)(void);
+	FILE* (*filepointer)(void);
+	int (*filedescriptor)(void);
 };
 typedef struct ficheiro FICHEIRO;
 /*
 ** procedure and function header
 */
-FICHEIRO FICHEIROenable(char *filename);
+FICHEIRO FICHEIROenable(void);
 #endif
 /***EOF***/

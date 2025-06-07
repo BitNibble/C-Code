@@ -38,7 +38,6 @@ COMMENT:
 */
 struct ficheiro{
 	//Local Variables
-	struct ficheiro *self;
 	FILE *fp;
 	int fd;
 	int errcode;
@@ -61,6 +60,6 @@ typedef struct ficheiro FICHEIRO;
 /*
 ** procedure and function header
 */
-FICHEIRO FICHEIROenable(struct ficheiro *self);
+FICHEIRO FICHEIROenable(void);
 #endif
 /***EOF***/
