@@ -114,17 +114,13 @@ int FICHEIROclose(void)
 /***FICHEIROputc***/
 int FICHEIROputc(int c)
 {
-	int r;
-	r=fputc(c, self.par.fp);
-	return r;
+	return fputc(c, self.par.fp);
 }
 
 /***FICHEIROputs***/
 int FICHEIROputs(const char* s)
 {
-	int r;
-	r=fputs(s, self.par.fp);
-	return r;
+	return fputs(s, self.par.fp);
 }
 
 /***FICHEIROprintf***/
@@ -139,17 +135,13 @@ void FICHEIROprintf(const char* fmt, ...)
 /***FICHEIROread***/
 int FICHEIROread(void *ptr, size_t size, size_t nmemb)
 {
-	int r;
-	r=fread(ptr, size, nmemb, self.par.fp);
-	return r;
+	return fread(ptr, size, nmemb, self.par.fp);
 }
 
 /***FICHEIROwrite***/
 int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb)
 {
-	int r;
-	r=fwrite(ptr, size, nmemb, self.par.fp);
-	return r;
+	return fwrite(ptr, size, nmemb, self.par.fp);
 }
 
 /***FICHEIROrewind***/
@@ -173,7 +165,7 @@ int FICHEIROfiledescriptor(void)
 int seekposition(int whence, long offset)
 {
 	int r;
-    r=fseek(self.par.fp, offset, whence);
+    r = fseek(self.par.fp, offset, whence);
     if(r){
         printf("Error at seekposition: %d\n", errno);
     }else{
