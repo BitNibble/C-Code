@@ -27,10 +27,9 @@
 //#include <stdio_ext.h>
 #include <math.h>
 // personal library
-#include"user_lib\inc\PCfunction.h"
-#include"user_lib\inc\PClfsm.h"
-#include"user_lib\inc\PCficheiro.h"
-//#include"user_lib\linux\ssfiledescriptor.h"
+#include"PCfunction.h"
+#include"PClfsm.h"
+#include"PCficheiro.h"
 /***Definition and Macros***/
 #define TRUE 1
 #define ZERO 0
@@ -39,42 +38,22 @@
 #define high 1
 #define LOW 0
 #define low 0
-//#ifdef linux
-//#elif _WIN32
-//#else
-//#endif
+
 /*****GLOBAL VARIABLES*****/
 LFSMDATA MEM[128];
-/*={
-{},
-{}
-};
-*/
 
 /*****Procedure and Function*****/
-void* this(void* address){
-	return address;
-}
 // Main Main Main Main Main Main Main Main Main Main Main Main Main Main
 // Main Main Main Main Main Main Main Main Main Main Main Main Main Main
 int main(int argc, char *argv[])
 {
-	/*
-	*** Capture arguments
-	*/
 	printf("Running program - %s with - %d arguments", argv[0], argc);
-	/*
-	*** Local variables
-	*/
 	char *cmd;
 	unsigned int number3;
 	unsigned int number1;
 	unsigned int number2;
     unsigned int value;
     unsigned int status=ZERO;
-	char* str=NULL;
-    //unsigned int count=0;
-	//char* token[10];
 /*******************************************************/
 	FUNC func=FUNCenable();
 	LFSM r = LFSMenable(MEM, 128);
@@ -83,11 +62,6 @@ int main(int argc, char *argv[])
 	f->open("file.txt", "a+");
 	f->putch('A');
 	f->puts(" qualquer coisa\n");
-	rewind(f->filepointer());
-	str=func.ftos(f->filepointer());
-	printf("string in file:\n%s\n\n",str);
-	//func.strtotok(str,token," ");
-	free(str);
 	f->close();
 	printf("lfsmdata size: %lld\n",sizeof(LFSMDATA));
 /********************************************************/
@@ -118,17 +92,17 @@ int main(int argc, char *argv[])
 			cmd=func.fltos(stdin);
 			number3=func.getnum(cmd);
 			printf("Entered values %d %d %d\n",number1,number2,number3);
-			r.learn(this(&r),number1,number2,number3);
+			r.learn(&r,number1,number2,number3);
             continue;
 		}
 
 		if(!strcmp(cmd,"how many") || !strcmp(cmd,"n")){
-			printf("------ %d ------\n",r.quant(this(&r)));
+			printf("------ %d ------\n",r.quant(&r));
             continue;
 		}
 
 		if(!strcmp(cmd,"delete all") || !strcmp(cmd,"d")){
-			r.deleteall(this(&r));
+			r.deleteall(&r);
             continue;
 		}
 
@@ -137,7 +111,7 @@ int main(int argc, char *argv[])
 			cmd=func.fltos(stdin);
 			number1=func.getnum(cmd);
 			//l.remove(&l,number1);
-			r.remove(this(&r),number1);
+			r.remove(&r,number1);
             continue;
 		}
 
@@ -156,7 +130,7 @@ int main(int argc, char *argv[])
             		printf("Input procedure:\n");
             		printf("\tProgram sequence is first desired input\n");
 			printf("\tsecond is desired ouput\n");
-			printf("\tthen select what page to store in refered as above.\n");
+			printf("\tthen select what page to store as refered above.\n");
 			continue;
 		}
 
@@ -165,7 +139,7 @@ int main(int argc, char *argv[])
             continue;
 		}
         if(status==ZERO){
-            value=r.read(this(&r),number1);
+            value=r.read(&r,number1);
             printf("\t\t\t\t\t[Output ->  %s  ]\n",func.print_binary(8, value));
         } 
 	}
