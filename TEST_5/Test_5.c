@@ -20,6 +20,8 @@
 #include <math.h>
 #include <time.h>
 //#include <assert.h>
+// chdir function is declared inside this header 
+#include<unistd.h> 
 #include "PCfunction.h"
 #include "PCficheiro.h"
 #include "explode.h"
@@ -65,7 +67,14 @@ while ass
 /****************************************************************************************************************************/
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
-
+if(chdir("..")) 
+	perror("chdir"); 
+else 
+{
+	file->open("test.txt","w"); 
+	file->puts("Changed directory.\n"); 
+	file->close();
+}
 
 
 
