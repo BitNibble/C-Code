@@ -79,16 +79,16 @@ int main(int argc, char *argv[])
 	FUNC func=FUNCenable();
 	LFSM r = LFSMenable(MEM, 128);
 	/***************************/
-	FICHEIRO f=FICHEIROenable();
-	f.open("file.txt", "a+");
-	f.putch('A');
-	f.puts(" qualquer coisa\n");
-	rewind(f.filepointer());
-	str=func.ftos(f.filepointer());
+	FICHEIRO* f=FICHEIROenable();
+	f->open("file.txt", "a+");
+	f->putch('A');
+	f->puts(" qualquer coisa\n");
+	rewind(f->filepointer());
+	str=func.ftos(f->filepointer());
 	printf("string in file:\n%s\n\n",str);
 	//func.strtotok(str,token," ");
 	free(str);
-	f.close();
+	f->close();
 	printf("lfsmdata size: %lld\n",sizeof(LFSMDATA));
 /********************************************************/
 	printf("sizeeeprom: %d\n", r.sizeeeprom);

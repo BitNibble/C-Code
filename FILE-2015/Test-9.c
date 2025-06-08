@@ -68,7 +68,7 @@ char string[256];
 test.testa = ftest();
 func=FUNCenable();
 
-FICHEIRO f = FICHEIROenable(); // one object all files
+FICHEIRO* f = FICHEIROenable(); // one object all files
 
 //EXPLODE port = EXPLODEenable();
 //EXPLODE input = EXPLODEenable();
@@ -83,30 +83,30 @@ printf("%s\n\n", str);
 for(i=0;i<(lines*columns);i++) // offset vector to 255 (emulate eeprom)
 	book[i]=0xFF;
 
-f.open("file.txt", "r");
-str = func.ftos(f.filepointer());
+f->open("file.txt", "r");
+str = func.ftos(f->filepointer());
 printf("read entire file\n%s \n", str);
-f.close();
+f->close();
 
-f.open("file.txt", "a+"); // Load Data from file to book vector (book[]).
+f->open("file.txt", "a+"); // Load Data from file to book vector (book[]).
 //f.open(f.self, "file.txt", "a+");
-for(i=1; (str = func.fltos(f.filepointer())); i++){
+for(i=1; (str = func.fltos(f->filepointer())); i++){
 	func.strtotok(str, token, ",");
 	printf("%d Tokens: %s -> %s\n", i, token[0], token[1]);
 	number1=func.getnumv2(token[0]);
 	number2=func.getnumv2(token[1]);
 	book[number1]=number2;
 }
-f.close();
+f->close();
 
 // open testing object functionality
-f.open("another.txt", "r+"); //rewind only works in r+
-f.puts("bla bla bla bla bla !!!\n");
-f.puts("bla bla bla bla bla !!!\n");
-f.puts("ua ua ua ua ua ua u !!!\n");
-f.rewind();
-f.puts("ble ble ble ble ble !!!\n");
-f.close();
+f->open("another.txt", "r+"); //rewind only works in r+
+f->puts("bla bla bla bla bla !!!\n");
+f->puts("bla bla bla bla bla !!!\n");
+f->puts("ua ua ua ua ua ua u !!!\n");
+f->rewind();
+f->puts("ble ble ble ble ble !!!\n");
+f->close();
 
 
 while(ONE){
@@ -160,14 +160,14 @@ while(ONE){
 	ptr = func.ftoa(number3,string, 0);
 	
 	if(state == 1){ //Record new entry
-		f.open("file.txt", "a+");
+		f->open("file.txt", "a+");
 		//f.open(&f, "file.txt", "a+");
 		strcat(tmp,",");
 		strcat(tmp, ptr);
 		strcat(tmp, "\n");
 		printf("ftoa---> %s\n", tmp);
-		f.puts(tmp);
-		f.close();
+		f->puts(tmp);
+		f->close();
 		state=0;
 	}
 	

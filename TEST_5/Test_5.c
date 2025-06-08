@@ -36,13 +36,13 @@ int main(int argc, char *argv[]){
 // Capture arguments
 printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 
-FICHEIRO file = FICHEIROenable();
+FICHEIRO* file = FICHEIROenable();
 (void)file;
-file.open("file.txt","w");
-//file.printf("Hello World");
-fprintf(file.filepointer(), "OLA");
-//file.puts("Hello New World!!\n");
-file.close();
+file->open("file.txt","w");
+file->printf("Hello World %c %c\n", '!', '!');
+fprintf(file->filepointer(), "OLA\n");
+file->puts("Mundo!!\n");
+file->close();
 
 func = FUNCenable();
 char* cmd = NULL;
@@ -86,4 +86,3 @@ end:
 }
 /****************************************************************************************************************************/
 /***EOF***/
-

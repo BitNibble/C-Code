@@ -25,7 +25,7 @@ FILE* FICHEIROfilepointer(void);
 int FICHEIROfiledescriptor(void);
 int seekposition(int whence, long offset);
 
-FICHEIRO FICHEIROenable(void)
+FICHEIRO* FICHEIROenable(void)
 {
 	/***Glocal variables assigning***/
 	errno=0;
@@ -45,8 +45,8 @@ FICHEIRO FICHEIROenable(void)
 	self.rewind=FICHEIROrewind;
 	self.filepointer=FICHEIROfilepointer;
 	self.filedescriptor=FICHEIROfiledescriptor;
-	/***Control Copy***/
-	return self;
+	/***Control Pointer***/
+	return &self;
 }
 
 /***FICHEIROopen***/
@@ -97,6 +97,7 @@ void FICHEIROopen(const char *filename, const char *permision)
 		self.par.errcode=errno;
 	}
 }
+
 /***FICHEIROclose***/
 int FICHEIROclose(void)
 {
@@ -109,6 +110,7 @@ int FICHEIROclose(void)
 	    return 0;
 	}
 }
+
 /***FICHEIROputc***/
 int FICHEIROputc(int c)
 {
@@ -116,6 +118,7 @@ int FICHEIROputc(int c)
 	r=fputc(c, self.par.fp);
 	return r;
 }
+
 /***FICHEIROputs***/
 int FICHEIROputs(const char* s)
 {

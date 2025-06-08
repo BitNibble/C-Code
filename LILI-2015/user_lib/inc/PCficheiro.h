@@ -26,7 +26,7 @@ COMMENT:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<inttypes.h>
+#include <inttypes.h>
 #include <errno.h>
 
 #define FILENAMESIZE 128
@@ -57,6 +57,6 @@ typedef struct{
 	int (*filedescriptor)(void);
 }FICHEIRO;
 
-FICHEIRO FICHEIROenable(void);
+FICHEIRO* FICHEIROenable(void);
 #endif
 /***EOF***/
