@@ -17,7 +17,7 @@ LICENSE:
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 COMMENT:
-	Very Stable
+
 ************************************************************************/
 #ifndef _PCFICHEIRO_H_
 	#define _PCFICHEIRO_H_
