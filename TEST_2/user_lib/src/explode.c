@@ -11,127 +11,66 @@ Comment:
 /***Library***/
 #include <inttypes.h>
 #include"explode.h"
-/***Constant & Macro***/
-#ifndef ZERO
-	#define ZERO 0
-	#define ONE 1
-#endif
-/***Global File Variable***/
-/***Header***/
-unsigned int EXPLODEPwr(unsigned int bs, unsigned int n);
-/************/
-void EXPLODEupdate(EXPLODE* self, unsigned int x);
-unsigned int EXPLODEmayia(EXPLODE* self, unsigned int nbits);
-unsigned int EXPLODEhh(EXPLODE* self);
-unsigned int EXPLODEll(EXPLODE* self);
-unsigned int EXPLODElh(EXPLODE* self);
-unsigned int EXPLODEhl(EXPLODE* self);
-struct expld EXPLODEread(struct expld* self);
-/***Procedure & Function***/
+
+void EXPLODEupdate(EXPLODE_par* par, unsigned int x);
+unsigned int EXPLODEhh(EXPLODE_par* par);
+unsigned int EXPLODEll(EXPLODE_par* par);
+unsigned int EXPLODElh(EXPLODE_par* par);
+unsigned int EXPLODEhl(EXPLODE_par* par);
+
 EXPLODE EXPLODEenable( void )
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	// OBJECT STRUCT
-	struct expld explode;
-	// inic VAR
-	explode.XI = ZERO;
-	explode.XF = ZERO;
-	explode.HL = ZERO;
-	explode.LH = ZERO;
-	explode.HH = ZERO;
-	explode.LL = ZERO;
-	// function pointers
-	explode.update = EXPLODEupdate;
-	explode.mayia = EXPLODEmayia;
-	explode.read = EXPLODEread;
-	/******/
-	return explode; //return copy
+	EXPLODE setup; // Dummy Setup
+	setup.par.XI = 0;
+	setup.par.XF = 0;
+	setup.par.HL = 0;
+	setup.par.LH = 0;
+	setup.par.HH = 0;
+	setup.par.LL = 0;
+	setup.update = EXPLODEupdate;
+	// Control Copy
+	return setup;
 }
 // boot
-void EXPLODEupdate(EXPLODE* self, unsigned int x)
+void EXPLODEupdate(EXPLODE_par* par, unsigned int x)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	self->XI = self->XF;
-	self->XF = x;
-	self->HL = EXPLODEhl(self);
-	self->LH = EXPLODElh(self);
-	self->HH = EXPLODEhh(self);
-	self->LL = EXPLODEll(self);
-}
-// mayia
-unsigned int EXPLODEmayia(EXPLODE* self, unsigned int nbits)
-{//magic formula
-	//printf("%d -> ",__LINE__);
-	//printf("%s\n",__func__);
-	unsigned int mask = 0;
-	unsigned int diff = 0;
-	unsigned int trans = 0;
-	mask = EXPLODEPwr(2,nbits)-ONE;
-	self->XI &= mask;
-	self->XF &= mask;
-	diff = self->XF ^ self->XI;
-	trans = diff & self->XF;
-	return (trans << nbits) | diff;
+	par->XI = par->XF;
+	par->XF = x;
+	par->HL = EXPLODEhl(par);
+	par->LH = EXPLODElh(par);
+	par->HH = EXPLODEhh(par);
+	par->LL = EXPLODEll(par);
 }
 // hh
-unsigned int EXPLODEhh(EXPLODE* self)
+unsigned int EXPLODEhh(EXPLODE_par* par)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i = 0;
-	i = self->XI & self->XF;
-	return i;
+	return (par->XI & par->XF);
 }
 // ll
-unsigned int EXPLODEll(EXPLODE* self)
+unsigned int EXPLODEll(EXPLODE_par* par)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i = 0;
-	i = self->XI | self->XF;
-	return ~i;
+	return ~(par->XI | par->XF);
 }
 // lh
-unsigned int EXPLODElh(EXPLODE* self)
+unsigned int EXPLODElh(EXPLODE_par* par)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i = 0;
-	i = self->XI ^ self->XF;
-	i &= self->XF;
-	return i;
+	return ((par->XI ^ par->XF) & par->XF);
 }
 // hl
-unsigned int EXPLODEhl(EXPLODE* self)
+unsigned int EXPLODEhl(EXPLODE_par* par)
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	unsigned int i = 0;
-	i = self->XF ^ self->XI;
-	i &= self->XI;
-	return i;
+	return ((par->XF ^ par->XI) & par->XI);
 }
-struct expld EXPLODEread(struct expld* self)
-{
-	//printf("%d -> ",__LINE__);
-	//printf("%s\n",__func__);
-	return *self; // return a copy
-}
-/*******************************************************************/
-// power: raise base to n-th power; n >= 0
-unsigned int EXPLODEPwr(unsigned int bs, unsigned int n)
-{
-	//printf("%d -> ",__LINE__);
-	//printf("%s\n",__func__);
-	unsigned int i = 0, p = 0;
-	p = ONE;
-	for (i = ONE; i <= n; ++i)
-	p = p * bs;
-	return p;
-}
-/***Interrupt***/
-/***Comment***
-*************/
 /***EOF***/

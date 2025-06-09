@@ -10,29 +10,21 @@ Comment:
 ************************************************************************/
 #ifndef _EXPLODE_H_
 	#define _EXPLODE_H_
-/***Library***/
-/***Constant & Macro***/
-/***Global Variable***/
-typedef struct expld {
-	/***Variable***/
+
+typedef struct {
 	unsigned int XI;
 	unsigned int XF;
 	unsigned int HL;
 	unsigned int LH;
 	unsigned int HH;
 	unsigned int LL;
-	/***PROTOTYPES VTABLE***/
-	void (*update)(struct expld* self, unsigned int x);
-	unsigned int (*mayia)(struct expld* self, unsigned int nbits);
-	struct expld (*read)(struct expld* self);
-}EXPLODE;
+}EXPLODE_par;
+
 typedef struct {
-	struct expld obj;
-	struct expld* ptr;
-}expld_base;
-/***Header***/
+	EXPLODE_par par;
+	void (*update)(EXPLODE_par* par, unsigned int x);
+}EXPLODE;
+
 EXPLODE EXPLODEenable(void);
 #endif
-/***Comment***
-*************/
 /***EOF***/

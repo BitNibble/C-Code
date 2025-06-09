@@ -20,8 +20,7 @@
 #include <math.h>
 #include <time.h>
 //#include <assert.h>
-// chdir function is declared inside this header 
-#include <unistd.h> 
+#include <unistd.h> // chdir 
 #include "PCfunction.h"
 #include "PCficheiro.h"
 #include "explode.h"
@@ -39,14 +38,12 @@ int main(int argc, char *argv[]){
 file = FICHEIROenable();
 (void)file;
 file->open("log.txt","w");
-// Capture arguments
 file->printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 file->close();
 
 func = FUNCenable();
 char* cmd = NULL;
 /*****************/
-//uint8_t vector[100] = {0};
 
 while ass
 {
