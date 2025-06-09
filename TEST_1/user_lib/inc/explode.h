@@ -11,6 +11,8 @@ Comment:
 #ifndef _EXPLODE_H_
 	#define _EXPLODE_H_
 
+#include <stdint.h>
+
 typedef struct {
 	unsigned int XI;
 	unsigned int XF;
@@ -28,3 +30,4 @@ typedef struct {
 EXPLODE EXPLODEenable(void);
 #endif
 /***EOF***/
+

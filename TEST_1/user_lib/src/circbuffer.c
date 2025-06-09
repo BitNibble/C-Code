@@ -67,7 +67,5 @@ struct circ_buf_template CIRCBUFFenable(size_t size_buff, char* buff) {
 
     return circ; // Return the initialized circular buffer
 }
-/*******************************************************************************/
-
 /***EOF***/
 

@@ -9,8 +9,8 @@ Comment:
     Pin Analysis
 ********************************************************************/
 /***Library***/
+#include "explode.h"
 #include <inttypes.h>
-#include"explode.h"
 
 void EXPLODEupdate(EXPLODE_par* par, unsigned int x);
 unsigned int EXPLODEhh(EXPLODE_par* par);

@@ -22,15 +22,11 @@ COMMENT:
 	perfect
 *************************************************************************/
 #include"PClili.h"
-/*
-** constant and macro
-*/
+
 #define EMPTY 0
 #define RMFR 1
 #define INSFR 1
-/*
-** variable
-*/
+
 // default return result
 LILIDATA empty = 
 {
@@ -38,9 +34,7 @@ LILIDATA empty =
 	.back = NULL,
 	.vector = "empty"
 };
-/*
-** procedure and function header
-*/
+
 LILIDATA LILIplay(struct lili *l);
 void LILIforward(struct lili *l);
 void LILIreverse(struct lili *l);
@@ -53,9 +47,7 @@ void LILIinsert(struct lili *l, const char* data); // not finished
 void LILIreplace(struct lili *l, const char* data);
 void LILIpush(struct lili *l, const char* data);
 LILIDATA LILIpop(struct lili *l);
-/*
-** Object Inicialize
-*/
+
 LILI LILIenable(void)
 {
 	/***Local Variable***/
@@ -82,9 +74,7 @@ LILI LILIenable(void)
 	/******/
 	return l;
 }
-/*
-** procedure and function
-*/
+
 /***play***/
 LILIDATA LILIplay(struct lili *l)
 {
@@ -326,11 +316,4 @@ LILIDATA LILIpop(struct lili *l)
 	}
 	return *ptr;
 }
-/*
-** interrupt
-*/
-/*
-*** Comments
-*/
-//encapsulation mandates repetition of code.
 /***EOF***/

@@ -60,3 +60,4 @@ typedef struct{
 FICHEIRO* FICHEIROenable(void);
 #endif
 /***EOF***/
+

@@ -20,9 +20,7 @@ COMMENT:
 ************************************************************************/
 #ifndef _PCLILI_H_
 	#define _PCLILI_H_
-/*
-** library
-*/
+
 // fopen perror fread fwrite feof fseek ferror fclose rewind scanf sscanf getchar scanf fscanf
 #include <stdio.h>
 // calloc free realloc malloc
@@ -43,15 +41,7 @@ COMMENT:
 //#include <fcntl.h>
 //#include <stdio_ext.h>
 //#include <math.h>
-/*
-*** library
-*/
-/*
-** constant and macro
-*/
-/*
-** variable
-*/
+
 struct lilidata{
 struct lilidata* next;
 struct lilidata* back;
@@ -82,9 +72,8 @@ struct lili{
 	LILIDATA (*pop)(struct lili *l);
 };
 typedef struct lili LILI;
-/*
-** procedure and function header
-*/
+
 LILI LILIenable(void);
 #endif
 /***EOF***/
+

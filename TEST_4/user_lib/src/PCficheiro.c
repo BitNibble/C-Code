@@ -11,7 +11,7 @@ Comment:
 *************************************************************************/
 #include"PCficheiro.h"
 
-static FICHEIRO self;
+static FICHEIRO self; // Object Variable
 
 void FICHEIROopen(const char* filename, const char *permision); //inic
 int FICHEIROclose(void);
@@ -174,3 +174,4 @@ int seekposition(int whence, long offset)
 	return r;
 }
 /***EOF***/
+

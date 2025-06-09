@@ -10,9 +10,9 @@ Comment:
 *******************************************************************************/
 #ifndef _CIRCBUFFER_H_
 	#define _CIRCBUFFER_H_
-/***Library***/
-#include <inttypes.h>
-/******/
+
+#include <stdint.h>
+
 struct circ_buf_par
 {
 	char* tail;
@@ -31,9 +31,8 @@ struct circ_buf_template
 	void (*puts)(struct circ_buf_template* circ, const char* str);
 } ;
 typedef struct circ_buf_template circbuff;
-/***Header***/
+
 circbuff CIRCBUFFenable(size_t size_buff, char* buff);
 #endif
-
 /***EOF***/
 

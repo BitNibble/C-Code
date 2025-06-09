@@ -21,9 +21,7 @@ COMMENT:
 ************************************************************************/
 #ifndef _PCFUNCTION_H_
 	#define _PCFUNCTION_H_
-/*
-** library
-*/
+
 // fopen perror fread fwrite feof fseek ferror fclose rewind scanf sscanf getchar scanf fscanf
 #include <stdio.h>
 // calloc free realloc malloc
@@ -46,12 +44,7 @@ COMMENT:
 //#include <fcntl.h>
 //#include <stdio_ext.h>
 #include <math.h>
-/*
-** constant and macro
-*/
-/*
-** variable
-*/
+
 struct func{
 	//char *value;
 	/***PROTOTYPES VTABLE***/
@@ -77,9 +70,8 @@ struct func{
 	//char (*mm74c923_read)(char c);
 };
 typedef struct func FUNC;
-/*
-** procedure and function header
-*/
+
 FUNC FUNCenable(void);
 #endif
 /***EOF***/
+

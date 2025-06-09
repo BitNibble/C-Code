@@ -12,31 +12,23 @@ Comment:
 	page=1 is dedicated for Global logic, page>=2 Local logic.
 *************************************************************************/
 #include"..\inc\PClfsm.h"
-/*
-** constant and macro
-*/
+
 #define EMPTY 0
-/*
-** variable
-*/
+
 LFSMDATA data;
 unsigned int x;
 /*
 unsigned int mem[]=
 {pin state, feedback, pin mask, output}
 */
-/*
-** procedure and function header
-*/
+
 unsigned int LFSMread(struct lfsm *r, unsigned int input);
 unsigned int LFSMlearn(struct lfsm *r, unsigned int input, unsigned int next, unsigned int page);
 unsigned int LFSMquant(struct lfsm *r);
 unsigned int LFSMremove(struct lfsm *r, unsigned int input);
 unsigned int LFSMdeleteall(struct lfsm *r);
 unsigned int LFSMvalidate(struct lfsm *r, unsigned int n);
-/*
-** Object Inicialize
-*/
+
 LFSM LFSMenable(LFSMDATA *eeprom, unsigned int sizeeeprom)
 {
 	/***Local Variable***/
@@ -73,9 +65,7 @@ LFSM LFSMenable(LFSMDATA *eeprom, unsigned int sizeeeprom)
 	/******/
 	return r;
 }
-/*
-** procedure and function
-*/
+
 /***read***/
 unsigned int LFSMread(struct lfsm *r, unsigned int input)
 {
@@ -348,11 +338,5 @@ unsigned int LFSMvalidate(struct lfsm *r, unsigned int n)
     x++;
     return k;
 }
-/*
-** interrupt
-*/
-/**Comment**
-If one can not see what is in front of them, let them stay in ignorance.
-
-************/
 /***EOF***/
+

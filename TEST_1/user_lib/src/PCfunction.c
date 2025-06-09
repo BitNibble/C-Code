@@ -10,18 +10,11 @@ Description:
 Comment:
 	Very Stable
 *************************************************************************/
-#include"PCfunction.h"
-/*
-** constant and macro
-*/
-/*
-** variable
-*/
+#include "PCfunction.h"
+
 char FUNCstr[256];
 static char *value=NULL;
-/*
-** procedure and function header
-*/
+
 int StringLength (const char string[]);
 void Reverse(char s[]);
 uint8_t FUNCintinvstr(int32_t n, char* res, uint8_t n_digit);
@@ -41,9 +34,7 @@ unsigned int FUNCdecimal_binary(unsigned int n);
 unsigned int FUNCbinary_decimal(unsigned int n);
 void FUNCstrflip(char* s);
 char* FUNCprint(char *format, ... );
-/*
-** Object Inicialize
-*/
+
 FUNC FUNCenable( void )
 {
 	value=(char*)realloc(value, sizeof(char));
@@ -71,9 +62,7 @@ FUNC FUNCenable( void )
 	func.print=FUNCprint;
 	return func;
 }
-/*
-** procedure and function
-*/
+
 /***StringLength***/
 int StringLength (const char string[])
 {
@@ -102,7 +91,6 @@ uint8_t FUNCintinvstr(int32_t n, char* res, uint8_t n_digit)
 	res[k]='\0';
 	return k;
 }
-/***/
 /***ftoa***/
 char* FUNCftoa(float n, char* res, uint8_t afterpoint)
 {
@@ -131,7 +119,6 @@ char* FUNCftoa(float n, char* res, uint8_t afterpoint)
 	}	
 	return res;
 }
-/***/
 /***fltos***/
 char* FUNCfltos(FILE* stream)
 {
@@ -329,7 +316,5 @@ char* FUNCprint(char *format, ... )
 	}else
 		return FUNCstr;
 }
-/*
-** interrupt
-*/
 /***EOF***/
+

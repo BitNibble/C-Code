@@ -11,9 +11,7 @@ COMMENT:
 ************************************************************************/
 #ifndef _PCLFSM_H_
 	#define _PCLFSM_H_
-/*
-** library
-*/
+
 // fopen perror fread fwrite feof fseek ferror fclose rewind scanf sscanf getchar scanf fscanf
 #include <stdio.h>
 // calloc free realloc malloc
@@ -34,12 +32,7 @@ COMMENT:
 //#include <fcntl.h>
 //#include <stdio_ext.h>
 //#include <math.h>
-/*
-** constant and macro
-*/
-/*
-** variable
-*/
+
 struct lfsmdata{
 unsigned int page;
 unsigned int feedback;
@@ -72,21 +65,8 @@ struct lfsm{
     unsigned int (*validate)(struct lfsm *r, unsigned int n);
 };
 typedef struct lfsm LFSM;
-/*
-** procedure and function header
-*/
+
 LFSM LFSMenable(LFSMDATA *eeprom, unsigned int sizeeeprom);
 #endif
 /***EOF***/
-/***
-Syntax Semantic Pragmatic.
-Syntax is a key principle able to follow a sintactical work flow that solves any problem,
-having a concise structural work flow is very importante.
-The method used is C object oriented aproach, do not know anybody using this type of aproach,
-but all the programs made here follow this type of paradigm, it is very very stable either in
-PC or Embeded MCU programs, making Main program very compact.
-Discovered this method by experience since then never left it, altering prior programs to fit
-its syntax, making the program much more flexible and broader.
-Of course C++ and C#, etc, already follows this type of paradigm, but C is the oldest and
-the mother language, most well recognised.
-***/
+
