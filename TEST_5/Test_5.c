@@ -44,6 +44,8 @@ file->close();
 
 func = FUNCenable();
 char* cmd = NULL;
+int number;
+(void)number;
 /*****************/
 
 while ass
@@ -67,11 +69,16 @@ if(chdir("../example"))
 	perror("chdir"); 
 else 
 {
-	file->open("test.txt","w"); 
-	file->puts("Changed directory.\n"); 
+	file->open("log.txt","a+");
+	number = read_num();
+	file->printf("-> %d\n", number);
 	file->close();
+
 }
-read_num();
+
+
+
+
 
 
 
@@ -89,16 +96,16 @@ end:
 /***EOF***/
 int read_num(void)
 {
-char c; int number;
-printf("Enter a Number:\n");
-if(scanf("%d",&number)){
-	printf("Number: %d", number);
-	for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
-}else{
-	perror("scanf");
-	for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
-	number=read_num();
-}
-return number;
+	char c; int number;
+	printf("Enter a Number:\n");
+	if(scanf("%d",&number)){
+		printf("Number: %d", number);
+		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
+	}else{
+		perror("scanf");
+		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
+		number=read_num();
+	}
+	return number;
 }
 
