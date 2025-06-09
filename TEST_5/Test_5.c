@@ -21,7 +21,7 @@
 #include <time.h>
 //#include <assert.h>
 // chdir function is declared inside this header 
-#include<unistd.h> 
+#include <unistd.h> 
 #include "PCfunction.h"
 #include "PCficheiro.h"
 #include "explode.h"
@@ -33,17 +33,14 @@
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
 static FUNC func;
+FICHEIRO* file;
 
 int main(int argc, char *argv[]){
-// Capture arguments
-printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
-
-FICHEIRO* file = FICHEIROenable();
+file = FICHEIROenable();
 (void)file;
-file->open("file.txt","w");
-file->printf("Hello World %c %c\n", '!', '!');
-fprintf(file->filepointer(), "OLA\n");
-file->puts("Mundo!!\n");
+file->open("log.txt","w");
+// Capture arguments
+file->printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 file->close();
 
 func = FUNCenable();
@@ -67,7 +64,7 @@ while ass
 /****************************************************************************************************************************/
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
-if(chdir("..")) 
+if(chdir("../example")) 
 	perror("chdir"); 
 else 
 {
