@@ -13,6 +13,12 @@ Comment:
 
 #include <stdint.h>
 
+#define IS_BIT_RISING(par, bit) ((par.LH >> (bit)) & 1)
+#define IS_BIT_FALLING(par, bit) ((par.HL >> (bit)) & 1)
+#define IS_BIT_LOW_BOTH(par, n)  (((par).LL >> (n)) & 1)
+#define IS_BIT_HIGH_BOTH(par, n) (((par).HH >> (n)) & 1)
+
+
 typedef struct {
 	unsigned int XI;
 	unsigned int XF;
