@@ -52,40 +52,34 @@ FICHEIRO* FICHEIROenable(void)
 /***FICHEIROopen***/
 void FICHEIROopen(const char *filename, const char *permision)
 {
-	unsigned int exit;
-	//Inicialize variables
+	unsigned int step;
 	strcpy(self.par.filename, filename);
-	//Do a checkup if exists first !
 	strcpy(self.par.permision, permision);
-	//procedures
-	for(exit=1; exit; ){
-		if(exit==1){
+	for(step=1; step; ){
+		if(step==1){
 			self.par.fp = fopen(self.par.filename, self.par.permision);
 			if(self.par.fp){
 				printf("Opening file: %s\n", self.par.filename);
-				exit=0;
+				step=0;
 			}else{
 				perror("FICHEIROopen");
 				fclose(self.par.fp);
-				exit=2;
+				step=2;
 			}
 		}
-		if(exit==2){
-			strcpy(self.par.permision, "W"); //setting as default
-			self.par.fp = fopen(self.par.filename, self.par.permision);
+		if(step==2){
+			self.par.fp = fopen(self.par.filename, "w");
 			if(self.par.fp){
 				printf("Re-Opening file: %s\n", self.par.filename);
-				strcpy(self.par.permision, permision);
 				fclose(self.par.fp);
-				exit=1;
+				step=1;
 			}else{
 				perror("FICHEIROopen");
 				fclose(self.par.fp);
-				exit=0;
+				step=0;
 			}
 		}
 	}
-	//Apart
 	#ifdef linux
 		self.par.fd=fileno(self.par.fp);
 	#elif _WIN32

@@ -13,7 +13,7 @@ Comment:
 #include "PCfunction.h"
 
 char FUNCstr[256];
-static char *value=NULL;
+static char *value=NULL; // Object variable
 
 int StringLength (const char string[]);
 void Reverse(char s[]);
@@ -127,7 +127,7 @@ char* FUNCfltos(FILE* stream)
 	//made it a file variable so do not need to free it up all the time except on exitting program.
 	//char* value=NULL;
 	free(value);
-	for(value=NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)) != EOF; i++){
+	for(value=NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)); i++){
 		if(i>NBytes-1){
 			NBytes+=block;
 			value=(char*)realloc(value, NBytes*sizeof(char));
