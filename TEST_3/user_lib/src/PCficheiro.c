@@ -62,7 +62,7 @@ void FICHEIROopenp(void)
 				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen");
+				fprintf(stderr, "FICHEIROopen, %d\n", errno);
 				step=2;
 			}
 		}
@@ -73,7 +73,7 @@ void FICHEIROopenp(void)
 				FICHEIROclose();
 				step=3;
 			}else{
-				fprintf(stderr, "FICHEIROopen");
+				fprintf(stderr, "FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
@@ -83,7 +83,7 @@ void FICHEIROopenp(void)
 				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen");
+				fprintf(stderr, "FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
@@ -113,7 +113,7 @@ void FICHEIROopen(const char *filename, const char *permission)
 				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen");
+				fprintf(stderr, "FICHEIROopen, %d\n", errno);
 				step=2;
 			}
 		}
@@ -124,7 +124,7 @@ void FICHEIROopen(const char *filename, const char *permission)
 				FICHEIROclose();
 				step=3;
 			}else{
-				fprintf(stderr, "FICHEIROopen");
+				fprintf(stderr, "FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
@@ -134,7 +134,7 @@ void FICHEIROopen(const char *filename, const char *permission)
 				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen");
+				fprintf(stderr, "FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
