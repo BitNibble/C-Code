@@ -124,7 +124,7 @@ char* FUNCfltos(FILE* stream)
 			NBytes+=block;
 			value=(char*)realloc(value, NBytes*sizeof(char));
 			if(value==NULL){
-				perror("fltos at realloc");
+				fprintf(stderr, "fltos at realloc");
 				break;
 			}
 		}
@@ -142,13 +142,13 @@ char* FUNCftos(FILE* stream)
 {
 	int i = 0, block = 0, NBytes = 0;
 	char caracter = '\0';
-	free(value);
+	if(value) free(value);
 	for(value = NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)) != EOF; i++){
 		if(i>NBytes-1){
 			NBytes+=block;
 			value=(char*)realloc(value, NBytes*sizeof(char));
 			if(value==NULL){
-				perror("ftos at realloc");
+				fprintf(stderr, "ftos at realloc");
 				break;
 			}
 		}

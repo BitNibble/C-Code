@@ -36,7 +36,7 @@ typedef struct{
 	int fd;
 	int errcode;
 	char filename[FILENAMESIZE];
-	char permision[4];
+	char permission[4];
 	int whence;
     long offset;
 }FICHEIRO_par;
@@ -46,14 +46,14 @@ typedef struct{
 	FICHEIRO_par par;
 	// Function Pointers
 	void (*openp)(void);
-	void (*open)(const char *filename, const char *permision);
+	void (*open)(const char *filename, const char *permission);
 	int (*close)(void);
-	char (*getc)(void);
+	int (*getc)(void);
 	int (*putch)(int c);
 	int (*puts)(const char* s);
 	void (*printf)(const char* fmt, ...);
-	int (*read)(void *ptr, size_t size, size_t nmemb);
-	int (*write)(const void *ptr, size_t size, size_t nmemb);
+	size_t (*read)(void *ptr, size_t size, size_t nmemb);
+	size_t (*write)(const void *ptr, size_t size, size_t nmemb);
 	void (*rewind)(void);
 	FILE* (*filepointer)(void);
 	int (*filedescriptor)(void);

@@ -17,6 +17,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <stdbool.h> // true, false
 #include <math.h>
 #include <time.h>
 //#include <assert.h>
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]){
 file = FICHEIROenable();
 (void)file;
 strcpy(file->par.filename, "log.txt");
-strcpy(file->par.permision, "w");
+strcpy(file->par.permission, "w");
 file->openp();
 file->printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 file->close();
@@ -73,27 +74,27 @@ while ass
 /****************************************************************************************************************************/
 
 if(chdir("../example")) 
-	perror("chdir"); 
+	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
 else 
 {
-	strcpy(file->par.permision, "a+");
+	strcpy(file->par.permission, "a+");
 	file->openp();
 	number = read_num();
 	file->printf("-> %d\n", number);
 	file->close();
 
 }
-strcpy(file->par.permision, "r");
+strcpy(file->par.permission, "r");
 strcpy(file->par.filename, "cvs.txt");
 file->openp();
 file->read(str, sizeof(char), str_size);
-printf("\nstring: %s\n------\n", str);
+printf("\nstring:\n %s\n------\n", str);
 func.strtotok(str,token,"\n");
-printf("\ntoken[0]: %s\n------\n", token[0]);
-printf("\ntoken[1]: %s\n------\n", token[1]);
-printf("\ntoken[2]: %s\n------\n", token[2]);
-printf("\ntoken[3]: %s\n------\n", token[3]);
-printf("\ntoken[4]: %s\n------\n", token[4]);
+printf("\ntoken[0]:\n %s\n------\n", token[0]);
+printf("\ntoken[1]:\n %s\n------\n", token[1]);
+printf("\ntoken[2]:\n %s\n------\n", token[2]);
+printf("\ntoken[3]:\n %s\n------\n", token[3]);
+printf("\ntoken[4]:\n %s\n------\n", token[4]);
 
 
 file->close();

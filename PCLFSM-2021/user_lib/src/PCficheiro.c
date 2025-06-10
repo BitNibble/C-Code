@@ -14,14 +14,14 @@ Comment:
 static FICHEIRO self; // Object Variable
 
 void FICHEIROopenp(void); //inic
-void FICHEIROopen(const char* filename, const char *permision); //inic
+void FICHEIROopen(const char* filename, const char *permission); //inic
 int FICHEIROclose(void);
-char FICHEIROgetc(void);
+int FICHEIROgetc(void);
 int FICHEIROputc(int c);
 int FICHEIROputs(const char* s);
 void FICHEIROprintf(const char* fmt, ...);
-int FICHEIROread(void *ptr, size_t size, size_t nmemb);
-int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb);
+size_t FICHEIROread(void *ptr, size_t size, size_t nmemb);
+size_t FICHEIROwrite(const void *ptr, size_t size, size_t nmemb);
 void FICHEIROrewind(void);
 FILE* FICHEIROfilepointer(void);
 int FICHEIROfiledescriptor(void);
@@ -32,11 +32,7 @@ FICHEIRO* FICHEIROenable(void)
 	/***Glocal variables assigning***/
 	errno=0;
 	/***local variables***/
-	self.par.fp = NULL;
-	self.par.fd = 0;
-	self.par.errcode=0;
-	self.par.whence=0;
-    self.par.offset=0;
+	memset(&self, 0, sizeof(self));
 	/***Local variables assigning***/
 	//Functions pointers or Vtable to declared functions
 	self.openp=FICHEIROopenp;
@@ -61,9 +57,9 @@ void FICHEIROopenp(void)
 	unsigned int step;
 	for(step=1; step; ){
 		if(step==1){
-			self.par.fp = fopen(self.par.filename, self.par.permision);
+			self.par.fp = fopen(self.par.filename, self.par.permission);
 			if(self.par.fp){
-				printf("Opening file: %s\n", self.par.filename);
+				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
 				perror("FICHEIROopen");
@@ -74,7 +70,7 @@ void FICHEIROopenp(void)
 		if(step==2){
 			self.par.fp = fopen(self.par.filename, "w");
 			if(self.par.fp){
-				printf("Re-Opening file: %s\n", self.par.filename);
+				fprintf(stderr, "Re-Opening file: %s\n", self.par.filename);
 				fclose(self.par.fp);
 				step=1;
 			}else{
@@ -91,22 +87,22 @@ void FICHEIROopenp(void)
 	#endif
 	if(self.par.fd < 0){
 		perror("FICHEIROopen");
-		printf("errno: %d\n", errno);
+		fprintf(stderr, "errno: %d\n", errno);
 		self.par.errcode=errno;
 	}
 }
 
 /***FICHEIROopen***/
-void FICHEIROopen(const char *filename, const char *permision)
+void FICHEIROopen(const char *filename, const char *permission)
 {
 	unsigned int step;
 	strcpy(self.par.filename, filename);
-	strcpy(self.par.permision, permision);
+	strcpy(self.par.permission, permission);
 	for(step=1; step; ){
 		if(step==1){
-			self.par.fp = fopen(self.par.filename, self.par.permision);
+			self.par.fp = fopen(self.par.filename, self.par.permission);
 			if(self.par.fp){
-				printf("Opening file: %s\n", self.par.filename);
+				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
 				perror("FICHEIROopen");
@@ -117,7 +113,7 @@ void FICHEIROopen(const char *filename, const char *permision)
 		if(step==2){
 			self.par.fp = fopen(self.par.filename, "w");
 			if(self.par.fp){
-				printf("Re-Opening file: %s\n", self.par.filename);
+				fprintf(stderr, "Re-Opening file: %s\n", self.par.filename);
 				fclose(self.par.fp);
 				step=1;
 			}else{
@@ -134,7 +130,7 @@ void FICHEIROopen(const char *filename, const char *permision)
 	#endif
 	if(self.par.fd < 0){
 		perror("FICHEIROopen");
-		printf("errno: %d\n", errno);
+		fprintf(stderr, "errno: %d\n", errno);
 		self.par.errcode=errno;
 	}
 }
@@ -142,18 +138,16 @@ void FICHEIROopen(const char *filename, const char *permision)
 /***FICHEIROclose***/
 int FICHEIROclose(void)
 {
-	if(fclose(self.par.fp)){
-        perror("FICHEIROclose");
-        return 1;
-    }else{
-		self.par.fp = NULL;
-		self.par.fd = 0;
-	    return 0;
-	}
+	int r;
+	if(self.par.fp)
+		r = fclose(self.par.fp);
+	else
+		r = 0;
+	return r;
 }
 
 /***FICHEIROgetc***/
-char FICHEIROgetc(void)
+int FICHEIROgetc(void)
 {
 	return getc(self.par.fp);
 }
@@ -180,13 +174,13 @@ void FICHEIROprintf(const char* fmt, ...)
 }
 
 /***FICHEIROread***/
-int FICHEIROread(void *ptr, size_t size, size_t nmemb)
+size_t FICHEIROread(void *ptr, size_t size, size_t nmemb)
 {
 	return fread(ptr, size, nmemb, self.par.fp);
 }
 
 /***FICHEIROwrite***/
-int FICHEIROwrite(const void *ptr, size_t size, size_t nmemb)
+size_t FICHEIROwrite(const void *ptr, size_t size, size_t nmemb)
 {
 	return fwrite(ptr, size, nmemb, self.par.fp);
 }
@@ -214,9 +208,9 @@ int seekposition(int whence, long offset)
 	int r;
     r = fseek(self.par.fp, offset, whence);
     if(r){
-        printf("Error at seekposition: %d\n", errno);
+        fprintf(stderr, "Error at seekposition: %d\n", errno);
     }else{
-        printf("At position: %ld\n",ftell(self.par.fp));
+        fprintf(stderr, "At position: %ld\n",ftell(self.par.fp));
     }
 	return r;
 }
