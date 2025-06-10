@@ -13,6 +13,7 @@ Comment:
 
 static FICHEIRO self; // Object Variable
 
+FICHEIRO_par* FICHEIROpar(FICHEIRO_par* par);
 void FICHEIROopen(const char* filename, const char *permision); //inic
 int FICHEIROclose(void);
 int FICHEIROputc(int c);
@@ -35,6 +36,7 @@ FICHEIRO* FICHEIROenable(void)
 	self.par.errcode=0;
 	/***Local variables assigning***/
 	//Functions pointers or Vtable to declared functions
+	self.parameter=FICHEIROpar;
 	self.open=FICHEIROopen;
 	self.close=FICHEIROclose;
 	self.putch=FICHEIROputc;
@@ -49,6 +51,11 @@ FICHEIRO* FICHEIROenable(void)
 	return &self;
 }
 
+/***FICHEIROpar***/
+FICHEIRO_par* FICHEIROpar(FICHEIRO_par* par)
+{
+	return par;
+}
 /***FICHEIROopen***/
 void FICHEIROopen(const char *filename, const char *permision)
 {

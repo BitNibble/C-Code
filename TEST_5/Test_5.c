@@ -75,9 +75,9 @@ else
 	file->close();
 
 }
+file->parameter(&file->par)->errcode = 26;
 
-
-
+printf("errcode: %d\n", file->par.errcode);
 
 
 
@@ -99,7 +99,7 @@ int read_num(void)
 	char c; int number;
 	printf("Enter a Number:\n");
 	if(scanf("%d",&number)){
-		printf("Number: %d", number);
+		printf("Number: %d\n", number);
 		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
 	}else{
 		perror("scanf");

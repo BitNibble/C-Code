@@ -45,6 +45,7 @@ typedef struct{
 	//Local Variables
 	FICHEIRO_par par;
 	// Function Pointers
+	FICHEIRO_par* (*parameter)(FICHEIRO_par* par);
 	void (*open)(const char *filename, const char *permision);
 	int (*close)(void);
 	int (*putch)(int c);
