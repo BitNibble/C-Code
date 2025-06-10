@@ -22,9 +22,8 @@ typedef struct {
 	unsigned int LL;
 }EXPLODE_par;
 
-typedef struct {
+typedef struct explode{
 	EXPLODE_par par;
-	EXPLODE_par* (*parameter)(EXPLODE_par* par);
 	void (*update)(EXPLODE_par* par, unsigned int x);
 }EXPLODE;
 

@@ -30,15 +30,22 @@
 #define ass (1)
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
+#define STR_SIZE 256
 
 static FUNC func;
 FICHEIRO* file;
+char str[STR_SIZE];
+size_t str_size = STR_SIZE - 1;
+char* token[10];
 int read_num(void);
+
 
 int main(int argc, char *argv[]){
 file = FICHEIROenable();
 (void)file;
-file->open("log.txt","w");
+strcpy(file->par.filename, "log.txt");
+strcpy(file->par.permision, "w");
+file->openp();
 file->printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 file->close();
 
@@ -69,17 +76,27 @@ if(chdir("../example"))
 	perror("chdir"); 
 else 
 {
-	file->open("log.txt","a+");
+	strcpy(file->par.permision, "a+");
+	file->openp();
 	number = read_num();
 	file->printf("-> %d\n", number);
 	file->close();
 
 }
-file->parameter(&file->par)->errcode = 26;
+strcpy(file->par.permision, "r");
+strcpy(file->par.filename, "cvs.txt");
+file->openp();
+file->read(str, sizeof(char), str_size);
+printf("\nstring: %s\n------\n", str);
+func.strtotok(str,token,"\n");
+printf("\ntoken[0]: %s\n------\n", token[0]);
+printf("\ntoken[1]: %s\n------\n", token[1]);
+printf("\ntoken[2]: %s\n------\n", token[2]);
+printf("\ntoken[3]: %s\n------\n", token[3]);
+printf("\ntoken[4]: %s\n------\n", token[4]);
 
-printf("errcode: %d\n", file->par.errcode);
 
-
+file->close();
 
 
 /****************************************************************************************************************************/

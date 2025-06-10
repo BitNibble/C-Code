@@ -13,9 +13,10 @@ Comment:
 
 static FICHEIRO self; // Object Variable
 
-FICHEIRO_par* FICHEIROpar(FICHEIRO_par* par);
+void FICHEIROopenp(void); //inic
 void FICHEIROopen(const char* filename, const char *permision); //inic
 int FICHEIROclose(void);
+char FICHEIROgetc(void);
 int FICHEIROputc(int c);
 int FICHEIROputs(const char* s);
 void FICHEIROprintf(const char* fmt, ...);
@@ -34,11 +35,14 @@ FICHEIRO* FICHEIROenable(void)
 	self.par.fp = NULL;
 	self.par.fd = 0;
 	self.par.errcode=0;
+	self.par.whence=0;
+    self.par.offset=0;
 	/***Local variables assigning***/
 	//Functions pointers or Vtable to declared functions
-	self.parameter=FICHEIROpar;
+	self.openp=FICHEIROopenp;
 	self.open=FICHEIROopen;
 	self.close=FICHEIROclose;
+	self.getc=FICHEIROgetc;
 	self.putch=FICHEIROputc;
 	self.puts=FICHEIROputs;
 	self.printf=FICHEIROprintf;
@@ -51,11 +55,47 @@ FICHEIRO* FICHEIROenable(void)
 	return &self;
 }
 
-/***FICHEIROpar***/
-FICHEIRO_par* FICHEIROpar(FICHEIRO_par* par)
+/***FICHEIROopenp***/
+void FICHEIROopenp(void)
 {
-	return par;
+	unsigned int step;
+	for(step=1; step; ){
+		if(step==1){
+			self.par.fp = fopen(self.par.filename, self.par.permision);
+			if(self.par.fp){
+				printf("Opening file: %s\n", self.par.filename);
+				step=0;
+			}else{
+				perror("FICHEIROopen");
+				fclose(self.par.fp);
+				step=2;
+			}
+		}
+		if(step==2){
+			self.par.fp = fopen(self.par.filename, "w");
+			if(self.par.fp){
+				printf("Re-Opening file: %s\n", self.par.filename);
+				fclose(self.par.fp);
+				step=1;
+			}else{
+				perror("FICHEIROopen");
+				fclose(self.par.fp);
+				step=0;
+			}
+		}
+	}
+	#ifdef linux
+		self.par.fd=fileno(self.par.fp);
+	#elif _WIN32
+		self.par.fd=_fileno(self.par.fp);
+	#endif
+	if(self.par.fd < 0){
+		perror("FICHEIROopen");
+		printf("errno: %d\n", errno);
+		self.par.errcode=errno;
+	}
 }
+
 /***FICHEIROopen***/
 void FICHEIROopen(const char *filename, const char *permision)
 {
@@ -110,6 +150,12 @@ int FICHEIROclose(void)
 		self.par.fd = 0;
 	    return 0;
 	}
+}
+
+/***FICHEIROgetc***/
+char FICHEIROgetc(void)
+{
+	return getc(self.par.fp);
 }
 
 /***FICHEIROputc***/

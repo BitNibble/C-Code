@@ -25,10 +25,6 @@ int FUNCstrtotok(char* line,char* token[],const char* parser);
 int FUNCgetnum(char* x);
 unsigned int FUNCgetnumv2(char* x);
 int FUNCreadint(int nmin, int nmax);
-unsigned int FUNCpinmatch(unsigned int match, unsigned int pin, unsigned int HL);
-unsigned int FUNClh(unsigned int xi, unsigned int xf);
-unsigned int FUNChl(unsigned int xi, unsigned int xf);
-unsigned int FUNCdiff(unsigned int xi, unsigned int xf);
 char* FUNCprint_binary(unsigned int n_bits, int number);
 unsigned int FUNCdecimal_binary(unsigned int n);
 unsigned int FUNCbinary_decimal(unsigned int n);
@@ -39,9 +35,7 @@ FUNC FUNCenable( void )
 {
 	value=(char*)realloc(value, sizeof(char));
 	*(value)='\0';
-	// struct object
 	FUNC func;
-	//func.value=NULL;
 	func.stringlength=StringLength;
 	func.reverse=Reverse;
 	func.ftoa=FUNCftoa;
@@ -51,10 +45,6 @@ FUNC FUNCenable( void )
 	func.getnum=FUNCgetnum;
 	func.getnumv2=FUNCgetnumv2;
 	func.readint=FUNCreadint;
-	func.pinmatch=FUNCpinmatch;
-	func.lh=FUNClh;
-	func.hl=FUNChl;
-	func.diff=FUNCdiff;
 	func.print_binary=FUNCprint_binary;
 	func.decimal_binary=FUNCdecimal_binary;
 	func.binary_decimal=FUNCbinary_decimal;
@@ -71,6 +61,7 @@ int StringLength (const char string[])
 		++count;
 	return count;
 }
+
 /***Reverse***/
 void Reverse(char s[])
 {
@@ -82,6 +73,7 @@ void Reverse(char s[])
 		s[j] = c;
 	}
 }
+
 /***intinvstr***/
 uint8_t FUNCintinvstr(int32_t n, char* res, uint8_t n_digit)
 {
@@ -91,6 +83,7 @@ uint8_t FUNCintinvstr(int32_t n, char* res, uint8_t n_digit)
 	res[k]='\0';
 	return k;
 }
+
 /***ftoa***/
 char* FUNCftoa(float n, char* res, uint8_t afterpoint)
 {
@@ -119,13 +112,12 @@ char* FUNCftoa(float n, char* res, uint8_t afterpoint)
 	}	
 	return res;
 }
+
 /***fltos***/
 char* FUNCfltos(FILE* stream)
 {
 	int i, block, NBytes;
 	char caracter;
-	//made it a file variable so do not need to free it up all the time except on exitting program.
-	//char* value=NULL;
 	free(value);
 	for(value=NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)); i++){
 		if(i>NBytes-1){
@@ -144,13 +136,12 @@ char* FUNCfltos(FILE* stream)
 	if(i) *(value+i)='\0';
 	return value;
 }
+
 /***ftos***/
 char* FUNCftos(FILE* stream)
 {
 	int i = 0, block = 0, NBytes = 0;
 	char caracter = '\0';
-	//made it a file variable so do not need to free it up all the time except on exiting program.
-	//char* value=NULL;
 	free(value);
 	for(value = NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)) != EOF; i++){
 		if(i>NBytes-1){
@@ -166,15 +157,15 @@ char* FUNCftos(FILE* stream)
 	if(i) *(value+i)='\0';
 	return value;
 }
+
 /***strtotok***/
 int FUNCstrtotok(char* line, char* token[], const char* parser)
 {
-	int i; // strtok simply replaces the parser with '\0' in the input string <line>
-	for (i = 0, token[i] = strtok(line, parser); token[i]!=NULL ; i++, token[i] = strtok(NULL, parser)){ // all cyclic are while condition
-		//printf("%d: %s\n", i, token[i]); //if no data it returns NULL
-	}
+	int i;
+	for (i = 0, token[i] = strtok(line, parser); token[i]!=NULL ; i++, token[i] = strtok(NULL, parser));
 	return i;
 }
+
 /***getnum***/
 int FUNCgetnum(char* x)
 {
@@ -186,6 +177,7 @@ int FUNCgetnum(char* x)
 		num = 0;
 	return num;
 }
+
 /***getnumv2***/
 unsigned int FUNCgetnumv2(char* x)
 {
@@ -207,6 +199,7 @@ unsigned int FUNCgetnumv2(char* x)
 		ret = 0;
 	return ret;
 }
+
 /***readint***/
 int FUNCreadint(int nmin, int nmax)
 {
@@ -222,44 +215,7 @@ int FUNCreadint(int nmin, int nmax)
 	}
 	return num;
 }
-/***pinmatch***/
-unsigned int FUNCpinmatch(unsigned int match, unsigned int pin, unsigned int HL)
-{
-	unsigned int result;
-	result=match&pin;
-	if(HL){
-		if(result==match);
-		else
-			result=0;
-	}else{
-		if(result)
-			result=0;
-		else
-			result=match;
-	}
-	return result;
-}
-/***lh***/
-unsigned int FUNClh(unsigned int xi, unsigned int xf)
-{
-	unsigned int i;
-	i=xf^xi;
-	i&=xf;
-	return i;
-}
-/***hl***/
-unsigned int FUNChl(unsigned int xi, unsigned int xf)
-{
-	unsigned int i;
-	i=xf^xi;
-	i&=xi;
-	return i;
-}
-/***diff***/
-unsigned int FUNCdiff(unsigned int xi, unsigned int xf)
-{
-	return xi^xf;
-}
+
 /***print_binary***/
 char* FUNCprint_binary(unsigned int n_bits, int number)
 {
@@ -269,6 +225,7 @@ char* FUNCprint_binary(unsigned int n_bits, int number)
 	FUNCstr[c]='\0';
 	return FUNCstr;
 }
+
 /***decimal_binary***/
 unsigned int FUNCdecimal_binary(unsigned int n) /*Function to convert decimal to binary*/
 {
@@ -282,6 +239,7 @@ unsigned int FUNCdecimal_binary(unsigned int n) /*Function to convert decimal to
 	}
 	return binary;
 }
+
 /***binary_decimal***/
 unsigned int FUNCbinary_decimal(unsigned int n) /* Function to convert binary to decimal.*/
 {
@@ -295,12 +253,14 @@ unsigned int FUNCbinary_decimal(unsigned int n) /* Function to convert binary to
     }
     return decimal;
 }
+
 /***flip***/
 void FUNCstrflip(char* s)
 {
 	int i,j; char c;
 	for(i=0, j=(strlen(s)-1); i<j ; c=s[i], s[i]=s[j], s[j]=c, i++, j--);
 }
+
 /***print***/
 char* FUNCprint(char *format, ... )
 {

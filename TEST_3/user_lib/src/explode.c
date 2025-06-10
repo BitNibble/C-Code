@@ -12,7 +12,6 @@ Comment:
 #include "explode.h"
 #include <inttypes.h>
 
-EXPLODE_par* EXPLODEpar(EXPLODE_par* par);
 void EXPLODEupdate(EXPLODE_par* par, unsigned int x);
 unsigned int EXPLODEhh(EXPLODE_par* par);
 unsigned int EXPLODEll(EXPLODE_par* par);
@@ -30,15 +29,9 @@ EXPLODE EXPLODEenable( void )
 	setup.par.LH = 0;
 	setup.par.HH = 0;
 	setup.par.LL = 0;
-	setup.parameter=EXPLODEpar;
 	setup.update = EXPLODEupdate;
 	// Control Copy
 	return setup;
-}
-// EXPLODEpar
-EXPLODE_par* EXPLODEpar(EXPLODE_par* par)
-{
-	return par;
 }
 // boot
 void EXPLODEupdate(EXPLODE_par* par, unsigned int x)

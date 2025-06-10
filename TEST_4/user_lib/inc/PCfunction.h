@@ -22,52 +22,36 @@ COMMENT:
 #ifndef _PCFUNCTION_H_
 	#define _PCFUNCTION_H_
 
-// fopen perror fread fwrite feof fseek ferror fclose rewind scanf sscanf getchar scanf fscanf
-#include <stdio.h>
-// calloc free realloc malloc
-#include <stdlib.h>
-// strcpy strcmp strcat memcmp
-#include <string.h>
+#include <stdio.h> // fopen perror fread fwrite feof fseek ferror fclose rewind scanf sscanf getchar scanf fscanf
+#include <stdlib.h> // calloc free realloc malloc
+#include <string.h> // strcpy strcmp strcat memcmp
 #include <stdarg.h>
 #include<inttypes.h>
-// termios tcflush
-//#include <termios.h>
-// nanosleep sleep
-//#include <time.h>
-// tcflsuh read write close
-//#include <unistd.h>
-// perror
-#include <errno.h>
-// open
-//#include <sys/types.h>
+//#include <termios.h> // termios tcflush
+//#include <time.h> // nanosleep sleep
+//#include <unistd.h> // tcflsuh read write close
+#include <errno.h> // perror
+//#include <sys/types.h> // open
 //#include <sys/stat.h>
 //#include <fcntl.h>
 //#include <stdio_ext.h>
 #include <math.h>
 
 struct func{
-	//char *value;
-	/***PROTOTYPES VTABLE***/
 	int (*stringlength)(const char string[]);
 	void (*reverse)(char s[]);
 	char* (*ftoa)(float n, char* res, uint8_t afterpoint);
-	/***/
 	char* (*fltos)(FILE* stream);
 	char* (*ftos)(FILE* stream);
 	int (*strtotok)(char* line,char* token[],const char* parser);
 	int (*getnum)(char* x);
 	unsigned int (*getnumv2)(char* x);
 	int (*readint)(int nmin, int nmax);
-	unsigned int (*pinmatch)(unsigned int match, unsigned int pin, unsigned int HL);
-	unsigned int (*lh)(unsigned int xi, unsigned int xf);
-	unsigned int (*hl)(unsigned int xi, unsigned int xf);
-	unsigned int (*diff)(unsigned int xi, unsigned int xf);
 	char* (*print_binary)(unsigned int n_bits, int number);
 	unsigned int (*decimal_binary)(unsigned int n);
 	unsigned int (*binary_decimal)(unsigned int n);
 	void (*strflip)(char* s);
 	char* (*print)(char *format, ... );
-	//char (*mm74c923_read)(char c);
 };
 typedef struct func FUNC;
 
