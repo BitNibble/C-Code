@@ -62,20 +62,28 @@ void FICHEIROopenp(void)
 				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
-				perror("FICHEIROopen");
-				fclose(self.par.fp);
+				fprintf(stderr, "FICHEIROopen");
 				step=2;
 			}
 		}
 		if(step==2){
-			self.par.fp = fopen(self.par.filename, "w");
+			self.par.fp = fopen(self.par.filename, "a+");
 			if(self.par.fp){
 				fprintf(stderr, "Re-Opening file: %s\n", self.par.filename);
-				fclose(self.par.fp);
-				step=1;
+				FICHEIROclose();
+				step=3;
 			}else{
-				perror("FICHEIROopen");
-				fclose(self.par.fp);
+				fprintf(stderr, "FICHEIROopen");
+				step=0;
+			}
+		}
+		if(step==3){
+			self.par.fp = fopen(self.par.filename, self.par.permission);
+			if(self.par.fp){
+				fprintf(stderr, "Opening file: %s\n", self.par.filename);
+				step=0;
+			}else{
+				fprintf(stderr, "FICHEIROopen");
 				step=0;
 			}
 		}
@@ -105,20 +113,28 @@ void FICHEIROopen(const char *filename, const char *permission)
 				fprintf(stderr, "Opening file: %s\n", self.par.filename);
 				step=0;
 			}else{
-				perror("FICHEIROopen");
-				fclose(self.par.fp);
+				fprintf(stderr, "FICHEIROopen");
 				step=2;
 			}
 		}
 		if(step==2){
-			self.par.fp = fopen(self.par.filename, "w");
+			self.par.fp = fopen(self.par.filename, "a+");
 			if(self.par.fp){
 				fprintf(stderr, "Re-Opening file: %s\n", self.par.filename);
-				fclose(self.par.fp);
-				step=1;
+				FICHEIROclose();
+				step=3;
 			}else{
-				perror("FICHEIROopen");
-				fclose(self.par.fp);
+				fprintf(stderr, "FICHEIROopen");
+				step=0;
+			}
+		}
+		if(step==3){
+			self.par.fp = fopen(self.par.filename, self.par.permission);
+			if(self.par.fp){
+				fprintf(stderr, "Opening file: %s\n", self.par.filename);
+				step=0;
+			}else{
+				fprintf(stderr, "FICHEIROopen");
 				step=0;
 			}
 		}

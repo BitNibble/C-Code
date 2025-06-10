@@ -78,6 +78,7 @@ if(chdir("../example"))
 else 
 {
 	strcpy(file->par.permission, "a+");
+	strcpy(file->par.filename, "log.txt");
 	file->openp();
 	number = read_num();
 	file->printf("-> %d\n", number);
