@@ -49,7 +49,7 @@ typedef struct{
 	void (*open)(const char *filename, const char *permission);
 	int (*close)(void);
 	int (*getc)(void);
-	int (*putch)(int c);
+	int (*putc)(int c);
 	int (*puts)(const char* s);
 	void (*printf)(const char* fmt, ...);
 	size_t (*read)(void *ptr, size_t size, size_t nmemb);

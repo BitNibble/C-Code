@@ -39,7 +39,7 @@ FICHEIRO* FICHEIROenable(void)
 	self.open=FICHEIROopen;
 	self.close=FICHEIROclose;
 	self.getc=FICHEIROgetc;
-	self.putch=FICHEIROputc;
+	self.putc=FICHEIROputc;
 	self.puts=FICHEIROputs;
 	self.printf=FICHEIROprintf;
 	self.read=FICHEIROread;
