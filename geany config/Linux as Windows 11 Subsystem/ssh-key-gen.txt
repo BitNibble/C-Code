@@ -1,0 +1,8 @@
+Steps: (Must be in a directory belonging to the Operating System)
+ssh-keygen -t ed25519 -C "sergio.salazar.santos@gmail.com"
+<ssh$78>
+chmod 400 <ssh-key-name>
+eval "$(ssh-agent -s)"
+
+ssh-add Linux_ed25519
+
