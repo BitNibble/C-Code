@@ -1,10 +1,7 @@
 Columns*zero+zero=zero
 Columns*zero+one=one
 Columns*one+zero=one
-
-
 Columns*one+one=zero
-dgdg
 Columns*zero+Ola=Ola Sergio
 Columns*zero+ola=Ola Sergio
 Columns*Ola Sergio+inic=zero

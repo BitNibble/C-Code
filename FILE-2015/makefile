@@ -61,11 +61,11 @@ clean:
 	@echo "Cleaning build files..."
 ifeq ($(OS),Windows_NT)
 	-del /Q $(WUSERLIBINC)\*.gch 2>nul
-	-del /Q *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT).exe 2>nul
+	-del /Q *.o *.s *.ppj *.tag *.ppx $(PROJECT).exe 2>nul
 	-del /Q $(WUSERLIBSRC)\*.o 2>nul
 	
 else
-rm -vf $(USERLIBINC)/*.gch
-	rm -vf *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT)
+	rm -vf $(USERLIBINC)/*.gch
+	rm -vf *.o *.s *.ppj *.tag *.ppx $(PROJECT)
 	rm -vf $(USERLIBSRC)/*.o
 endif

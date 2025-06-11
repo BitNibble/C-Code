@@ -11,7 +11,7 @@ Comment:
 *************************************************************************/
 #include"PCficheiro.h"
 
-static FICHEIRO self; // Object Variable
+static FICHEIRO self = {0}; // Object Variable
 
 void FICHEIROopenp(void); //inic
 void FICHEIROopen(const char* filename, const char *permission); //inic
@@ -30,12 +30,7 @@ int seekposition(int whence, long offset);
 
 FICHEIRO* FICHEIROenable(void)
 {
-	/***Glocal variables assigning***/
 	errno=0;
-	/***local variables***/
-	memset(&self, 0, sizeof(self));
-	/***Local variables assigning***/
-	//Functions pointers or Vtable to declared functions
 	self.openp=FICHEIROopenp;
 	self.open=FICHEIROopen;
 	self.close=FICHEIROclose;
@@ -98,7 +93,6 @@ void FICHEIROopenp(void)
 	if(self.par.fd < 0){
 		perror("FICHEIROopen");
 		fprintf(stderr, "errno: %d\n", errno);
-		self.par.errcode=errno;
 	}
 }
 
@@ -149,7 +143,6 @@ void FICHEIROopen(const char *filename, const char *permission)
 	if(self.par.fd < 0){
 		perror("FICHEIROopen");
 		fprintf(stderr, "errno: %d\n", errno);
-		self.par.errcode=errno;
 	}
 }
 

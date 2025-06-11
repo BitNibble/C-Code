@@ -32,19 +32,16 @@ COMMENT:
 #define FILENAMESIZE 128
 
 typedef struct{
-	FILE *fp;
-	int fd;
-	int errcode;
-	char filename[FILENAMESIZE];
-	char permission[4];
 	int whence;
     long offset;
+	int fd;
+	char filename[FILENAMESIZE];
+	char permission[4];
+	FILE *fp;
 }FICHEIRO_par;
 
 typedef struct{
-	//Local Variables
 	FICHEIRO_par par;
-	// Function Pointers
 	void (*openp)(void);
 	void (*open)(const char *filename, const char *permission);
 	int (*close)(void);
