@@ -1,6 +1,9 @@
+Columns*zero+zero=zero
+Columns*zero+one=one
+Columns*one+zero=one
+Columns*one+one=zero
 Columns*line+column_x=address_1
-Columns*address_1+column_x=address_2
-Columns*address_2+column_x=address_3
+Columns*address_1_data+column_x=address_2
+Columns*address_2_data+column_x=address_3
+Columns*zero+zero=zero
 
-Columns*line+33
-Columns*line+44

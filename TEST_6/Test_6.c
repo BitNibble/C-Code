@@ -32,13 +32,16 @@
 #define ass (1)
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
-#define STR_SIZE 2048
+#define STR_SIZE 512
 
 static FUNC func;
 FICHEIRO* file;
 char str[STR_SIZE]={0};
+char substr[STR_SIZE]={0};
+char entry[STR_SIZE]={0};
 size_t str_size = STR_SIZE - 1;
 char* token[10];
+char* subtoken[10];
 int read_num(void);
 
 
@@ -54,6 +57,8 @@ strcpy(file->par.permission, "r");
 strcpy(file->par.filename, "lfsm.txt");
 if(chdir("../example")) 
 	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
+file->openp();	
+
 
 while ass
 {
@@ -72,15 +77,22 @@ while ass
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
 
-file->openp();
 
-number = read_num();
+if(file->fgets(str, str_size)) printf("file:%s\n", str);
 
-file->fgets(str, str_size);
+printf("\nEntry : ");
+cmd=func.fltos(stdin);
 
-printf("%s\n", str);
 
-file->close();
+func.strtotok(str,token,"=");
+printf("token[0]:%s\n", token[0]);
+strcpy(substr,token[0]);
+func.strtotok(substr,subtoken,"+");
+snprintf(entry,str_size,"%s+%s",subtoken[0],cmd);
+printf("entry:%s\n", entry);
+
+if(!strcmp(entry,token[0])) printf("OUT: %s\n", token[1]);
+
 
 
 
@@ -93,6 +105,7 @@ file->close();
 /*******************************************************/
 /*******************************************************/
 end:
+	file->close();
 	free(cmd);
 	return 0;
 }
