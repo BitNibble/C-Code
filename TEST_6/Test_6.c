@@ -39,10 +39,12 @@ FICHEIRO* file;
 char str[STR_SIZE]={0};
 char substr[STR_SIZE]={0};
 char entry[STR_SIZE]={0};
+char feedback[STR_SIZE]={0};
 size_t str_size = STR_SIZE - 1;
 char* token[10];
 char* subtoken[10];
 int read_num(void);
+int i;
 
 
 int main(void){
@@ -52,13 +54,12 @@ func = FUNCenable();
 char* cmd = NULL;
 int number;
 (void)number;
+strcpy(feedback,"zero");
 /*****************/
 strcpy(file->par.permission, "r");
 strcpy(file->par.filename, "lfsm.txt");
 if(chdir("../example")) 
 	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
-file->openp();	
-
 
 while ass
 {
@@ -78,23 +79,37 @@ while ass
 /****************************************************************************************************************************/
 
 
-if(file->fgets(str, str_size)) printf("file:%s\n", str);
+file->openp();	
 
 printf("\nEntry : ");
 cmd=func.fltos(stdin);
 
 
-func.strtotok(str,token,"=");
-printf("token[0]:%s\n", token[0]);
-strcpy(substr,token[0]);
-func.strtotok(substr,subtoken,"+");
-snprintf(entry,str_size,"%s+%s",subtoken[0],cmd);
-printf("entry:%s\n", entry);
-
-if(!strcmp(entry,token[0])) printf("OUT: %s\n", token[1]);
 
 
+while(file->fgets(str, str_size)) {
+	for(i=0;*(str+i);i++) if(*(str+i) == '\n') *(str+i)='\0';
+	printf("file:%s.\n", str);
 
+	func.strtotok(str,token,"=");
+	printf("token[0]:%s.\n", token[0]);
+	if(token[0]){
+		strcpy(substr,token[0]);
+		func.strtotok(substr,subtoken,"+");
+		printf("subtoken[0]:%s.\n", subtoken[0]);
+		snprintf(entry,str_size,"Columns*%s+%s",feedback,cmd);
+		printf("entry:%s.\n", entry);
+		if(!strcmp(entry,token[0])){ strcpy(feedback, token[1]); printf("OUT: %s.\n-------\n", feedback); break;}
+	}else{printf("Skip Token.\n");}
+}
+
+if (feof(file->filepointer())) {
+       printf("End of file reached.\n");
+}
+
+file->close();
+
+printf("\n-------------\nOUT: %s.\n-------------\n", feedback);
 
 
 
@@ -105,7 +120,6 @@ if(!strcmp(entry,token[0])) printf("OUT: %s\n", token[1]);
 /*******************************************************/
 /*******************************************************/
 end:
-	file->close();
 	free(cmd);
 	return 0;
 }

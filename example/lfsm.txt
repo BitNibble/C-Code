@@ -1,9 +1,10 @@
 Columns*zero+zero=zero
 Columns*zero+one=one
 Columns*one+zero=one
-Columns*one+one=zero
-Columns*line+column_x=address_1
-Columns*address_1_data+column_x=address_2
-Columns*address_2_data+column_x=address_3
-Columns*zero+zero=zero
 
+
+Columns*one+one=zero
+dgdg
+Columns*zero+Ola=Ola Sergio
+Columns*zero+ola=Ola Sergio
+Columns*Ola Sergio+inic=zero
