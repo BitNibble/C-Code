@@ -17,8 +17,9 @@ void FICHEIROopenp(void); //inic
 void FICHEIROopen(const char* filename, const char *permission); //inic
 int FICHEIROclose(void);
 int FICHEIROgetc(void);
-int FICHEIROputc(int c);
-int FICHEIROputs(const char* s);
+char* FICHEIROfgets(char* buffer, size_t size);
+int FICHEIROfputc(int c);
+int FICHEIROfputs(const char* s);
 void FICHEIROprintf(const char* fmt, ...);
 size_t FICHEIROread(void *ptr, size_t size, size_t nmemb);
 size_t FICHEIROwrite(const void *ptr, size_t size, size_t nmemb);
@@ -39,8 +40,9 @@ FICHEIRO* FICHEIROenable(void)
 	self.open=FICHEIROopen;
 	self.close=FICHEIROclose;
 	self.getc=FICHEIROgetc;
-	self.putc=FICHEIROputc;
-	self.puts=FICHEIROputs;
+	self.fgets=FICHEIROfgets;
+	self.fputc=FICHEIROfputc;
+	self.fputs=FICHEIROfputs;
 	self.printf=FICHEIROprintf;
 	self.read=FICHEIROread;
 	self.write=FICHEIROwrite;
@@ -168,14 +170,19 @@ int FICHEIROgetc(void)
 	return getc(self.par.fp);
 }
 
-/***FICHEIROputc***/
-int FICHEIROputc(int c)
+/***FICHEIROfgets***/
+char* FICHEIROfgets(char* buffer, size_t size)
+{
+	return fgets(buffer, size, self.par.fp);
+}
+/***FICHEIROfputc***/
+int FICHEIROfputc(int c)
 {
 	return fputc(c, self.par.fp);
 }
 
-/***FICHEIROputs***/
-int FICHEIROputs(const char* s)
+/***FICHEIROfputs***/
+int FICHEIROfputs(const char* s)
 {
 	return fputs(s, self.par.fp);
 }

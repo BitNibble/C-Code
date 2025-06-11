@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
 	/***************************/
 	FICHEIRO* f=FICHEIROenable();
 	f->open("file.txt", "a+");
-	f->putc('A');
-	f->puts(" qualquer coisa\n");
+	f->fputc('A');
+	f->fputs(" qualquer coisa\n");
 	f->close();
 	printf("lfsmdata size: %lld\n",sizeof(LFSMDATA));
 /********************************************************/

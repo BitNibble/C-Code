@@ -11,14 +11,16 @@ CC = gcc
 CXX = g++
 AS = as
 
-CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
-##CFLAGS = -g -Wall -Wextra -Werror -I. -I./user_lib/inc/
+CFLAGS = -g -Wall -Wextra -Werror -I. -I./user_lib/inc/
 LDFLAGS = -lm
 
 PROJECT = out
 
+USERLIBINC = ./user_lib/inc
 USERLIBSRC = ./user_lib/src
+WUSERLIBINC = user_lib\inc
 WUSERLIBSRC = user_lib\src
+
 
 CFILES = $(wildcard *.c $(USERLIBSRC)/*.c)
 OFILES = $(CFILES:.c=.o)
@@ -58,9 +60,12 @@ clean:
 ## Detect OS and set RM command accordingly
 	@echo "Cleaning build files..."
 ifeq ($(OS),Windows_NT)
+	-del /Q $(WUSERLIBINC)\*.gch 2>nul
 	-del /Q *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT).exe 2>nul
 	-del /Q $(WUSERLIBSRC)\*.o 2>nul
+	
 else
+rm -vf $(USERLIBINC)/*.gch
 	rm -vf *.o *.s *.ppj *.tag *.ppx *.txt $(PROJECT)
 	rm -vf $(USERLIBSRC)/*.o
 endif

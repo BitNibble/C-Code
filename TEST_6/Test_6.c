@@ -32,30 +32,28 @@
 #define ass (1)
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
-#define STR_SIZE 256
+#define STR_SIZE 2048
 
 static FUNC func;
 FICHEIRO* file;
-char str[STR_SIZE];
+char str[STR_SIZE]={0};
 size_t str_size = STR_SIZE - 1;
 char* token[10];
 int read_num(void);
 
 
-int main(int argc, char *argv[]){
+int main(void){
 file = FICHEIROenable();
 (void)file;
-strcpy(file->par.filename, "log.txt");
-strcpy(file->par.permission, "w");
-file->openp();
-file->printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
-file->close();
-
 func = FUNCenable();
 char* cmd = NULL;
 int number;
 (void)number;
 /*****************/
+strcpy(file->par.permission, "r");
+strcpy(file->par.filename, "lfsm.txt");
+if(chdir("../example")) 
+	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
 
 while ass
 {
@@ -74,32 +72,18 @@ while ass
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
 
-if(chdir("../example")) 
-	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
-else 
-{
-	strcpy(file->par.permission, "a+");
-	strcpy(file->par.filename, "log.txt");
-	file->openp();
-	number = read_num();
-	file->printf("-> %d\n", number);
-	file->close();
-
-}
-strcpy(file->par.permission, "r");
-strcpy(file->par.filename, "cvs.txt");
 file->openp();
-file->read(str, sizeof(char), str_size);
-printf("\nstring:\n %s\n------\n", str);
-func.strtotok(str,token,"\n");
-printf("\ntoken[0]:\n %s\n------\n", token[0]);
-printf("\ntoken[1]:\n %s\n------\n", token[1]);
-printf("\ntoken[2]:\n %s\n------\n", token[2]);
-printf("\ntoken[3]:\n %s\n------\n", token[3]);
-printf("\ntoken[4]:\n %s\n------\n", token[4]);
 
+number = read_num();
+
+file->fgets(str, str_size);
+
+printf("%s\n", str);
 
 file->close();
+
+
+
 
 
 /****************************************************************************************************************************/

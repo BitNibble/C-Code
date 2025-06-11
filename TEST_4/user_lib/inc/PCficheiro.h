@@ -49,8 +49,9 @@ typedef struct{
 	void (*open)(const char *filename, const char *permission);
 	int (*close)(void);
 	int (*getc)(void);
-	int (*putc)(int c);
-	int (*puts)(const char* s);
+	char* (*fgets)(char* buffer, size_t size);
+	int (*fputc)(int c);
+	int (*fputs)(const char* s);
 	void (*printf)(const char* fmt, ...);
 	size_t (*read)(void *ptr, size_t size, size_t nmemb);
 	size_t (*write)(const void *ptr, size_t size, size_t nmemb);

@@ -101,11 +101,11 @@ f->close();
 
 // open testing object functionality
 f->open("another.txt", "r+"); //rewind only works in r+
-f->puts("bla bla bla bla bla !!!\n");
-f->puts("bla bla bla bla bla !!!\n");
-f->puts("ua ua ua ua ua ua u !!!\n");
+f->fputs("bla bla bla bla bla !!!\n");
+f->fputs("bla bla bla bla bla !!!\n");
+f->fputs("ua ua ua ua ua ua u !!!\n");
 f->rewind();
-f->puts("ble ble ble ble ble !!!\n");
+f->fputs("ble ble ble ble ble !!!\n");
 f->close();
 
 
@@ -166,7 +166,7 @@ while(ONE){
 		strcat(tmp, ptr);
 		strcat(tmp, "\n");
 		printf("ftoa---> %s\n", tmp);
-		f->puts(tmp);
+		f->fputs(tmp);
 		f->close();
 		state=0;
 	}
