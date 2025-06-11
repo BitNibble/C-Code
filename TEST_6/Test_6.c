@@ -22,7 +22,6 @@
 #include <time.h>
 //#include <assert.h>
 #include <unistd.h> // chdir 
-#include <windows.h>
 #include "PCfunction.h"
 #include "PCficheiro.h"
 #include "explode.h"
