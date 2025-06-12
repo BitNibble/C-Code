@@ -32,14 +32,16 @@
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define STR_SIZE 512
+#define SUBSTR_SIZE 64
 
 static FUNC func;
 FICHEIRO* file;
 char str[STR_SIZE]={0};
-char substr[STR_SIZE]={0};
+char substr[SUBSTR_SIZE]={0};
 char entry[STR_SIZE]={0};
-char feedback[STR_SIZE]={0};
-size_t str_size = STR_SIZE - 1;
+char feedback[SUBSTR_SIZE]={0};
+const size_t str_size = STR_SIZE - 1;
+const size_t substr_size = SUBSTR_SIZE - 1;
 char* token[10];
 char* subtoken[10];
 int read_num(void);
@@ -80,22 +82,23 @@ while ass
 
 file->openp();	
 
-printf("\nEntry : ");
+printf("Entry : ");
 cmd=func.fltos(stdin);
 
 while(file->fgets(str, str_size)) {
 	for(i=0;*(str+i);i++) if(*(str+i) == '\n') *(str+i)='\0';
-	printf("file:%s.\n", str);
+	printf("file:%s\n", str);
 
 	func.strtotok(str,token,"=");
-	printf("token[0]:%s.\n", token[0]);
+	printf("token[0]:%s\n", token[0]);
 	if(token[0]){
 		strcpy(substr,token[0]);
 		func.strtotok(substr,subtoken,"+");
-		printf("subtoken[0]:%s.\n", subtoken[0]);
-		snprintf(entry,str_size,"Columns*%s+%s",feedback,cmd);
-		printf("entry:%s.\n", entry);
-		if(!strcmp(entry,token[0])){ strcpy(feedback, token[1]); printf("OUT: %s.\n-------\n", feedback); break;}
+		printf("subtoken[0]:%s\n", subtoken[0]);
+		if(snprintf(entry, str_size, "Columns*%s+%s", feedback, cmd) > 0) {
+			printf("entry:%s\n", entry);
+			if(!strcmp(entry,token[0])){ strcpy(feedback, token[1]); printf("OUT: %s\n-------\n", feedback); break;}
+		}
 	}else{printf("Skip Token.\n");}
 }
 
@@ -105,7 +108,7 @@ if (feof(file->filepointer())) {
 
 file->close();
 
-printf("\n-------------\nOUT: %s.\n-------------\n", feedback);
+printf("\n-------------\n OUT: %s.\n-------------\n", feedback);
 
 if(!strcmp(cmd,"restart")) strcpy(feedback,"zero");
 

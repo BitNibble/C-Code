@@ -25,3 +25,9 @@ pacman -S make
 pacman -S mingw-w64-ucrt-x86_64-gcc
 gcc --version
 pacman -S man-db
+
+/******/
+sudo apt-get install build-essential
+apt-get -y install make
+sudo apt-get update
+sudo apt-get -y install make
