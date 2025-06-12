@@ -47,7 +47,7 @@ $(PROJECT): $(OFILES)
 
 ## Run the program
 run: $(PROJECT)
-	@echo "Running Program"
+	@echo "Running Program $<"
 ifeq ($(OS),Windows_NT)
 	@$(PROJECT)
 else

@@ -45,7 +45,7 @@ const size_t str_size = STR_SIZE - 1;
 const size_t substr_size = SUBSTR_SIZE - 1;
 char* token[6];
 char* subtoken[6];
-int i;
+void rmcrnl(char* str);
 
 int main(void){
 file = FICHEIROenable();
@@ -60,7 +60,7 @@ strcpy(file->par.permission, "r");
 strcpy(file->par.filename, "lfsm.txt");
 if(chdir("../example")) 
 	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
-printf("--------------------\nProgram START\n--------------------\n");
+printf("------------------\nProgram START\n------------------\n");
 while ass
 {
 	printf("Enter i Data : ");
@@ -79,14 +79,12 @@ while ass
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
 
-file->openp();	
-
+file->openp();
 printf("Entry : ");
 cmd=func.fltos(stdin);
-
 while(file->fgets(str, str_size)) {
-	str[strcspn(str, "\r\n")] = 0;
-	printf("file:%s\n", str);
+	rmcrnl(str);
+	printf("file: %s\n", str);
 	func.strtotok(str,token,"=");
 	printf("\ttoken[0]:%s\n", token[0]);
 	if(token[0]){
@@ -107,11 +105,9 @@ while(file->fgets(str, str_size)) {
 		}
 	}else{printf("Skip Token\n");}
 }
-
 if (feof(file->filepointer())) {
        printf("End of file reached.\n");
 }
-
 file->close();
 
 printf("\n-------------\n LOG-OUT: %s\n-------------\n", logic);
@@ -128,9 +124,18 @@ memset(logic, 0, SUBSTR_SIZE);
 /*******************************************************/
 end:
 	free(cmd);
-	printf("--------------------\nProgram END\n--------------------\n");
+	printf("------------------\nProgram END\n------------------\n");
 	return 0;
 }
 /****************************************************************************************************************************/
 /***EOF***/
+void rmcrnl(char* str)
+{
+	int i; int stop;
+	for(i=strlen(str), stop=i-3; i > stop ; i--) {
+		if(*(str+i) == '\r' || *(str+i) == '\n') {
+			*(str+i)='\0';
+		}
+	}
+}
 
