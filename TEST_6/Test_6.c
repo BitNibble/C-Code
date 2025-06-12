@@ -1,6 +1,6 @@
 /********************************************************
 * Research Environment
-* Test_5.c
+* Test_6.c
 * Nome: 
 *	sergio santos
 * Contacto: 
@@ -93,11 +93,9 @@ while(file->fgets(str, str_size)) {
 	printf("token[0]:%s\n", token[0]);
 	if(token[0]){
 		strcpy(substr,token[0]);
-		func.strtotok(substr,subtoken,"+");
-		printf("subtoken[0]:%s\n", subtoken[0]);
 		if(snprintf(entry, str_size, "Columns*%s+%s", feedback, cmd) > 0) {
 			printf("entry:%s\n", entry);
-			if(!strcmp(entry,token[0])){ strcpy(feedback, token[1]); printf("OUT: %s\n-------\n", feedback); break;}
+			if(!strcmp(entry, substr)){ strcpy(feedback, token[1]); printf("OUT: %s\n-------\n", feedback); break;}
 		}
 	}else{printf("Skip Token.\n");}
 }
