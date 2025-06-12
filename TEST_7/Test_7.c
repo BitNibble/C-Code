@@ -37,12 +37,13 @@
 static FUNC func;
 FICHEIRO* file;
 char str[STR_SIZE]={0};
-char SEQ[STR_SIZE]={0};
 char LOG[STR_SIZE]={0};
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 const size_t str_size = STR_SIZE - 1;
 const size_t substr_size = SUBSTR_SIZE - 1;
+const char* seq = "seq";
+
 char* token[4];
 void rmcrnl(char* str);
 
@@ -77,9 +78,9 @@ int main(void) {
 						strcpy(logic, token[1]);
 						//printf("LOG-out: ----> %s\n", logic); 
 					}
-					if(snprintf(SEQ, str_size, "seq*%s+%s", feedback, cmd) > 0) {
+					if(snprintf(LOG, str_size, "%s*%s+%s",seq ,feedback, cmd) > 0) {
 						//printf("\tsequence: %s\n", SEQ);
-						if(!strcmp(SEQ, token[0])){
+						if(!strcmp(LOG, token[0])){
 							strcpy(feedback, token[1]);
 							//printf("SEQ-out ----> %s\n", feedback); 
 							break;
@@ -150,5 +151,20 @@ void rmcrnl(char* str)
 		}
 	}
 }
+/*
+void lfsm( char* search, const char* seq_name, unsigned int buff_size, FILE* fp, char* logic, char* feedback )
+{
+	char str[buff_size]={0};
+	char LOG[buff_size]={0};
+	const size_t BUFF_SIZE = buff_size - 1;
+	char* token[4];
+	
+	
+	
+	
+	
+	
+}
+*/
 /***EOF***/
 
