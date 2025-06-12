@@ -37,14 +37,14 @@
 static FUNC func;
 FICHEIRO* file;
 char str[STR_SIZE]={0};
-char substr[SUBSTR_SIZE]={0};
-char entry[STR_SIZE]={0};
+char SEQ[STR_SIZE]={0};
+char LOG[STR_SIZE]={0};
+char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 const size_t str_size = STR_SIZE - 1;
 const size_t substr_size = SUBSTR_SIZE - 1;
-char* token[10];
-char* subtoken[10];
-int read_num(void);
+char* token[6];
+char* subtoken[6];
 int i;
 
 int main(void){
@@ -54,13 +54,13 @@ func = FUNCenable();
 char* cmd = NULL;
 int number;
 (void)number;
-strcpy(feedback,"zero");
+strcpy(feedback, "zero");
 /*****************/
 strcpy(file->par.permission, "r");
 strcpy(file->par.filename, "lfsm.txt");
 if(chdir("../example")) 
 	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
-printf("--------------------\nProgram Start\n--------------------\n");
+printf("--------------------\nProgram START\n--------------------\n");
 while ass
 {
 	printf("Enter i Data : ");
@@ -79,26 +79,30 @@ while ass
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
 
-
 file->openp();	
 
 printf("Entry : ");
 cmd=func.fltos(stdin);
 
 while(file->fgets(str, str_size)) {
-	for(i=0;*(str+i);i++) if(*(str+i) == '\n' || *(str+i) == '\r') *(str+i)='\0';
+	str[strcspn(str, "\r\n")] = 0;
 	printf("file:%s\n", str);
 	func.strtotok(str,token,"=");
-	printf("token[0]:%s\n", token[0]);
+	printf("\ttoken[0]:%s\n", token[0]);
 	if(token[0]){
-		strcpy(substr,token[0]);
-		memset(entry, 0, str_size);
-		if(snprintf(entry, str_size, "Columns*%s+%s", feedback, cmd) > 0) {
-			printf("ENTRY: %s\n", entry);
-			if(!strcmp(entry, substr)){
-				strcpy(feedback, token[1]);
-				printf("OUT: %s\n-------------\n", feedback); 
-				break;
+		if(snprintf(LOG, str_size, "log+%s", cmd) > 0) {
+			printf("\tlogic: %s\n", LOG);
+			if(!strcmp(LOG, token[0])){
+				strcpy(logic, token[1]);
+				printf("LOG-out: ----> %s\n", logic); 
+			}
+			if(snprintf(SEQ, str_size, "seq*%s+%s", feedback, cmd) > 0) {
+				printf("\tsequence: %s\n", SEQ);
+				if(!strcmp(SEQ, token[0])){
+					strcpy(feedback, token[1]);
+					printf("SEQ-out ----> %s\n", feedback); 
+					break;
+				}
 			}
 		}
 	}else{printf("Skip Token\n");}
@@ -110,10 +114,12 @@ if (feof(file->filepointer())) {
 
 file->close();
 
-printf("\n-------------\n OUT: %s\n-------------\n", feedback);
+printf("\n-------------\n LOG-OUT: %s\n-------------\n", logic);
+printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
 
-if(!strcmp(cmd,"restart")) strcpy(feedback,"zero");
+if(!strcmp(logic,"restart")) strcpy(feedback,"zero");
 
+memset(logic, 0, SUBSTR_SIZE);
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
 	}
@@ -122,22 +128,9 @@ if(!strcmp(cmd,"restart")) strcpy(feedback,"zero");
 /*******************************************************/
 end:
 	free(cmd);
+	printf("--------------------\nProgram END\n--------------------\n");
 	return 0;
 }
 /****************************************************************************************************************************/
 /***EOF***/
-int read_num(void)
-{
-	char c; int number;
-	printf("Enter a Number:\n");
-	if(scanf("%d",&number)){
-		printf("Number: %d\n", number);
-		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
-	}else{
-		perror("scanf");
-		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
-		number=read_num();
-	}
-	return number;
-}
 
