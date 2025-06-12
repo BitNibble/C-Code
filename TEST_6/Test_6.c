@@ -47,7 +47,6 @@ char* subtoken[10];
 int read_num(void);
 int i;
 
-
 int main(void){
 file = FICHEIROenable();
 (void)file;
@@ -61,12 +60,13 @@ strcpy(file->par.permission, "r");
 strcpy(file->par.filename, "lfsm.txt");
 if(chdir("../example")) 
 	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
-
+printf("--------------------\nProgram Start\n--------------------\n");
 while ass
 {
-	printf("\nEnter i Data : ");
+	printf("Enter i Data : ");
 	cmd=func.fltos(stdin);
 	if(!strcmp(cmd,"quit") || !strcmp(cmd,"q")){
+		printf("Exiting Program\n");
 		goto end;
 	}
 	if(!strcmp(cmd,"help") || !strcmp(cmd,"h")){
@@ -86,18 +86,22 @@ printf("Entry : ");
 cmd=func.fltos(stdin);
 
 while(file->fgets(str, str_size)) {
-	for(i=0;*(str+i);i++) if(*(str+i) == '\n') *(str+i)='\0';
+	for(i=0;*(str+i);i++) if(*(str+i) == '\n' || *(str+i) == '\r') *(str+i)='\0';
 	printf("file:%s\n", str);
-
 	func.strtotok(str,token,"=");
 	printf("token[0]:%s\n", token[0]);
 	if(token[0]){
 		strcpy(substr,token[0]);
+		memset(entry, 0, str_size);
 		if(snprintf(entry, str_size, "Columns*%s+%s", feedback, cmd) > 0) {
-			printf("entry:%s\n", entry);
-			if(!strcmp(entry, substr)){ strcpy(feedback, token[1]); printf("OUT: %s\n-------\n", feedback); break;}
+			printf("ENTRY: %s\n", entry);
+			if(!strcmp(entry, substr)){
+				strcpy(feedback, token[1]);
+				printf("OUT: %s\n-------------\n", feedback); 
+				break;
+			}
 		}
-	}else{printf("Skip Token.\n");}
+	}else{printf("Skip Token\n");}
 }
 
 if (feof(file->filepointer())) {
@@ -106,7 +110,7 @@ if (feof(file->filepointer())) {
 
 file->close();
 
-printf("\n-------------\n OUT: %s.\n-------------\n", feedback);
+printf("\n-------------\n OUT: %s\n-------------\n", feedback);
 
 if(!strcmp(cmd,"restart")) strcpy(feedback,"zero");
 

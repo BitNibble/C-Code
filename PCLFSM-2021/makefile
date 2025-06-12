@@ -11,8 +11,8 @@ CC = gcc
 CXX = g++
 AS = as
 
-CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
-LDFLAGS = -lm
+CFLAGS = -g -Wall -Wextra -m64 -I. -I./user_lib/inc/
+LDFLAGS = -m64 -lm
 
 PROJECT = out.exe
 
@@ -20,7 +20,6 @@ USERLIBINC = ./user_lib/inc
 USERLIBSRC = ./user_lib/src
 WUSERLIBINC = user_lib\inc
 WUSERLIBSRC = user_lib\src
-
 
 CFILES = $(wildcard *.c $(USERLIBSRC)/*.c)
 OFILES = $(CFILES:.c=.o)
@@ -52,13 +51,13 @@ run: $(PROJECT)
 ifeq ($(OS),Windows_NT)
 	@$(PROJECT)
 else
+	@chmod 755 $(PROJECT)
 	@./$(PROJECT)
 endif
 ## Print file info
 message:
 	@echo "CFILES: $(CFILES)"
 	@echo "OFILES: $(OFILES)"
-
 ## Clean artifacts
 clean:
 	@echo "Cleaning build files..."
