@@ -59,43 +59,42 @@ int main(void) {
 	strcpy(file->par.filename, "lfsm.txt");
 	if(chdir("../example")) 
 		fprintf(stderr, "chdir failed: %s\n", strerror(errno));
-	printf("------------------\nProgram START\n------------------\n");
+	printf("\n------------------\nProgram START\n------------------\n");
 	while ass {
 		file->openp();
-		printf("Entry : ");
+		printf("\n Entry : ");
 		cmd=func.fltos(stdin);
 		memset(logic, 0, SUBSTR_SIZE);
 		while(file->fgets(str, str_size)) {
 			rmcrnl(str);
-			printf("file: %s\n", str);
+			//printf("file: %s\n", str);
 			func.strtotok(str,token,"=");
-			printf("\ttoken[0]:%s\n", token[0]);
+			//printf("\ttoken[0]:%s\n", token[0]);
 			if(token[0]){
 				if(snprintf(LOG, str_size, "log+%s", cmd) > 0) {
-					printf("\tlogic: %s\n", LOG);
+					//printf("\tlogic: %s\n", LOG);
 					if(!strcmp(LOG, token[0])){
 						strcpy(logic, token[1]);
-						printf("LOG-out: ----> %s\n", logic); 
+						//printf("LOG-out: ----> %s\n", logic); 
 					}
 					if(snprintf(SEQ, str_size, "seq*%s+%s", feedback, cmd) > 0) {
-						printf("\tsequence: %s\n", SEQ);
+						//printf("\tsequence: %s\n", SEQ);
 						if(!strcmp(SEQ, token[0])){
 							strcpy(feedback, token[1]);
-							printf("SEQ-out ----> %s\n", feedback); 
+							//printf("SEQ-out ----> %s\n", feedback); 
 							break;
 						}
 					}
 				}
-			}else {printf("Skip Token\n");}
+			}else {
+				//printf("Skip Token\n");
+			}
 		}
 		if (feof(file->filepointer())) {
-			   printf("End of file reached.\n");
+			   //printf("End of file reached.\n");
 		}
 		file->close();
 
-		printf("\n-------------\n LOG-OUT: %s\n-------------\n", logic);
-		printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
-		
 		if(!strcmp(cmd,"restart") || !strcmp(cmd,"r")) {
 			strcpy(feedback, "zero");
 		}
@@ -131,12 +130,14 @@ int main(void) {
 
 		/**************************************************************/
 		/**************************************************************/
+		printf("\n-------------\n LOG-OUT: %s\n-------------", logic);
+		printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
 	}
 /**********************************************************************/
 /**********************************************************************/
 end:
 	free(cmd);
-	printf("------------------\nProgram END\n------------------\n");
+	printf("\n------------------\nProgram END\n------------------\n");
 	return 0;
 }
 /**********************************************************************/
