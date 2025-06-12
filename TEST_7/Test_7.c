@@ -43,8 +43,7 @@ char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 const size_t str_size = STR_SIZE - 1;
 const size_t substr_size = SUBSTR_SIZE - 1;
-char* token[6];
-char* subtoken[6];
+char* token[4];
 void rmcrnl(char* str);
 
 int main(void) {
@@ -141,7 +140,6 @@ end:
 	return 0;
 }
 /**********************************************************************/
-/***EOF***/
 void rmcrnl(char* str)
 {
 	int i; int stop;
