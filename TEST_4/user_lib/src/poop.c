@@ -31,9 +31,8 @@ void fplfsm( const char* seq_name, const char* search, const size_t buff_size, F
 	char LOG[buff_size];
 	const size_t BUFF_SIZE = buff_size - 1;
 	char* token[4];
-	int logic_size = sizeof(logic);
 	file->openp();
-	memset(logic, 0, logic_size);
+	logic[0]='\0';
 	while(file->fgets(line, BUFF_SIZE)) {
 		rmcrnl(line);
 		//printf("file: %s\n", line);
@@ -43,15 +42,19 @@ void fplfsm( const char* seq_name, const char* search, const size_t buff_size, F
 			if(snprintf(LOG, BUFF_SIZE, "log+%s", search) > 0) {
 				//printf("\tlogic: %s\n", LOG);
 				if(!strcmp(LOG, token[0])){
-					strcpy(logic, token[1]);
-					printf("LOG-out: ----> %s\n", logic); 
+					if(token[1]) {
+						strcpy(logic, token[1]);
+						printf("LOG-out: ----> %s\n", logic);
+					}
 				}
 				if(snprintf(LOG, BUFF_SIZE, "%s*%s+%s",seq_name ,feedback, search) > 0) {
 					//printf("\tsequence: %s\n", LOG);
 					if(!strcmp(LOG, token[0])){
-						strcpy(feedback, token[1]);
-						printf("SEQ-out ----> %s\n", feedback); 
-						break;
+						if(token[1]) {
+							strcpy(feedback, token[1]);
+							printf("SEQ-out ----> %s\n", feedback); 
+							break;
+						}
 					}
 				}else{perror("LOG");}
 			}else{perror("LOG");}

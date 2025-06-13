@@ -22,13 +22,7 @@ EXPLODE EXPLODEenable( void )
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	EXPLODE setup; // Dummy Setup
-	setup.par.XI = 0;
-	setup.par.XF = 0;
-	setup.par.HL = 0;
-	setup.par.LH = 0;
-	setup.par.HH = 0;
-	setup.par.LL = 0;
+	EXPLODE setup = {0}; // Dummy Setup
 	setup.update = EXPLODEupdate;
 	// Control Copy
 	return setup;
