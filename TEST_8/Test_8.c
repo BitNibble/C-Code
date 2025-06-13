@@ -41,7 +41,7 @@ char feedback[SUBSTR_SIZE]={0};
 
 int strtotok(char* line, char* token[], const char* parser);
 void rmcrnl(char* str);
-void fplfsm( const char* seq_name, char* cmd, size_t buff_size, FICHEIRO* file, char* logic, char* feedback );
+void fplfsm( const char* seq_name, char* search, size_t buff_size, FICHEIRO* file, char* logic, char* feedback );
 
 int main(void) {
 	file = FICHEIROenable();
@@ -51,7 +51,7 @@ int main(void) {
 	strcpy(feedback, "zero");
 	/*****************/
 	strcpy(file->par.permission, "r");
-	strcpy(file->par.filename, "lfsm.txt");
+	strcpy(file->par.filename, "lfsm_1.txt");
 	if(chdir("../example")) 
 		fprintf(stderr, "chdir failed: %s\n", strerror(errno));
 	printf("\n------------------\nProgram START\n------------------\n");
@@ -128,7 +128,7 @@ void rmcrnl(char* str)
 	}
 }
 /***lfsm***/
-void fplfsm( const char* seq_name, char* cmd, const size_t buff_size, FICHEIRO* file, char* logic, char* feedback )
+void fplfsm( const char* seq_name, char* search, const size_t buff_size, FICHEIRO* file, char* logic, char* feedback )
 {
 	char line[buff_size];
 	char LOG[buff_size];
@@ -143,13 +143,13 @@ void fplfsm( const char* seq_name, char* cmd, const size_t buff_size, FICHEIRO* 
 		strtotok(line, token, "=");
 		printf("\ttoken[0]:%s\n", token[0]);
 		if(token[0]){
-			if(snprintf(LOG, BUFF_SIZE, "log+%s", cmd) > 0) {
+			if(snprintf(LOG, BUFF_SIZE, "log+%s", search) > 0) {
 				printf("\tlogic: %s\n", LOG);
 				if(!strcmp(LOG, token[0])){
 					strcpy(logic, token[1]);
 					printf("LOG-out: ----> %s\n", logic); 
 				}
-				if(snprintf(LOG, BUFF_SIZE, "%s*%s+%s",seq_name ,feedback, cmd) > 0) {
+				if(snprintf(LOG, BUFF_SIZE, "%s*%s+%s",seq_name ,feedback, search) > 0) {
 					printf("\tsequence: %s\n", LOG);
 					if(!strcmp(LOG, token[0])){
 						strcpy(feedback, token[1]);
