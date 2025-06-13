@@ -60,14 +60,14 @@ int main(void) {
 		fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
 		
 		
-		if(!strcmp(cmd,"restart") || !strcmp(cmd,"r")) {
+		if(!strcmp(cmd,"restart")) {
 			strcpy(feedback, "zero");
 		}
 		if(!strcmp(cmd,"quit") || !strcmp(cmd,"q")) {
 			printf("Exiting Program\n");
 			goto end;
 		}
-		if(!strcmp(cmd,"help") || !strcmp(cmd,"h")) {
+		if(!strcmp(cmd,"help")) {
 			printf("Possible commands:\n"); 
 			printf("\trestart - r\n"); 
 			printf("\tquit - q\n"); 

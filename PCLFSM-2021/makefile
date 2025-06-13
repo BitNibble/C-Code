@@ -11,8 +11,8 @@ CC = gcc
 CXX = g++
 AS = as
 
-CFLAGS = -g -Wall -Wextra -m64 -I. -I./user_lib/inc/
-LDFLAGS = -m64 -lm
+CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
+LDFLAGS = -lm
 
 PROJECT = out.exe
 
