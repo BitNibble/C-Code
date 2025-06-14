@@ -6,9 +6,9 @@ Software: GCC
 Hardware: OS
 License: Free beer
 ************************************************************************/
-#include "PCficheiro.h"
 #ifndef _POOP_H_
 	#define _POOP_H_
+#include "PCficheiro.h"
 /***strtotok***/
 int strtotok(char* line, char* token[], const char* parser);
 void rmcrnl(char* str);

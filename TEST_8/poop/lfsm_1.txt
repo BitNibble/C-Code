@@ -1,4 +1,5 @@
 log+inic=restart
+log+exit=exit
 seq*+zero=zero
 seq*zero+zero=zero
 seq*zero+one=one

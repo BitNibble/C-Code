@@ -20,12 +20,19 @@
 #include <stdbool.h> // true, false
 #include <math.h>
 #include <time.h>
+#include <errno.h>
+#include <signal.h>
 //#include <assert.h>
-#include <unistd.h> // chdir 
+#ifdef _WIN32
+	#include <process.h> // _spawnl	
+#endif
+#include <unistd.h>  // fork, chdir
+#include "PCficheiro.h"
 #include "PCfunction.h"
 #include "explode.h"
 #include "circbuffer.h"
 #include "poop.h"
+#include "procedures.h"
 /***Definition and Macros***/
 #define sperm ~0
 #define ass (1)
@@ -38,12 +45,15 @@ static FUNC func;
 FICHEIRO* file;
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
+char* cmd = NULL;
+void Ctrl_C_Handler(int sig);
 
 int main(void) {
 	file = FICHEIROenable();
 	(void)file;
 	func = FUNCenable();
-	char* cmd = NULL;
+	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
+	/*****************/
 	strcpy(feedback, "zero");
 	/*****************/
 	strcpy(file->par.permission, "r");
@@ -86,28 +96,26 @@ int main(void) {
 		if(!strcmp(logic,"restart")) {
 			strcpy(feedback, "zero");
 		}
+		if(!strcmp(logic,"exit")) {
+			printf("Exiting Program\n");
+			goto end;
+		}
 		/***/
 		if(!strcmp(logic,"excel")) {
-			system("\"C:\\Program Files\\LibreOffice\\program\\scalc.exe\""); // Launches Excel via cmd.exe
+			launch_excel();
 		}
 		if(!strcmp(logic,"word")) {
-			system("\"C:\\Program Files\\LibreOffice\\program\\swriter.exe\""); // Launches Excel via cmd.exe
+			launch_word();
 		}
 		if(!strcmp(logic,"powerpoint")) {
-			system("\"C:\\Program Files\\LibreOffice\\program\\simpress.exe\""); // Launches Excel via cmd.exe
+			launch_powerpoint();
 		}
 		if(!strcmp(logic,"flowchart")) {
-			system("\"C:\\Program Files\\LibreOffice\\program\\sdraw.exe\""); // Launches Excel via cmd.exe
+			launch_flowchart();
 		}
 		if(!strcmp(logic,"formula")) {
-			system("\"C:\\Program Files\\LibreOffice\\program\\smath.exe\""); // Launches Excel via cmd.exe
+			launch_formula();
 		}
-
-
-
-
-
-
 
 
 		/**************************************************************/
@@ -124,19 +132,12 @@ end:
 }
 /***EOF***/
 
-/*****
-system("ls -l /");
-/bin/sh -c "ls -l /"
-system("bash -c 'some-bash-command'");
-system("powershell -Command \"Get-Process\"");
-cmd.exe /c dir
-system("dir");
-system("start \"\" \"notepad.exe\" \"C:\\test.txt\"");
-system("\"C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE\"");
-system("start winword \"C:\\Users\\Salazar\\Documents\\example.docx\"");
-system("start excel"); // Launches Excel via cmd.exe
-system("wsl bash -c \"ls -l /\""); // Calls WSL bash
-system("dir"); // Equivalent to 'ls' on Unix
+// Handler for SIGINT, triggered by 
+// Ctrl-C at the keyboard 
+void Ctrl_C_Handler(int sig)  { 
+    printf("Caught signal %d\n", sig);
+    free(cmd);
+	printf("\n------------------\nProgram END\n------------------\n");
+    exit(sig);
+}
 
-
-******/
