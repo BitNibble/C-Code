@@ -71,7 +71,7 @@ void fplfsm( const char* seq_name, const char* search, const size_t line_size, F
 /***logsnprintf***/
 char* logsnprintf( const char* search )
 {
-	static char LOG[BUFF_SIZE];
+	static char LOG[BUFF_SIZE]={0};
 	const size_t buff_size = BUFF_SIZE - 1;
 	if(snprintf(LOG, buff_size, "log+%s", search) > 0) {
 		printf("\tlogic: %s\n", LOG);
@@ -81,14 +81,14 @@ char* logsnprintf( const char* search )
 /***seqsnprintf***/
 char* seqsnprintf( const char* seq_name, const char* search, const char* feedback )
 {
-	static char SEQ[BUFF_SIZE];
+	static char SEQ[BUFF_SIZE]={0};
 	const size_t buff_size = BUFF_SIZE - 1;
 	if(snprintf(SEQ, buff_size, "%s*%s+%s", seq_name, feedback, search) > 0) {
 		printf("\tsequence: %s\n", SEQ);
 	}else{perror("SEQ");}
 	return SEQ;
 }
-/***loglfsm***/
+/***pooplfsm***/
 void pooplfsm( const char* poopin, const char* parser, const size_t line_size, FICHEIRO* file, char* poopout )
 {
 	char line[line_size];
