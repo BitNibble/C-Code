@@ -126,7 +126,7 @@ static POOP setup = {
     .fplfsm = _fplfsm,
     .logsnprintf = _logsnprintf,
     .seqsnprintf = _seqsnprintf,
-    .pooplfsm = _pooplfsm,
+    .pooplfsm = _pooplfsm
 };
 
 POOP* POOPenable(void)

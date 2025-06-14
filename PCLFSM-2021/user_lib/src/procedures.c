@@ -17,8 +17,6 @@ License:  Free beer
 	#include <unistd.h>
 #endif
 
-static PROCEDURES setup;
-
 /***internal_procs***/
 int _change_directory(const char* dirname) {
 	#ifdef _WIN32
@@ -155,16 +153,18 @@ int _launch_formula(void) {
 	return 0;
 }
 
+static PROCEDURES setup = {
+	.change_directory = _change_directory,
+	.launch_excel     = _launch_excel,
+	.launch_word      = _launch_word,
+	.launch_powerpoint= _launch_powerpoint,
+	.launch_flowchart = _launch_flowchart,
+	.launch_formula   = _launch_formula
+};
+
 /***interface***/
 PROCEDURES* PROCEDURESenable(void)
 {
-	setup.change_directory = _change_directory;
-	setup.launch_excel     = _launch_excel;
-	setup.launch_word      = _launch_word;
-	setup.launch_powerpoint= _launch_powerpoint;
-	setup.launch_flowchart = _launch_flowchart;
-	setup.launch_formula   = _launch_formula;
-		
 	return &setup;
 }
 

@@ -41,7 +41,7 @@
 #define STR_SIZE 512
 #define SUBSTR_SIZE 64
 
-static FUNC func;
+FUNC func;
 FICHEIRO* file;
 PROCEDURES* procedure;
 POOP* poop;
@@ -69,10 +69,10 @@ int main(void) {
 		cmd=func.fltos(stdin);
 		
 		
-		//fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
+		//poop->fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
 		poop->pooplfsm( poop->seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, file, feedback);
 		
-		//fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
+		//poop->fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
 		poop->pooplfsm( poop->seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, file, feedback);
 		
 		logic[0]='\0'; // oneshot
