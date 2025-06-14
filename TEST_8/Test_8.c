@@ -43,6 +43,8 @@
 
 static FUNC func;
 FICHEIRO* file;
+PROCEDURES* procedure;
+POOP* poop;
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 char* cmd = NULL;
@@ -50,6 +52,8 @@ void Ctrl_C_Handler(int sig);
 
 int main(void) {
 	file = FICHEIROenable();
+	procedure = PROCEDURESenable();
+	poop = POOPenable();
 	(void)file;
 	func = FUNCenable();
 	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
@@ -58,7 +62,7 @@ int main(void) {
 	/*****************/
 	strcpy(file->par.permission, "r");
 	strcpy(file->par.filename, "lfsm_1.txt");
-	change_directory("./poop");
+	procedure->change_directory("./poop");
 	printf("\n------------------\nProgram START\n------------------\n");
 	while ass {
 		printf("\n Entry : ");
@@ -66,13 +70,13 @@ int main(void) {
 		
 		
 		//fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
-		pooplfsm( seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, file, feedback);
+		poop->pooplfsm( poop->seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, file, feedback);
 		
 		//fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
-		pooplfsm( seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, file, feedback);
+		poop->pooplfsm( poop->seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, file, feedback);
 		
 		logic[0]='\0'; // oneshot
-		pooplfsm( logsnprintf(cmd), "=", STR_SIZE, file, logic);
+		poop->pooplfsm( poop->logsnprintf(cmd), "=", STR_SIZE, file, logic);
 		
 		
 		if(!strcmp(cmd,"restart")) {
@@ -101,19 +105,19 @@ int main(void) {
 		}
 		/***/
 		if(!strcmp(logic,"excel")) {
-			launch_excel();
+			procedure->launch_excel();
 		}
 		if(!strcmp(logic,"word")) {
-			launch_word();
+			procedure->launch_word();
 		}
 		if(!strcmp(logic,"powerpoint")) {
-			launch_powerpoint();
+			procedure->launch_powerpoint();
 		}
 		if(!strcmp(logic,"flowchart")) {
-			launch_flowchart();
+			procedure->launch_flowchart();
 		}
 		if(!strcmp(logic,"formula")) {
-			launch_formula();
+			procedure->launch_formula();
 		}
 
 
