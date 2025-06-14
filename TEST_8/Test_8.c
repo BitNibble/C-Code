@@ -58,8 +58,7 @@ int main(void) {
 	/*****************/
 	strcpy(file->par.permission, "r");
 	strcpy(file->par.filename, "lfsm_1.txt");
-	if(chdir("./poop"))
-		fprintf(stderr, "chdir: %s\n", strerror(errno));
+	change_directory("./poop");
 	printf("\n------------------\nProgram START\n------------------\n");
 	while ass {
 		printf("\n Entry : ");

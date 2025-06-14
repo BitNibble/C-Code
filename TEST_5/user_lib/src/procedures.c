@@ -8,11 +8,29 @@ License: Free beer
 ************************************************************************/
 #include "procedures.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 #ifdef _WIN32
+	#include <direct.h>
 	#include <process.h> // _spawnl	
 #else
 	#include <unistd.h>  // fork, chdir
 #endif
+/***change_directory***/
+int change_directory(const char* dirname) {
+	#ifdef _WIN32
+		if(_chdir(dirname)) {
+			fprintf(stderr, "_chdir: %s\n", strerror(errno));
+			return 0;
+		}
+	#else
+		if(chdir(dirname)) {
+			fprintf(stderr, "chdir fail: %d\n", errno);
+			return 0;
+		}
+	#endif
+	return -1;
+}
 /***launch_excel***/
 int launch_excel(void) {
 #ifdef _WIN32

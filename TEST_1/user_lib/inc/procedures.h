@@ -9,6 +9,7 @@ License: Free beer
 #ifndef _PROCEDURES_H_
 	#define _PROCEDURES_H_
 #include <stdint.h>
+int change_directory(const char* dirname);
 int launch_excel(void);
 int launch_word(void);
 int launch_powerpoint(void);

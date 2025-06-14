@@ -7,7 +7,6 @@ seq*one+zero=one
 seq*one+one=zero
 seq*zero+Ola=Ola Sergio
 seq*zero+ola=Ola Sergio
-seq_1*Ola Sergio+ola=yep
 log+excel=excel
 log+word=word
 log+powerpoint=powerpoint
