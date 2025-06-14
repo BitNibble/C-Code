@@ -1,4 +1,4 @@
-#!/bin/bash
+#!\\wsl.localhost\Ubuntu-24.04\usr\bin\bash
 #author: sergio manuel salazar dos santos
 #sergio.salazar.santos@gmail.com
 #mobile: 916919898

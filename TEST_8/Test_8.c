@@ -56,8 +56,14 @@ int main(void) {
 		cmd=func.fltos(stdin);
 		
 		
-		fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
-		fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
+		//fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
+		pooplfsm( seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, file, feedback);
+		
+		//fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
+		pooplfsm( seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, file, feedback);
+		
+		logic[0]='\0';
+		pooplfsm( logsnprintf(cmd), "=", STR_SIZE, file, logic);
 		
 		
 		if(!strcmp(cmd,"restart")) {
@@ -107,3 +113,19 @@ end:
 }
 /***EOF***/
 
+/*****
+system("ls -l /");
+/bin/sh -c "ls -l /"
+system("bash -c 'some-bash-command'");
+system("powershell -Command \"Get-Process\"");
+cmd.exe /c dir
+system("dir");
+system("start \"\" \"notepad.exe\" \"C:\\test.txt\"");
+system("\"C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE\"");
+system("start winword \"C:\\Users\\Salazar\\Documents\\example.docx\"");
+system("start excel"); // Launches Excel via cmd.exe
+system("wsl bash -c \"ls -l /\""); // Calls WSL bash
+system("dir"); // Equivalent to 'ls' on Unix
+
+
+******/
