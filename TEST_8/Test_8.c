@@ -62,7 +62,7 @@ int main(void) {
 		//fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
 		pooplfsm( seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, file, feedback);
 		
-		logic[0]='\0';
+		logic[0]='\0'; // oneshot
 		pooplfsm( logsnprintf(cmd), "=", STR_SIZE, file, logic);
 		
 		
@@ -87,10 +87,21 @@ int main(void) {
 			strcpy(feedback, "zero");
 		}
 		/***/
-
-
-
-
+		if(!strcmp(logic,"excel")) {
+			system("\"C:\\Program Files\\LibreOffice\\program\\scalc.exe\""); // Launches Excel via cmd.exe
+		}
+		if(!strcmp(logic,"word")) {
+			system("\"C:\\Program Files\\LibreOffice\\program\\swriter.exe\""); // Launches Excel via cmd.exe
+		}
+		if(!strcmp(logic,"powerpoint")) {
+			system("\"C:\\Program Files\\LibreOffice\\program\\simpress.exe\""); // Launches Excel via cmd.exe
+		}
+		if(!strcmp(logic,"flowchart")) {
+			system("\"C:\\Program Files\\LibreOffice\\program\\sdraw.exe\""); // Launches Excel via cmd.exe
+		}
+		if(!strcmp(logic,"formula")) {
+			system("\"C:\\Program Files\\LibreOffice\\program\\smath.exe\""); // Launches Excel via cmd.exe
+		}
 
 
 
