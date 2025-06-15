@@ -1,0 +1,4 @@
+/mnt/d/C-Code/TEST_8/build/CMakeFiles/usr_lib.dir
+/mnt/d/C-Code/TEST_8/build/CMakeFiles/out.dir
+/mnt/d/C-Code/TEST_8/build/CMakeFiles/edit_cache.dir
+/mnt/d/C-Code/TEST_8/build/CMakeFiles/rebuild_cache.dir

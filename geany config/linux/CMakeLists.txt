@@ -1,7 +1,16 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.28)
+include_directories(usr_lib PUBLIC . ./user_lib/inc/)
 
+
+set(CFLAGS -g -Wall -Wextra -Werror)
+set(LDFLAGS -lm)
 project(out)
+set(SOURCE_FILE Test_8.c)
+set(SOURCE_DIR ./user_lib/src/)
 
-add_executable( out Test_6.c ./user_lib/src/circbuffer.c ./user_lib/src/explode.c ./user_lib/src/PCficheiro.c ./user_lib/src/PCfunction.c ./user_lib/src/PClili.c ./user_lib/inc/explode.h ./user_lib/inc/PCficheiro.h ./user_lib/inc/PCfunction.h ./user_lib/inc/PClili.h )
+add_library(usr_lib ${SOURCE_DIR}circbuffer.c ${SOURCE_DIR}explode.c ${SOURCE_DIR}PCficheiro.c ${SOURCE_DIR}PCfunction.c ${SOURCE_DIR}PClili.c ${SOURCE_DIR}procedures.c ${SOURCE_DIR}poop.c)
 
-target_link_libraries(out PRIVATE m)
+add_executable(${PROJECT_NAME} ${SOURCE_FILE})
+target_link_libraries(${PROJECT_NAME} usr_lib ${CFLAGS} ${LDFLAGS} )
+
+

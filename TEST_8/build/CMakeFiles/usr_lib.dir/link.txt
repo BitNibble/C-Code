@@ -1,0 +1,2 @@
+/usr/bin/ar qc libusr_lib.a CMakeFiles/usr_lib.dir/user_lib/src/circbuffer.c.o CMakeFiles/usr_lib.dir/user_lib/src/explode.c.o CMakeFiles/usr_lib.dir/user_lib/src/PCficheiro.c.o CMakeFiles/usr_lib.dir/user_lib/src/PCfunction.c.o CMakeFiles/usr_lib.dir/user_lib/src/PClili.c.o CMakeFiles/usr_lib.dir/user_lib/src/procedures.c.o CMakeFiles/usr_lib.dir/user_lib/src/poop.c.o
+/usr/bin/ranlib libusr_lib.a
