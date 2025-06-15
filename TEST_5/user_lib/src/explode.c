@@ -1,12 +1,11 @@
 /********************************************************************
 	EXPLODE
-Author: Sergio Santos
-	<sergio.salazar.santos@gmail.com>
-License: GNU General Public License
+Author:   <sergio.salazar.santos@gmail.com>
+License:  GNU General Public License
 Hardware: all
-Date: 16032021
+Date:     16032021
 Comment:
-    Pin Analysis
+
 ********************************************************************/
 /***Library***/
 #include "explode.h"

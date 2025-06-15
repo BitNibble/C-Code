@@ -3,7 +3,7 @@ Title:    poop
 Author:   <sergio.salazar.santos@gmail.com>
 File:     $Id: poop.h$
 Software: GCC
-Hardware: OS
+Hardware: PC
 License:  Free beer
 ************************************************************************/
 #ifndef _POOP_H_

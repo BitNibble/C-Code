@@ -1,19 +1,20 @@
 /**************************************************************************
 Title:    PCFUNCTION
-Author:   Sergio Manuel Santos <sergio.salazar.santos@gmail.com>
+Author:   <sergio.salazar.santos@gmail.com>
 File:     $Id: PCfunction.c, v 0.1 2015/08/01 14:00:00 sergio Exp $
 Software: GCC
 Hardware: PC
-License:  GNU General Public License
-Description:
-	PC emulation
+License:  Free beer
 Comment:
-	Very Stable
+
 *************************************************************************/
 #include "PCfunction.h"
 
-char FUNCstr[256];
-static char *value=NULL; // Object variable
+#define FUNC_STR_SIZE 256
+
+static char FUNCstr[256];
+const size_t func_str_size = (FUNC_STR_SIZE - 1);
+static char *value = NULL; // Object variable
 
 int StringLength (const char string[]);
 void Reverse(char s[]);
@@ -272,7 +273,6 @@ char* FUNCprint(char *format, ... )
 	va_end(aptr);
 	if(ret < 0){
 		return NULL;
-		//FUNCstr[0]='/0';FUNCstr[1]='/0';FUNCstr[2]='/0';FUNCstr[3]='/0';
 	}else
 		return FUNCstr;
 }

@@ -45,6 +45,7 @@ char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 char* cmd = NULL;
 void Ctrl_C_Handler(int sig);
+void Hang_Up_Handler(int sig);
 
 int main(void) {
 	file = FICHEIROenable();
@@ -53,6 +54,7 @@ int main(void) {
 	(void)file;
 	func = FUNCenable();
 	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
+	signal(SIGTERM, Hang_Up_Handler); // Create function pointer to signal (callback)
 	/*****************/
 	strcpy(feedback, "zero");
 	/*****************/
@@ -144,4 +146,13 @@ void Ctrl_C_Handler(int sig)  {
 	printf("\n------------------\nProgram END\n------------------\n");
     exit(sig);
 }
+// Handler for SIGHUP, triggered by 
+// Close Terminal 
+void Hang_Up_Handler(int sig)  { 
+    printf("Caught signal %d\n", sig);
+    free(cmd);
+	printf("\n------------------\nProgram END\n------------------\n");
+    exit(sig);
+}
+
 

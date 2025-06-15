@@ -1,11 +1,10 @@
 /*************************************************************************
 Title:    PCFICHEIRO (WRAPPER)
-Author:   Sergio Manuel Santos <sergio.salazar.santos@gmail.com>
+Author:   <sergio.salazar.santos@gmail.com>
 File:     $Id: PCficheiro.c, v 0.1 2015/08/12 14:00:00 sergio Exp $
 Software: GCC
 Hardware: PC
 License:  GNU General Public License
-Description:  PC emulation
 Comment:
 	
 *************************************************************************/

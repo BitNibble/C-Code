@@ -3,7 +3,7 @@ Title:    procedures
 Author:   <sergio.salazar.santos@gmail.com>
 File:     $Id: procedures.h$
 Software: GCC
-Hardware: OS
+Hardware: PC
 License:  Free beer
 ************************************************************************/
 #ifndef _PROCEDURES_H_

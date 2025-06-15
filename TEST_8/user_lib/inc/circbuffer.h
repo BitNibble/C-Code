@@ -1,10 +1,9 @@
 /******************************************************************************
 	CIRCBUFFER
-Author: Sergio Santos
-	<sergio.salazar.santos@gmail.com>
-License: GNU General Public License
+Author:   <sergio.salazar.santos@gmail.com>
+License:  GNU General Public License
 Hardware: all
-Date: 03112024
+Date:     03112024
 Comment:
 	Pin Analysis
 *******************************************************************************/
