@@ -9,6 +9,8 @@ License:  Free beer
 #include "procedures.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
 #include <errno.h>
 #ifdef _WIN32
 	#include <direct.h>
@@ -17,7 +19,65 @@ License:  Free beer
 	#include <unistd.h>
 #endif
 
-/***internal_procs***/
+#define BUFF_SIZE 512
+
+/***_procs***/
+int _proc_strtotok(char* line, char* token[], const char* parser);
+void _proc_rmcrnl(char* str);
+char* _proc_vsnprintf(char *s, ... );
+int _change_directory(const char* dirname);
+int _launch_excel(void);
+int _launch_word(void);
+int _launch_powerpoint(void);
+int _launch_flowchart(void);
+int _launch_formula(void);
+
+static PROCEDURES setup = {
+	.strtotok         = _proc_strtotok,
+	.rmcrnl           = _proc_rmcrnl,
+	.vsnprintf        = _proc_vsnprintf,
+	.change_directory = _change_directory,
+	.launch_excel     = _launch_excel,
+	.launch_word      = _launch_word,
+	.launch_powerpoint= _launch_powerpoint,
+	.launch_flowchart = _launch_flowchart,
+	.launch_formula   = _launch_formula
+};
+
+int _proc_strtotok(char* line, char* token[], const char* parser)
+{
+    int i;
+    for (i = 0, token[i] = strtok(line, parser); token[i]; i++, token[i] = strtok(NULL, parser));
+    return i;
+}
+
+void _proc_rmcrnl(char* str)
+{
+    int i;
+    int stop;
+    size_t len = strlen(str);
+    for (i = (int)len, stop = (int)len - 3; i > stop; i--) {
+        if (*(str + i) == '\r' || *(str + i) == '\n') {
+            *(str + i) = '\0';
+        }
+    }
+}
+
+char* _proc_vsnprintf(char *s, ... )
+{
+	static char buff[BUFF_SIZE] = {0};
+	const size_t size = BUFF_SIZE - 1;
+	int ret;
+	va_list arg;
+	va_start(arg, s);
+	ret = vsnprintf(buff, size, s, arg);
+	va_end(arg);
+	if(ret < 0){
+		return NULL;
+	}else
+		return buff;
+}
+
 int _change_directory(const char* dirname) {
 	#ifdef _WIN32
 		if (_chdir(dirname)) {
@@ -152,15 +212,6 @@ int _launch_formula(void) {
 	#endif
 	return 0;
 }
-
-static PROCEDURES setup = {
-	.change_directory = _change_directory,
-	.launch_excel     = _launch_excel,
-	.launch_word      = _launch_word,
-	.launch_powerpoint= _launch_powerpoint,
-	.launch_flowchart = _launch_flowchart,
-	.launch_formula   = _launch_formula
-};
 
 /***interface***/
 PROCEDURES* PROCEDURESenable(void)
