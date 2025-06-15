@@ -11,6 +11,7 @@ License:  Free beer
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <time.h>
 #include <errno.h>
 #ifdef _WIN32
 	#include <direct.h>
@@ -31,6 +32,7 @@ int _launch_word(void);
 int _launch_powerpoint(void);
 int _launch_flowchart(void);
 int _launch_formula(void);
+char* _proc_get_time(void);
 
 static PROCEDURES setup = {
 	.strtotok         = _proc_strtotok,
@@ -41,7 +43,8 @@ static PROCEDURES setup = {
 	.launch_word      = _launch_word,
 	.launch_powerpoint= _launch_powerpoint,
 	.launch_flowchart = _launch_flowchart,
-	.launch_formula   = _launch_formula
+	.launch_formula   = _launch_formula,
+	.time             = _proc_get_time
 };
 
 int _proc_strtotok(char* line, char* token[], const char* parser)
@@ -211,6 +214,23 @@ int _launch_formula(void) {
 		}
 	#endif
 	return 0;
+}
+
+char* _proc_get_time(void)
+{
+	time_t current_time;
+	char* c_time_string;
+	
+	current_time = time(NULL);
+	
+	if (current_time == ((time_t)-1))
+	{
+		return  NULL;
+	}
+	
+	c_time_string = ctime(&current_time);
+	
+	return c_time_string;
 }
 
 /***interface***/

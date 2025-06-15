@@ -1,11 +1,7 @@
 /**********************************************************************
 * Research Environment
 * Test_8.c
-* Nome: 
-*	sergio santos
-* Contacto: 
-*	916919898; 
-*	sergio.salazar.santos@gmail.com
+* Nome: <sergio.salazar.santos@gmail.com>
 * data: 24-02-2018 11:00
 * comment: 
 *	file pointer learning finite state machine
@@ -68,7 +64,6 @@ int main(void) {
 		printf("\n Entry : ");
 		cmd=func.fltos(stdin);
 		
-		
 		//poop->fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
 		poop->pooplfsm( poop->seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, file, feedback);
 		
@@ -77,7 +72,6 @@ int main(void) {
 		
 		logic[0]='\0'; // oneshot
 		poop->pooplfsm( poop->logsnprintf(cmd), "=", STR_SIZE, file, logic);
-		
 		
 		if(!strcmp(cmd,"restart")) {
 			strcpy(feedback, "zero");
@@ -94,11 +88,15 @@ int main(void) {
 			continue;
 		}
 		/**************************************************************/
-		//				-------TESTING AREA--------
 		/**************************************************************/
 		if(!strcmp(logic,"restart")) {
 			strcpy(feedback, "zero");
 		}
+		printf("\n-------------\n LOG-OUT: %s\n-------------", logic);
+		printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
+		/**************************************************************/
+		//				-------TESTING AREA--------
+		/**************************************************************/
 		if(!strcmp(logic,"exit")) {
 			printf("Exiting Program\n");
 			goto end;
@@ -119,12 +117,15 @@ int main(void) {
 		if(!strcmp(logic,"formula")) {
 			procedure->launch_formula();
 		}
+		if(!strcmp(logic,"time")) {
+			printf("Time: %s\n", procedure->time());
+		}
 
 
-		/**************************************************************/
-		/**************************************************************/
-		printf("\n-------------\n LOG-OUT: %s\n-------------", logic);
-		printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
+
+
+
+
 	}
 /**********************************************************************/
 /**********************************************************************/

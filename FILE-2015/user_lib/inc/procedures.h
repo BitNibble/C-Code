@@ -21,6 +21,7 @@ typedef struct {
 	int  (*launch_powerpoint)(void);
 	int  (*launch_flowchart)(void);
 	int  (*launch_formula)(void);
+	char* (*time)(void);
 }PROCEDURES;
 
 PROCEDURES* PROCEDURESenable(void);
