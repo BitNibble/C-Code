@@ -22,9 +22,15 @@ EXPLODE EXPLODEenable( void )
 {
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
-	EXPLODE setup = {0}; // Dummy Setup
-	setup.update = EXPLODEupdate;
-	// Control Copy
+	EXPLODE setup = {
+		.par.XI = 0,
+		.par.XF = 0,
+		.par.HL = 0,
+		.par.LH = 0,
+		.par.HH = 0,
+		.par.LL = 0,
+		.update = EXPLODEupdate
+	};
 	return setup;
 }
 // boot
@@ -68,3 +74,4 @@ unsigned int EXPLODEhl(EXPLODE_par* par)
 	return ((par->XF ^ par->XI) & par->XI);
 }
 /***EOF***/
+
