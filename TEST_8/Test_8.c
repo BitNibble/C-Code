@@ -7,9 +7,9 @@
 *	file pointer learning finite state machine
 * 
 ***********************************************************************/
-#include <stdio.h>
+#include <ostdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <ostring.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <inttypes.h>
@@ -41,6 +41,7 @@ FUNC func;
 FICHEIRO* file;
 PROCEDURES* procedure;
 POOP* poop;
+OSTRING* string;
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 char* cmd = NULL;
@@ -53,13 +54,14 @@ int main(void) {
 	poop = POOPenable();
 	(void)file;
 	func = FUNCenable();
+	string = OSTRINGenable();
 	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
 	signal(SIGTERM, Hang_Up_Handler); // Create function pointer to signal (callback)
 	/*****************/
-	strcpy(feedback, "zero");
+	string->cpy(feedback, "zero");
 	/*****************/
-	strcpy(file->par.permission, "r");
-	strcpy(file->par.filename, "lfsm_1.txt");
+	string->cpy(file->par.permission, "r");
+	string->cpy(file->par.filename, "lfsm_1.txt");
 	procedure->change_directory("./poop");
 	printf("\n------------------\nProgram START\n------------------\n");
 	while ass {
@@ -75,14 +77,14 @@ int main(void) {
 		logic[0]='\0'; // oneshot
 		poop->pooplfsm( poop->logsnprintf(cmd), "=", STR_SIZE, file, logic);
 		
-		if(!strcmp(cmd,"restart")) {
+		if(!string->cmp(cmd,"restart")) {
 			strcpy(feedback, "zero");
 		}
-		if(!strcmp(cmd,"quit") || !strcmp(cmd,"q")) {
+		if(!string->cmp(cmd,"quit") || !string->cmp(cmd,"q")) {
 			printf("Exiting Program\n");
 			goto end;
 		}
-		if(!strcmp(cmd,"help")) {
+		if(!string->cmp(cmd,"help")) {
 			printf("Possible commands:\n"); 
 			printf("\trestart - r\n"); 
 			printf("\tquit - q\n"); 
@@ -91,35 +93,35 @@ int main(void) {
 		}
 		/**************************************************************/
 		/**************************************************************/
-		if(!strcmp(logic,"restart")) {
-			strcpy(feedback, "zero");
+		if(!string->cmp(logic,"restart")) {
+			string->cpy(feedback, "zero");
 		}
 		printf("\n-------------\n LOG-OUT: %s\n-------------", logic);
 		printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
 		/**************************************************************/
 		//				-------TESTING AREA--------
 		/**************************************************************/
-		if(!strcmp(logic,"exit")) {
+		if(!string->cmp(logic,"exit")) {
 			printf("Exiting Program\n");
 			goto end;
 		}
 		/***/
-		if(!strcmp(logic,"excel")) {
+		if(!string->cmp(logic,"excel")) {
 			procedure->launch_excel();
 		}
-		if(!strcmp(logic,"word")) {
+		if(!string->cmp(logic,"word")) {
 			procedure->launch_word();
 		}
-		if(!strcmp(logic,"powerpoint")) {
+		if(!string->cmp(logic,"powerpoint")) {
 			procedure->launch_powerpoint();
 		}
-		if(!strcmp(logic,"flowchart")) {
+		if(!string->cmp(logic,"flowchart")) {
 			procedure->launch_flowchart();
 		}
-		if(!strcmp(logic,"formula")) {
+		if(!string->cmp(logic,"formula")) {
 			procedure->launch_formula();
 		}
-		if(!strcmp(logic,"time")) {
+		if(!string->cmp(logic,"time")) {
 			printf("Time: %s\n", procedure->time());
 		}
 
@@ -154,5 +156,4 @@ void Hang_Up_Handler(int sig)  {
 	printf("\n------------------\nProgram END\n------------------\n");
     exit(sig);
 }
-
 
