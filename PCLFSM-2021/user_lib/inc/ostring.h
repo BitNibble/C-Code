@@ -30,3 +30,5 @@ typedef struct OSTRING {
 OSTRING *OSTRINGenable(void);
 
 #endif
+/***EOF***/
+

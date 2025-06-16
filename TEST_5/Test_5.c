@@ -11,9 +11,9 @@
 *	Explore ideas
 * 
 *******************************************************/
-#include <stdio.h>
+#include <ostdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <ostring.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <inttypes.h>

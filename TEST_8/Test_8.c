@@ -8,7 +8,7 @@
 * 
 ***********************************************************************/
 #include <ostdio.h>
-#include <stdlib.h>
+#include <ostdlib.h>
 #include <ostring.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -43,6 +43,7 @@ PROCEDURES* procedure;
 POOP* poop;
 OSTDIO* stdio;
 OSTRING* string;
+OSTDLIB* stdlib;
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 char* cmd = NULL;
@@ -57,6 +58,7 @@ int main(void) {
 	func = FUNCenable();
 	stdio = OSTDIOenable();
 	string = OSTRINGenable();
+	stdlib = OSTDLIBenable();
 	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
 	signal(SIGTERM, Hang_Up_Handler); // Create function pointer to signal (callback)
 	/*****************/
@@ -146,7 +148,7 @@ end:
 // Ctrl-C at the keyboard 
 void Ctrl_C_Handler(int sig)  { 
     stdio->printf("Caught signal %d\n", sig);
-    free(cmd);
+    stdlib->free(cmd);
 	stdio->printf("\n------------------\nProgram END\n------------------\n");
     exit(sig);
 }
@@ -154,7 +156,7 @@ void Ctrl_C_Handler(int sig)  {
 // Close Terminal 
 void Hang_Up_Handler(int sig)  { 
     stdio->printf("Caught signal %d\n", sig);
-    free(cmd);
+    stdlib->free(cmd);
 	stdio->printf("\n------------------\nProgram END\n------------------\n");
     exit(sig);
 }
