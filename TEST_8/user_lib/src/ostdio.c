@@ -24,6 +24,7 @@ int _fflush(FILE *fp);
 int _fseek(FILE *fp, long offset, int whence);
 long _ftell(FILE *fp);
 void _rewind(FILE *fp);
+int _printf(const char *fmt, ...);
 
 /*** singleton interface ***/
 static OSTDIO iface = {
@@ -39,6 +40,7 @@ static OSTDIO iface = {
     .fseek   = _fseek,
     .ftell   = _ftell,
     .rewind  = _rewind,
+    .printf  = _printf
 };
 
 /*** static passthroughs ***/
@@ -96,6 +98,14 @@ long _ftell(FILE *fp) {
 
 void _rewind(FILE *fp) {
     rewind(fp);
+}
+
+int _printf(const char *fmt, ...) {
+	va_list ap;
+    va_start(ap, fmt);
+    int r = vfprintf(stdout, fmt, ap);
+    va_end(ap);
+    return r;
 }
 
 OSTDIO *OSTDIOenable(void) {

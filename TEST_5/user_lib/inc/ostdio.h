@@ -26,6 +26,7 @@ typedef struct {
     int   (*fseek)(FILE *fp, long offset, int whence);
     long  (*ftell)(FILE *fp);
     void  (*rewind)(FILE *fp);
+    int   (*printf)(const char *fmt, ...);
 } OSTDIO;
 
 OSTDIO *OSTDIOenable(void);
