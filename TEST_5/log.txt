@@ -1,3 +1,3 @@
-Running program - out.exe
+Running program - ./out.exe
 with - 1 arguments
 

@@ -138,7 +138,7 @@ int main(void) {
 /**********************************************************************/
 /**********************************************************************/
 end:
-	free(cmd);
+	stdlib->free(cmd);
 	stdio->printf("\n------------------\nProgram END\n------------------\n");
 	return 0;
 }
@@ -150,7 +150,7 @@ void Ctrl_C_Handler(int sig)  {
     stdio->printf("Caught signal %d\n", sig);
     stdlib->free(cmd);
 	stdio->printf("\n------------------\nProgram END\n------------------\n");
-    exit(sig);
+    stdlib->exit(sig);
 }
 // Handler for SIGHUP, triggered by 
 // Close Terminal 
@@ -158,6 +158,6 @@ void Hang_Up_Handler(int sig)  {
     stdio->printf("Caught signal %d\n", sig);
     stdlib->free(cmd);
 	stdio->printf("\n------------------\nProgram END\n------------------\n");
-    exit(sig);
+    stdlib->exit(sig);
 }
 

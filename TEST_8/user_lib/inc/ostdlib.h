@@ -45,7 +45,7 @@ typedef struct {
 //    int (*rand)(void);
 //    void (*srand)(unsigned int seed);
 
-//    void (*exit)(int status);
+    void (*exit)(int status);
 //    void (*abort)(void);
 //    int (*atexit)(void (*func)(void));
 //    int (*system)(const char *command);

@@ -39,7 +39,7 @@ static OSTDLIB iface = {
 //    .rand = rand,
 //    .srand = srand,
 
-//    .exit = exit,
+    .exit = exit,
 //    .abort = abort,
 //    .atexit = atexit,
 //    .system = system,
