@@ -12,7 +12,8 @@ CXX = g++
 AS = as
 
 CFLAGS = -g -Wall -Wextra -Werror -I. -I./user_lib/inc/
-LDFLAGS = -lm
+LDFLAGS =
+LIBS = -lm
 
 PROJECT = out.exe
 
@@ -33,17 +34,17 @@ all: $(PROJECT)
 
 $(PROJECT): $(OFILES)
 	@echo "Linking..."
-	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LIBS) -o $@
+
+## Compile .S to .o
+%.o: %.S
+	@echo "Generating assembly for $<"
+	$(CC) -c $(CFLAGS) $< -o $@
 
 ## Compile .c to .S first (assembly)
 %.S: %.c
-	@echo "Generating assembly for $<"
-	$(CC) -S $(CFLAGS) $< -o $@
-
-## Compile .c to .o depends on .S (so .S is generated first)
-%.o: %.c
 	@echo "Compiling $< to object"
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -S $(CFLAGS) $< -o $@
 
 ## Run the program
 run: $(PROJECT)

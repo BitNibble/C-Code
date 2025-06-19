@@ -30,7 +30,10 @@ static OSTDIO iface = {
     .fseek   = fseek,
     .ftell   = ftell,
     .rewind  = rewind,
-    .printf  = printf
+    .printf  = printf,
+    .scanf   = scanf,
+    .getchar = getchar,
+    .perror  = perror
 };
 
 /*** static passthroughs ***/

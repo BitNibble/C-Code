@@ -12,7 +12,7 @@
 * 
 *******************************************************/
 #include <ostdio.h>
-#include <stdlib.h>
+#include <ostdlib.h>
 #include <ostring.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -35,72 +35,90 @@
 #define STR_SIZE 256
 
 static FUNC func;
+OSTRING* string;
+OSTDIO* stdio;
+OSTDLIB* stdlib;
 FICHEIRO* file;
 char str[STR_SIZE];
 size_t str_size = STR_SIZE - 1;
 char* token[10];
 int read_num(void);
 
+void func1(void);
+
+void proc_link(void (*ptr) ()){
+	if(ptr)
+		(*ptr)();
+}
 
 int main(int argc, char *argv[]){
 file = FICHEIROenable();
 (void)file;
-strcpy(file->par.filename, "log.txt");
-strcpy(file->par.permission, "w");
+string = OSTRINGenable();
+stdio = OSTDIOenable();
+stdlib = OSTDLIBenable();
+string->cpy(file->par.filename, "log.txt");
+string->cpy(file->par.permission, "w");
 file->openp();
 file->printf("Running program - %s\nwith - %d arguments\n\n", argv[0], argc);
 file->close();
 
 func = FUNCenable();
 char* cmd = NULL;
-int number;
+int number = 0;
 (void)number;
 /*****************/
+void (*link)(void);
+link=func1;
 
 while ass
 {
-	printf("\nEnter i Data : ");
+	stdio->printf("\nEnter i Data : ");
 	cmd=func.fltos(stdin);
-	if(!strcmp(cmd,"quit") || !strcmp(cmd,"q")){
+	if(!string->cmp(cmd,"quit") || !string->cmp(cmd,"q")){
 		goto end;
 	}
-	if(!strcmp(cmd,"help") || !strcmp(cmd,"h")){
-		printf("Possible commands:\n"); printf("\trun - r\n"); printf("\tquit - q\n"); printf("\thelp - h\n");
+	if(!string->cmp(cmd,"help") || !string->cmp(cmd,"h")){
+		stdio->printf("Possible commands:\n"); stdio->printf("\trun - r\n"); stdio->printf("\tquit - q\n"); stdio->printf("\thelp - h\n");
 		continue;
 	}
 	// RUN TESTING CONDITION:
-	if( !strcmp(cmd,"run") || !strcmp(cmd,"r") ){  // one shot testing
+	if( !string->cmp(cmd,"run") || !string->cmp(cmd,"r") ){  // one shot testing
 /****************************************************************************************************************************/
 //							-------TESTING AREA--------
 /****************************************************************************************************************************/
 
 if(chdir("../example")) 
-	fprintf(stderr, "chdir failed: %s\n", strerror(errno));
+	stdio->fprintf(stderr, "chdir failed: %d\n", errno);
 else 
 {
-	strcpy(file->par.permission, "a+");
-	strcpy(file->par.filename, "log.txt");
+	string->cpy(file->par.permission, "a+");
+	string->cpy(file->par.filename, "log.txt");
 	file->openp();
 	number = read_num();
 	file->printf("-> %d\n", number);
 	file->close();
 
 }
-strcpy(file->par.permission, "r");
-strcpy(file->par.filename, "cvs.txt");
+string->cpy(file->par.permission, "r");
+string->cpy(file->par.filename, "cvs.txt");
 file->openp();
 file->read(str, sizeof(char), str_size);
-printf("\nstring:\n %s\n------\n", str);
+stdio->printf("\nstring:\n %s\n------\n", str);
 func.strtotok(str,token,"\n");
-printf("\ntoken[0]:\n %s\n------\n", token[0]);
-printf("\ntoken[1]:\n %s\n------\n", token[1]);
-printf("\ntoken[2]:\n %s\n------\n", token[2]);
-printf("\ntoken[3]:\n %s\n------\n", token[3]);
-printf("\ntoken[4]:\n %s\n------\n", token[4]);
+stdio->printf("\ntoken[0]:\n %s\n------\n", token[0]);
+stdio->printf("\ntoken[1]:\n %s\n------\n", token[1]);
+stdio->printf("\ntoken[2]:\n %s\n------\n", token[2]);
+stdio->printf("\ntoken[3]:\n %s\n------\n", token[3]);
+stdio->printf("\ntoken[4]:\n %s\n------\n", token[4]);
 
+//if(number > 100){
+	proc_link(&func1);
+	proc_link(NULL);
+	link();
+//}
 
 file->close();
-
 
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
@@ -109,7 +127,7 @@ file->close();
 /*******************************************************/
 /*******************************************************/
 end:
-	free(cmd);
+	stdlib->free(cmd);
 	return 0;
 }
 /****************************************************************************************************************************/
@@ -117,15 +135,20 @@ end:
 int read_num(void)
 {
 	char c; int number;
-	printf("Enter a Number:\n");
-	if(scanf("%d",&number)){
-		printf("Number: %d\n", number);
-		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
+	stdio->printf("Enter a Number:\n");
+	if(stdio->scanf("%d",&number)){
+		stdio->printf("Number: %d\n", number);
+		for(c = stdio->getchar() ;c != '\n' && c != EOF; c = stdio->getchar()); // clear stdin
 	}else{
-		perror("scanf");
-		for(c = getchar() ;c != '\n' && c != EOF; c = getchar()); // clear stdin
+		stdio->perror("scanf");
+		for(c = stdio->getchar() ;c != '\n' && c != EOF; c = stdio->getchar()); // clear stdin
 		number=read_num();
 	}
 	return number;
+}
+
+void func1(void)
+{
+	stdio->printf("Hello world");
 }
 
