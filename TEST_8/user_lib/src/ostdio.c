@@ -16,25 +16,31 @@ int _fprintf(FILE *fp, const char *fmt, ...);
 int _fscanf(FILE *fp, const char *fmt, ...);
 int _printf(const char *fmt, ...);
 
+static OSTDIO iface = {0};
+
+void ostdio_enable(void){
 /*** singleton interface ***/
-static OSTDIO iface = {
-    .fopen   = fopen,
-    .fclose  = fclose,
-    .fread   = fread,
-    .fwrite  = fwrite,
-    .fgets   = fgets,
-    .fputs   = fputs,
-    .fprintf = _fprintf,
-    .fscanf  = _fscanf,
-    .fflush  = fflush,
-    .fseek   = fseek,
-    .ftell   = ftell,
-    .rewind  = rewind,
-    .printf  = printf,
-    .scanf   = scanf,
-    .getchar = getchar,
-    .perror  = perror
-};
+    iface.fopen   = fopen;
+    iface.fclose  = fclose;
+    iface.fread   = fread;
+    iface.fwrite  = fwrite;
+    iface.fgets   = fgets;
+    iface.fputs   = fputs;
+    iface.fprintf = _fprintf;
+    iface.fscanf  = _fscanf;
+    iface.fflush  = fflush;
+    iface.fseek   = fseek;
+    iface.ftell   = ftell;
+    iface.rewind  = rewind;
+    iface.printf  = printf;
+    iface.scanf   = scanf;
+    iface.getchar = getchar;
+    iface.perror  = perror;
+}
+
+OSTDIO *ostdio(void) {
+    return &iface;
+}
 
 /*** static passthroughs ***/
 int _fprintf(FILE *fp, const char *fmt, ...) {
@@ -61,8 +67,5 @@ int _printf(const char *fmt, ...) {
     return r;
 }
 
-OSTDIO *ostdio(void) {
-    return &iface;
-}
 /***EOF***/
 

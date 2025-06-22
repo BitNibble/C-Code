@@ -34,18 +34,27 @@ int _launch_flowchart(void);
 int _launch_formula(void);
 char* _proc_get_time(void);
 
-static PROCEDURES setup = {
-	.strtotok         = _proc_strtotok,
-	.rmcrnl           = _proc_rmcrnl,
-	.vsnprintf        = _proc_vsnprintf,
-	.change_directory = _change_directory,
-	.launch_excel     = _launch_excel,
-	.launch_word      = _launch_word,
-	.launch_powerpoint= _launch_powerpoint,
-	.launch_flowchart = _launch_flowchart,
-	.launch_formula   = _launch_formula,
-	.time             = _proc_get_time
-};
+static PROCEDURES setup = {0};
+
+void oprocedure_enable(void)
+{
+	setup.strtotok         = _proc_strtotok;
+	setup.rmcrnl           = _proc_rmcrnl;
+	setup.vsnprintf        = _proc_vsnprintf;
+	setup.change_directory = _change_directory;
+	setup.launch_excel     = _launch_excel;
+	setup.launch_word      = _launch_word;
+	setup.launch_powerpoint= _launch_powerpoint;
+	setup.launch_flowchart = _launch_flowchart;
+	setup.launch_formula   = _launch_formula;
+	setup.time             = _proc_get_time;
+}
+
+/***interface***/
+PROCEDURES* oprocedure(void)
+{
+	return &setup;
+}
 
 int _proc_strtotok(char* line, char* token[], const char* parser)
 {
@@ -231,12 +240,6 @@ char* _proc_get_time(void)
 	c_time_string = ctime(&current_time);
 	
 	return c_time_string;
-}
-
-/***interface***/
-PROCEDURES* oprocedure(void)
-{
-	return &setup;
 }
 
 /***EOF***/

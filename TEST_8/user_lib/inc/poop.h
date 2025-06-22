@@ -10,6 +10,7 @@ License:  Free beer
 	#define _POOP_H_
 
 #include "PCficheiro.h"
+#include <stdlib.h>
 #include <stddef.h>
 
 typedef struct POOP {
@@ -21,6 +22,7 @@ typedef struct POOP {
     void (*pooplfsm)(const char* poopin, const char* parser, size_t line_size, FICHEIRO* file, char* poopout);
 } POOP;
 
+void opoop_enable(void);
 POOP* opoop(void);
 
 #endif

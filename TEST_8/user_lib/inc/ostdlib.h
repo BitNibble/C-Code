@@ -52,6 +52,7 @@ typedef struct {
 //    char *(*getenv)(const char *name);
 } OSTDLIB;
 
+void ostdlib_enable(void);
 OSTDLIB *ostdlib(void);
 
 #endif /* OSTDLIB_H */

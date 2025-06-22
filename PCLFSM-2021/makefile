@@ -11,7 +11,7 @@ CC = gcc
 CXX = g++
 AS = as
 
-CFLAGS = -g -Wall -Wextra -Werror -I. -I./user_lib/inc/
+CFLAGS = -g -Wall -Wextra -I. -I./user_lib/inc/
 LDFLAGS =
 LIBS = -lm
 

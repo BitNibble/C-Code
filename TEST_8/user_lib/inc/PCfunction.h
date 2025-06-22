@@ -44,6 +44,7 @@ struct func{
 };
 typedef struct func FUNC;
 
+void ofunc_enable(void);
 FUNC* ofunc(void);
 #endif
 /***EOF***/

@@ -11,19 +11,22 @@ Comment:
 #include "ostring.h"
 #include <string.h>
 
-static OSTRING iface = {
-    .len = strlen,
-    .cpy = strcpy,
-    .ncpy = strncpy,
-    .cmp = strcmp,
-    .ncmp = strncmp,
-    .cat = strcat,
-    .ncat = strncat,
-    .memset = memset,
-    .memcpy = memcpy,
-    .memmove = memmove,
-    .memcmp = memcmp,
-};
+static OSTRING iface = {0};
+
+void ostring_enable(void)
+{
+    iface.len = strlen;
+    iface.cpy = strcpy;
+    iface.ncpy = strncpy;
+    iface.cmp = strcmp;
+    iface.ncmp = strncmp;
+    iface.cat = strcat;
+    iface.ncat = strncat;
+    iface.memset = memset;
+    iface.memcpy = memcpy;
+    iface.memmove = memmove;
+    iface.memcmp = memcmp;
+}
 
 OSTRING *ostring(void) {
     return &iface;

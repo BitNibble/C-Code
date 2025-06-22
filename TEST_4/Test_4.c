@@ -25,8 +25,8 @@
 #include "user_lib\inc\explode.h"
 #include "user_lib\inc\circbuffer.h"
 /***Definition and Macros***/
-#define sperm ~0
-#define ass (1)
+#define wala ~0
+#define yey (1)
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
@@ -70,7 +70,7 @@ byte = (Byte*)vector;
 vector[0]=10;
 vector[1]=255;
 
-while ass
+while yey
 {
 	printf("\nEnter i Data : ");
 	cmd=func.fltos(stdin);

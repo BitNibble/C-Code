@@ -10,6 +10,7 @@ Comment:
 #ifndef _CIRCBUFFER_H_
 	#define _CIRCBUFFER_H_
 
+#include <stdlib.h>
 #include <stdint.h>
 
 struct circ_buf_par

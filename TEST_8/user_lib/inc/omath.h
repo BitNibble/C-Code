@@ -9,6 +9,8 @@ Comment:
 *************************************************************************/
 #ifndef OMATH_H
 	#define OMATH_H
+	
+#include <stdlib.h>
 
 typedef struct {
     double (*sin)(double x);
@@ -30,6 +32,7 @@ typedef struct {
     double (*fmod)(double x, double y);
 } omath_t;
 
+void omath_enable(void);
 omath_t* omath();
 
 #endif // OMATH_H

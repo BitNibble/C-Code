@@ -9,6 +9,7 @@ License:  Free beer
 #ifndef _PROCEDURES_H_
 	#define _PROCEDURES_H_
 
+#include <stdlib.h>
 #include <stdint.h>
 
 typedef struct {
@@ -24,6 +25,7 @@ typedef struct {
 	char* (*time)(void);
 }PROCEDURES;
 
+void oprocedure_enable(void);
 PROCEDURES* oprocedure(void);
 
 #endif

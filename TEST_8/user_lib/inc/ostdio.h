@@ -12,6 +12,7 @@ Comment:
 #define OSTDIO_H
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
     FILE *(*fopen)(const char *path, const char *mode);
@@ -32,6 +33,7 @@ typedef struct {
     void (*perror)(const char *s);
 } OSTDIO;
 
+void ostdio_enable(void);
 OSTDIO *ostdio(void);
 
 #endif // OSTDIO_H

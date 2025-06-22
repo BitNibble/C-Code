@@ -10,6 +10,7 @@ Comment:
 #ifndef _EXPLODE_H_
 	#define _EXPLODE_H_
 
+#include <stdlib.h>
 #include <stdint.h>
 
 #define IS_BIT_LH(par, bit) ((par.LH >> (bit)) & 1)

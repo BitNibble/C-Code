@@ -12,6 +12,7 @@ Comment:
 	#define OSTRING_H
 
 #include <stddef.h>
+#include <stdlib.h>
 
 typedef struct OSTRING {
     size_t (*len)(const char *s);
@@ -27,6 +28,7 @@ typedef struct OSTRING {
     int (*memcmp)(const void *s1, const void *s2, size_t n);
 } OSTRING;
 
+void ostring_enable(void);
 OSTRING *ostring(void);
 
 #endif

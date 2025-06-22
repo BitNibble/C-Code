@@ -30,8 +30,8 @@
 #include "poop.h"
 #include "procedures.h"
 /***Definition and Macros***/
-#define sperm ~0
-#define ass (1)
+#define wala ~0
+#define yey (1)
 #define AREA(l, b) (l * b)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define STR_SIZE 512
@@ -44,6 +44,14 @@ void Ctrl_C_Handler(int sig);
 void Hang_Up_Handler(int sig);
 
 int main(void) {
+	ostdio_enable();
+	ostring_enable();
+	ostdlib_enable();
+	omath_enable();
+	ofile_enable();
+	opoop_enable();
+	oprocedure_enable();
+	ofunc_enable();
 	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
 	signal(SIGTERM, Hang_Up_Handler); // Create function pointer to signal (callback)
 	/*****************/
@@ -53,7 +61,7 @@ int main(void) {
 	ostring()->cpy(ofile()->par.filename, "lfsm_1.txt");
 	oprocedure()->change_directory("./poop");
 	ostdio()->printf("\n------------------\nProgram START\n------------------\n");
-	while ass {
+	while yey {
 		ostdio()->printf("\n Entry : ");
 		cmd=ofunc()->fltos(stdin);
 		

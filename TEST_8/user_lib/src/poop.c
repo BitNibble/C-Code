@@ -19,14 +19,22 @@ char* _logsnprintf(const char* search);
 char* _seqsnprintf(const char* seq_name, const char* search, const char* feedback);
 void _pooplfsm(const char* poopin, const char* parser, size_t line_size, FICHEIRO* file, char* poopout);
 
-static POOP setup = {
-    .strtotok = _poop_strtotok,
-    .rmcrnl = _poop_rmcrnl,
-    .fplfsm = _fplfsm,
-    .logsnprintf = _logsnprintf,
-    .seqsnprintf = _seqsnprintf,
-    .pooplfsm = _pooplfsm
-};
+static POOP setup = {0};
+
+void opoop_enable(void)
+{
+    setup.strtotok = _poop_strtotok;
+    setup.rmcrnl = _poop_rmcrnl;
+    setup.fplfsm = _fplfsm;
+    setup.logsnprintf = _logsnprintf;
+    setup.seqsnprintf = _seqsnprintf;
+    setup.pooplfsm = _pooplfsm;
+}
+
+POOP* opoop(void)
+{
+    return &setup;
+}
 
 int _poop_strtotok(char* line, char* token[], const char* parser)
 {
@@ -128,11 +136,6 @@ void _pooplfsm(const char* poopin, const char* parser, size_t line_size, FICHEIR
         }
     }
     file->close();
-}
-
-POOP* opoop(void)
-{
-    return &setup;
 }
 
 /***EOF***/
