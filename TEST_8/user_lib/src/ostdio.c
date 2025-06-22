@@ -61,7 +61,7 @@ int _printf(const char *fmt, ...) {
     return r;
 }
 
-OSTDIO *OSTDIOenable(void) {
+OSTDIO *ostdio(void) {
     return &iface;
 }
 /***EOF***/

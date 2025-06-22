@@ -234,7 +234,7 @@ char* _proc_get_time(void)
 }
 
 /***interface***/
-PROCEDURES* PROCEDURESenable(void)
+PROCEDURES* oprocedure(void)
 {
 	return &setup;
 }

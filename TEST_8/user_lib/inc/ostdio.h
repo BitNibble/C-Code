@@ -32,7 +32,7 @@ typedef struct {
     void (*perror)(const char *s);
 } OSTDIO;
 
-OSTDIO *OSTDIOenable(void);
+OSTDIO *ostdio(void);
 
 #endif // OSTDIO_H
 /***EOF***/

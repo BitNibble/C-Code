@@ -44,7 +44,7 @@ struct func{
 };
 typedef struct func FUNC;
 
-FUNC FUNCenable(void);
+FUNC* ofunc(void);
 #endif
 /***EOF***/
 

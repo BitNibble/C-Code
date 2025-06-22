@@ -51,7 +51,7 @@ static OSTDLIB iface = {
 };
 
 /*** singleton accessor ***/
-OSTDLIB *OSTDLIBenable(void) {
+OSTDLIB *ostdlib(void) {
     return &iface;
 }
 

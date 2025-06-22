@@ -9,7 +9,7 @@ Comment:
 	
 *************************************************************************/
 #ifndef OSTRING_H
-#define OSTRING_H
+	#define OSTRING_H
 
 #include <stddef.h>
 
@@ -27,7 +27,7 @@ typedef struct OSTRING {
     int (*memcmp)(const void *s1, const void *s2, size_t n);
 } OSTRING;
 
-OSTRING *OSTRINGenable(void);
+OSTRING *ostring(void);
 
 #endif
 /***EOF***/

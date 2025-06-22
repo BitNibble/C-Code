@@ -47,7 +47,7 @@ typedef struct{
 	int (*filedescriptor)(void);
 }FICHEIRO;
 
-FICHEIRO* FICHEIROenable(void);
+FICHEIRO* ofile(void);
 #endif
 /***EOF***/
 

@@ -32,27 +32,24 @@ unsigned int FUNCbinary_decimal(unsigned int n);
 void FUNCstrflip(char* s);
 char* FUNCprint(char *format, ... );
 
-FUNC FUNCenable( void )
-{
-	value=(char*)realloc(value, sizeof(char));
-	*(value)='\0';
-	FUNC func;
-	func.stringlength=StringLength;
-	func.reverse=Reverse;
-	func.ftoa=FUNCftoa;
-	func.fltos=FUNCfltos;
-	func.ftos=FUNCftos;
-	func.strtotok=FUNCstrtotok;
-	func.getnum=FUNCgetnum;
-	func.getnumv2=FUNCgetnumv2;
-	func.readint=FUNCreadint;
-	func.print_binary=FUNCprint_binary;
-	func.decimal_binary=FUNCdecimal_binary;
-	func.binary_decimal=FUNCbinary_decimal;
-	func.strflip=FUNCstrflip;
-	func.print=FUNCprint;
-	return func;
-}
+static FUNC setup = {
+	.stringlength=StringLength,
+	.reverse=Reverse,
+	.ftoa=FUNCftoa,
+	.fltos=FUNCfltos,
+	.ftos=FUNCftos,
+	.strtotok=FUNCstrtotok,
+	.getnum=FUNCgetnum,
+	.getnumv2=FUNCgetnumv2,
+	.readint=FUNCreadint,
+	.print_binary=FUNCprint_binary,
+	.decimal_binary=FUNCdecimal_binary,
+	.binary_decimal=FUNCbinary_decimal,
+	.strflip=FUNCstrflip,
+	.print=FUNCprint
+};
+
+FUNC* ofunc(void){ return &setup; }
 
 /***StringLength***/
 int StringLength (const char string[])
@@ -119,7 +116,7 @@ char* FUNCfltos(FILE* stream)
 {
 	int i, block, NBytes;
 	char caracter;
-	free(value);
+	if(value) free(value);
 	for(value=NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)); i++){
 		if(i>NBytes-1){
 			NBytes+=block;

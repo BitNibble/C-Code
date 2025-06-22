@@ -25,7 +25,7 @@ static OSTRING iface = {
     .memcmp = memcmp,
 };
 
-OSTRING *OSTRINGenable(void) {
+OSTRING *ostring(void) {
     return &iface;
 }
 /***EOF***/

@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include <stdbool.h> // true, false
-#include <math.h>
+#include <omath.h>
 #include <time.h>
 #include <errno.h>
 #include <signal.h>
@@ -37,13 +37,6 @@
 #define STR_SIZE 512
 #define SUBSTR_SIZE 64
 
-FUNC func;
-FICHEIRO* file;
-PROCEDURES* procedure;
-POOP* poop;
-OSTDIO* stdio;
-OSTRING* string;
-OSTDLIB* stdlib;
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
 char* cmd = NULL;
@@ -51,82 +44,74 @@ void Ctrl_C_Handler(int sig);
 void Hang_Up_Handler(int sig);
 
 int main(void) {
-	file = FICHEIROenable();
-	procedure = PROCEDURESenable();
-	poop = POOPenable();
-	(void)file;
-	func = FUNCenable();
-	stdio = OSTDIOenable();
-	string = OSTRINGenable();
-	stdlib = OSTDLIBenable();
 	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
 	signal(SIGTERM, Hang_Up_Handler); // Create function pointer to signal (callback)
 	/*****************/
-	string->cpy(feedback, "zero");
+	ostring()->cpy(feedback, "zero");
 	/*****************/
-	string->cpy(file->par.permission, "r");
-	string->cpy(file->par.filename, "lfsm_1.txt");
-	procedure->change_directory("./poop");
-	stdio->printf("\n------------------\nProgram START\n------------------\n");
+	ostring()->cpy(ofile()->par.permission, "r");
+	ostring()->cpy(ofile()->par.filename, "lfsm_1.txt");
+	oprocedure()->change_directory("./poop");
+	ostdio()->printf("\n------------------\nProgram START\n------------------\n");
 	while ass {
-		stdio->printf("\n Entry : ");
-		cmd=func.fltos(stdin);
+		ostdio()->printf("\n Entry : ");
+		cmd=ofunc()->fltos(stdin);
 		
-		//poop->fplfsm( "seq", cmd, STR_SIZE, file, logic, feedback );
-		poop->pooplfsm( poop->seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, file, feedback);
+		//opoop()->fplfsm( "seq", cmd, STR_SIZE, ofile(), logic, feedback );
+		opoop()->pooplfsm( opoop()->seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, ofile(), feedback);
 		
-		//poop->fplfsm( "seq_1", cmd, STR_SIZE, file, logic, feedback );
-		poop->pooplfsm( poop->seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, file, feedback);
+		//opoop()->fplfsm( "seq_1", cmd, STR_SIZE, ofile(), logic, feedback );
+		opoop()->pooplfsm( opoop()->seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, ofile(), feedback);
 		
 		logic[0]='\0'; // oneshot
-		poop->pooplfsm( poop->logsnprintf(cmd), "=", STR_SIZE, file, logic );
+		opoop()->pooplfsm( opoop()->logsnprintf(cmd), "=", STR_SIZE, ofile(), logic );
 		
-		if(!string->cmp(cmd,"restart")) {
-			string->cpy(feedback, "zero");
+		if(!ostring()->cmp(cmd,"restart")) {
+			ostring()->cpy(feedback, "zero");
 		}
-		if(!string->cmp(cmd,"quit") || !string->cmp(cmd,"q")) {
-			stdio->printf("Exiting Program\n");
+		if(!ostring()->cmp(cmd,"quit") || !ostring()->cmp(cmd,"q")) {
+			ostdio()->printf("Exiting Program\n");
 			goto end;
 		}
-		if(!string->cmp(cmd,"help")) {
-			stdio->printf("Possible commands:\n"); 
-			stdio->printf("\trestart - r\n"); 
-			stdio->printf("\tquit - q\n"); 
-			stdio->printf("\thelp - h\n");
+		if(!ostring()->cmp(cmd,"help")) {
+			ostdio()->printf("Possible commands:\n"); 
+			ostdio()->printf("\trestart - r\n"); 
+			ostdio()->printf("\tquit - q\n"); 
+			ostdio()->printf("\thelp - h\n");
 			continue;
 		}
 		/**************************************************************/
 		/**************************************************************/
-		if(!string->cmp(logic,"restart")) {
-			string->cpy(feedback, "zero");
+		if(!ostring()->cmp(logic,"restart")) {
+			ostring()->cpy(feedback, "zero");
 		}
-		stdio->printf("\n-------------\n LOG-OUT: %s\n-------------", logic);
-		stdio->printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
+		ostdio()->printf("\n-------------\n LOG-OUT: %s\n-------------", logic);
+		ostdio()->printf("\n-------------\n SEQ-OUT: %s\n-------------\n", feedback);
 		/**************************************************************/
 		//				-------TESTING AREA--------
 		/**************************************************************/
-		if(!string->cmp(logic,"exit")) {
-			stdio->printf("Exiting Program\n");
+		if(!ostring()->cmp(logic,"exit")) {
+			ostdio()->printf("Exiting Program\n");
 			goto end;
 		}
 		/***/
-		if(!string->cmp(logic,"excel")) {
-			procedure->launch_excel();
+		if(!ostring()->cmp(logic,"excel")) {
+			oprocedure()->launch_excel();
 		}
-		if(!string->cmp(logic,"word")) {
-			procedure->launch_word();
+		if(!ostring()->cmp(logic,"word")) {
+			oprocedure()->launch_word();
 		}
-		if(!string->cmp(logic,"powerpoint")) {
-			procedure->launch_powerpoint();
+		if(!ostring()->cmp(logic,"powerpoint")) {
+			oprocedure()->launch_powerpoint();
 		}
-		if(!string->cmp(logic,"flowchart")) {
-			procedure->launch_flowchart();
+		if(!ostring()->cmp(logic,"flowchart")) {
+			oprocedure()->launch_flowchart();
 		}
-		if(!string->cmp(logic,"formula")) {
-			procedure->launch_formula();
+		if(!ostring()->cmp(logic,"formula")) {
+			oprocedure()->launch_formula();
 		}
-		if(!string->cmp(logic,"time")) {
-			stdio->printf("Time: %s\n", procedure->time());
+		if(!ostring()->cmp(logic,"time")) {
+			ostdio()->printf("Time: %s\n", oprocedure()->time());
 		}
 
 
@@ -138,8 +123,8 @@ int main(void) {
 /**********************************************************************/
 /**********************************************************************/
 end:
-	stdlib->free(cmd);
-	stdio->printf("\n------------------\nProgram END\n------------------\n");
+	ostdlib()->free(cmd);
+	ostdio()->printf("\n------------------\nProgram END\n------------------\n");
 	return 0;
 }
 /***EOF***/
@@ -147,17 +132,17 @@ end:
 // Handler for SIGINT, triggered by 
 // Ctrl-C at the keyboard 
 void Ctrl_C_Handler(int sig)  { 
-    stdio->printf("Caught signal %d\n", sig);
-    stdlib->free(cmd);
-	stdio->printf("\n------------------\nProgram END\n------------------\n");
-    stdlib->exit(sig);
+    ostdio()->printf("Caught signal %d\n", sig);
+    ostdlib()->free(cmd);
+	ostdio()->printf("\n------------------\nProgram END\n------------------\n");
+    ostdlib()->exit(sig);
 }
 // Handler for SIGHUP, triggered by 
 // Close Terminal 
 void Hang_Up_Handler(int sig)  { 
-    stdio->printf("Caught signal %d\n", sig);
-    stdlib->free(cmd);
-	stdio->printf("\n------------------\nProgram END\n------------------\n");
-    stdlib->exit(sig);
+    ostdio()->printf("Caught signal %d\n", sig);
+    ostdlib()->free(cmd);
+	ostdio()->printf("\n------------------\nProgram END\n------------------\n");
+    ostdlib()->exit(sig);
 }
 

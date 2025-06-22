@@ -22,12 +22,14 @@ EXPLODE EXPLODEenable( void )
 	//printf("%d -> ",__LINE__);
 	//printf("%s\n",__func__);
 	EXPLODE setup = {
-		.par.XI = 0,
-		.par.XF = 0,
-		.par.HL = 0,
-		.par.LH = 0,
-		.par.HH = 0,
-		.par.LL = 0,
+		.par = {
+			.XI = 0,
+			.XF = 0,
+			.HL = 0,
+			.LH = 0,
+			.HH = 0,
+			.LL = 0
+		},
 		.update = EXPLODEupdate
 	};
 	return setup;

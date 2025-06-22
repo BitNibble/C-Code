@@ -11,10 +11,6 @@ Comment:
 #ifndef OSTDLIB_H
 	#define OSTDLIB_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stddef.h>  // size_t
 #include <limits.h>  // for div_t, etc.
 
@@ -56,11 +52,7 @@ typedef struct {
 //    char *(*getenv)(const char *name);
 } OSTDLIB;
 
-OSTDLIB *OSTDLIBenable(void);
-
-#ifdef __cplusplus
-}
-#endif
+OSTDLIB *ostdlib(void);
 
 #endif /* OSTDLIB_H */
 /*** EOF ***/

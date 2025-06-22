@@ -130,7 +130,7 @@ void _pooplfsm(const char* poopin, const char* parser, size_t line_size, FICHEIR
     file->close();
 }
 
-POOP* POOPenable(void)
+POOP* opoop(void)
 {
     return &setup;
 }

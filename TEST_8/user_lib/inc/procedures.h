@@ -24,7 +24,7 @@ typedef struct {
 	char* (*time)(void);
 }PROCEDURES;
 
-PROCEDURES* PROCEDURESenable(void);
+PROCEDURES* oprocedure(void);
 
 #endif
 
