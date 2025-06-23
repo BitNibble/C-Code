@@ -52,8 +52,8 @@ int main(void) {
 	opoop_enable();
 	oprocedure_enable();
 	ofunc_enable();
-	signal(SIGINT, Ctrl_C_Handler); // Create function pointer to signal (callback)
-	signal(SIGTERM, Hang_Up_Handler); // Create function pointer to signal (callback)
+	signal(SIGINT, Ctrl_C_Handler);
+	signal(SIGTERM, Hang_Up_Handler);
 	/*****************/
 	ostring()->cpy(feedback, "zero");
 	/*****************/
@@ -117,6 +117,9 @@ int main(void) {
 		}
 		if(!ostring()->cmp(logic,"formula")) {
 			oprocedure()->launch_formula();
+		}
+		if(!ostring()->cmp(logic,"bash")) {
+			printf("Shell exited with code %d\n", oprocedure()->launch_bash());
 		}
 		if(!ostring()->cmp(logic,"time")) {
 			ostdio()->printf("Time: %s\n", oprocedure()->time());

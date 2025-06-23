@@ -22,7 +22,9 @@ typedef struct {
 	int  (*launch_powerpoint)(void);
 	int  (*launch_flowchart)(void);
 	int  (*launch_formula)(void);
+	int (*launch_bash)(void);
 	char* (*time)(void);
+	
 }PROCEDURES;
 
 void oprocedure_enable(void);

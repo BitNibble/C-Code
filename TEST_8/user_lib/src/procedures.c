@@ -16,8 +16,10 @@ License:  Free beer
 #ifdef _WIN32
 	#include <direct.h>
 	#include <process.h>
+	#include <windows.h>
 #else
 	#include <unistd.h>
+	#include <sys/wait.h>
 #endif
 
 #define BUFF_SIZE 512
@@ -33,6 +35,7 @@ int _launch_powerpoint(void);
 int _launch_flowchart(void);
 int _launch_formula(void);
 char* _proc_get_time(void);
+int _launch_shell(void);
 
 static PROCEDURES setup = {0};
 
@@ -48,6 +51,7 @@ void oprocedure_enable(void)
 	setup.launch_flowchart = _launch_flowchart;
 	setup.launch_formula   = _launch_formula;
 	setup.time             = _proc_get_time;
+	setup.launch_bash      = _launch_shell;
 }
 
 /***interface***/
@@ -242,9 +246,79 @@ char* _proc_get_time(void)
 	return c_time_string;
 }
 
+int _launch_shell(void) {
+#ifdef _WIN32
+    const char *cmd = "wsl.exe";
+
+    // Check if WSL is available
+    if (system("where wsl >nul 2>&1") != 0) {
+        cmd = "powershell.exe";
+    }
+
+    PROCESS_INFORMATION pi;
+    STARTUPINFOA si = {0};
+    si.cb = sizeof(si);
+
+    char command[256];
+    snprintf(command, sizeof(command), "%s", cmd);
+
+    if (!CreateProcessA(
+            NULL,             // No module name
+            command,          // Command line
+            NULL, NULL,       // Security attributes
+            FALSE,            // Inherit handles
+            0,                // Creation flags
+            NULL, NULL,       // Environment and working dir
+            &si, &pi))        // Startup info and process info
+    {
+        fprintf(stderr, "CreateProcess failed (%lu)\n", GetLastError());
+        return -1;
+    }
+
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    DWORD exit_code = 0;
+    GetExitCodeProcess(pi.hProcess, &exit_code);
+
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+
+    return (int)exit_code;
+
+#else  // POSIX systems
+
+    pid_t pid = fork();
+
+    if (pid == 0) {
+        // Child process: replace with bash
+        execlp("bash", "bash", NULL);
+        perror("execlp failed");
+        exit(127);
+    } else if (pid > 0) {
+        // Parent process
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid failed");
+            return -1;
+        }
+
+        if (WIFEXITED(status)) {
+            return WEXITSTATUS(status);
+        } else if (WIFSIGNALED(status)) {
+            return 128 + WTERMSIG(status);
+        }
+
+        return -1;
+    } else {
+        perror("fork failed");
+        return -1;
+    }
+#endif
+}
+
 /***EOF***/
 
 /***
-registers->intances->objects->systems
+registers->intances->handlers->systems
 ***/
 
