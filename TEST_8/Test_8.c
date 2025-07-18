@@ -49,7 +49,7 @@ void Ctrl_C_Handler(int sig);
 void Hang_Up_Handler(int sig);
 
 int main(void) {
-	BUFF b = buff_enable(3,buffer);
+	BUFF_Handler b = buff_enable(3,buffer);
 	signal(SIGINT, Ctrl_C_Handler);
 	signal(SIGTERM, Hang_Up_Handler);
 	/*****************/

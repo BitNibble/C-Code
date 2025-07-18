@@ -3,41 +3,37 @@
 Author:   <sergio.salazar.santos@gmail.com>
 License:  GNU General Public License
 Hardware: all
-Date:     17112022
-*******************************************************************************/
-/****** Comment:
-	Circular Buffer
+Date:     17072025
 *******************************************************************************/
 #ifndef _BUFFER_H_
 	#define _BUFFER_H_
 
-/*** Global Library ***/
+/*** Library ***/
+#include <stdint.h>
 #include <inttypes.h>
 
-/*** Global Constant & Macro ***/
+/*** Constant & Macro ***/
 #define BUFFvar char
 
-/*** Global Variable ***/
-typedef struct {
+/*** Parameter ***/
+typedef struct{
 	BUFFvar* orig;
 	BUFFvar* head;
 	BUFFvar* end;
-}buffer_parameter;
+}BUFF_Parameter;
 
-struct buffer
-{
-	buffer_parameter par;
-	void (*push)(buffer_parameter* par, BUFFvar data);
-	BUFFvar* (*raw)(buffer_parameter* par);
-	void (*flush)(buffer_parameter* par);
-};
+/*** Handler ***/
+typedef struct{
+	BUFF_Parameter par;
+	
+	// V-table
+	void (*push)(BUFF_Parameter* par, BUFFvar data);
+	BUFFvar* (*raw)(BUFF_Parameter* par);
+	void (*flush)(BUFF_Parameter* par);
+}BUFF_Handler;
 
-typedef struct buffer BUFF;
-
-/*** Global Header ***/
-BUFF buff_enable(uint8_t size_buff, BUFFvar* buff);
+BUFF_Handler buff_enable(uint16_t size_buff, BUFFvar* buff);
 
 #endif
-
 /*** EOF ***/
 
