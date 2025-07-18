@@ -28,7 +28,6 @@ typedef struct OSTRING {
     int (*memcmp)(const void *s1, const void *s2, size_t n);
 } OSTRING;
 
-void ostring_enable(void);
 OSTRING *ostring(void);
 
 #endif

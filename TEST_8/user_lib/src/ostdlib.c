@@ -11,47 +11,44 @@ Comment:
 #include "ostdlib.h"
 #include <stdlib.h>
 
-static OSTDLIB iface = {0};
-
-void ostdlib_enable(void)
-{
+static OSTDLIB iface = {
 /*** interface ***/
-    iface.malloc = malloc;
-    iface.calloc = calloc;
-    iface.realloc = realloc;
-    iface.free = free;
+    .malloc = malloc,
+    .calloc = calloc,
+    .realloc = realloc,
+    .free = free,
 
-    iface.atoi = atoi;
-    iface.atol = atol;
-    iface.atoll = atoll;
-    iface.atof = atof;
+    .atoi = atoi,
+    .atol = atol,
+    .atoll = atoll,
+    .atof = atof,
 
-    iface.strtol = strtol;
-    iface.strtoul = strtoul;
-    iface.strtoll = strtoll;
-    iface.strtoull = strtoull;
+    .strtol = strtol,
+    .strtoul = strtoul,
+    .strtoll = strtoll,
+    .strtoull = strtoull,
 
-    iface.abs = abs;
-    iface.labs = labs;
-    iface.llabs = llabs;
+    .abs = abs,
+    .labs = labs,
+    .llabs = llabs,
 
-//    iface.div = div;
-//    iface.ldiv = ldiv;
-//    iface.lldiv = lldiv;
+//    .div = div,
+//    .ldiv = ldiv,
+//    .lldiv = lldiv,
 
-//    iface.rand = rand;
-//    iface.srand = srand;
+//    .rand = rand,
+//    .srand = srand,
 
-    iface.exit = exit;
-//    iface.abort = abort;
-//    iface.atexit = atexit;
-//    iface.system = system;
+    .exit = exit,
+//    .abort = abort,
+//    .atexit = atexit,
+//    .system = system,
 
-//    iface.bsearch = bsearch;
-//    iface.qsort = qsort;
+//    .bsearch = bsearch,
+//    .qsort = qsort,
 
-//    iface.getenv = getenv;
-}
+//    .getenv = getenv
+};
 
 /*** singleton accessor ***/
 OSTDLIB *ostdlib(void) {

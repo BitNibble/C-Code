@@ -14,3 +14,4 @@ log+flowchart=flowchart
 log+formula=formula
 log+time=time
 log+bash=bash
+log+test=test

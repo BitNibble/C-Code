@@ -25,28 +25,25 @@ FILE* FICHEIROfilepointer(void);
 int FICHEIROfiledescriptor(void);
 int seekposition(int whence, long offset);
 
-static FICHEIRO setup = {0};
-
-void ofile_enable(void)
-{
-	setup.par.whence = 0;
-	setup.par.offset = 0;
-	setup.par.fd = 0;
-	setup.par.fp = NULL;
-	setup.openp=FICHEIROopenp;
-	setup.open=FICHEIROopen;
-	setup.close=FICHEIROclose;
-	setup.getc=FICHEIROgetc;
-	setup.fgets=FICHEIROfgets;
-	setup.fputc=FICHEIROfputc;
-	setup.fputs=FICHEIROfputs;
-	setup.printf=FICHEIROprintf;
-	setup.read=FICHEIROread;
-	setup.write=FICHEIROwrite;
-	setup.rewind=FICHEIROrewind;
-	setup.filepointer=FICHEIROfilepointer;
-	setup.filedescriptor=FICHEIROfiledescriptor;
-}
+static FICHEIRO setup = {
+	.par.whence = 0,
+	.par.offset = 0,
+	.par.fd = 0,
+	.par.fp = NULL,
+	.openp=FICHEIROopenp,
+	.open=FICHEIROopen,
+	.close=FICHEIROclose,
+	.getc=FICHEIROgetc,
+	.fgets=FICHEIROfgets,
+	.fputc=FICHEIROfputc,
+	.fputs=FICHEIROfputs,
+	.printf=FICHEIROprintf,
+	.read=FICHEIROread,
+	.write=FICHEIROwrite,
+	.rewind=FICHEIROrewind,
+	.filepointer=FICHEIROfilepointer,
+	.filedescriptor=FICHEIROfiledescriptor
+};
 
 FICHEIRO* ofile(void){ return &setup;}
 

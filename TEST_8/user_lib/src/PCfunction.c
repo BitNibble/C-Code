@@ -32,27 +32,24 @@ unsigned int FUNCbinary_decimal(unsigned int n);
 void FUNCstrflip(char* s);
 char* FUNCprint(char *format, ... );
 
-static FUNC setup = {0};
+static FUNC func_setup = {
+	.stringlength=StringLength,
+	.reverse=Reverse,
+	.ftoa=FUNCftoa,
+	.fltos=FUNCfltos,
+	.ftos=FUNCftos,
+	.strtotok=FUNCstrtotok,
+	.getnum=FUNCgetnum,
+	.getnumv2=FUNCgetnumv2,
+	.readint=FUNCreadint,
+	.print_binary=FUNCprint_binary,
+	.decimal_binary=FUNCdecimal_binary,
+	.binary_decimal=FUNCbinary_decimal,
+	.strflip=FUNCstrflip,
+	.print=FUNCprint
+};
 
-void ofunc_enable(void)
-{
-	setup.stringlength=StringLength;
-	setup.reverse=Reverse;
-	setup.ftoa=FUNCftoa;
-	setup.fltos=FUNCfltos;
-	setup.ftos=FUNCftos;
-	setup.strtotok=FUNCstrtotok;
-	setup.getnum=FUNCgetnum;
-	setup.getnumv2=FUNCgetnumv2;
-	setup.readint=FUNCreadint;
-	setup.print_binary=FUNCprint_binary;
-	setup.decimal_binary=FUNCdecimal_binary;
-	setup.binary_decimal=FUNCbinary_decimal;
-	setup.strflip=FUNCstrflip;
-	setup.print=FUNCprint;
-}
-
-FUNC* ofunc(void){ return &setup; }
+FUNC* ofunc(void){ return &func_setup; }
 
 /***StringLength***/
 int StringLength (const char string[])

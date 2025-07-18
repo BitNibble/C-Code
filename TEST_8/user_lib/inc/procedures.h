@@ -27,7 +27,6 @@ typedef struct {
 	
 }PROCEDURES;
 
-void oprocedure_enable(void);
 PROCEDURES* oprocedure(void);
 
 #endif

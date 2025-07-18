@@ -29,6 +29,8 @@
 #include "circbuffer.h"
 #include "poop.h"
 #include "procedures.h"
+#include "buffer.h"
+
 /***Definition and Macros***/
 #define wala ~0
 #define yey (1)
@@ -36,6 +38,9 @@
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define STR_SIZE 512
 #define SUBSTR_SIZE 64
+#define BUFF_size 256
+const int buff_size = BUFF_size -1;
+char buffer[BUFF_size] = {0};
 
 char logic[SUBSTR_SIZE]={0};
 char feedback[SUBSTR_SIZE]={0};
@@ -44,14 +49,7 @@ void Ctrl_C_Handler(int sig);
 void Hang_Up_Handler(int sig);
 
 int main(void) {
-	ostdio_enable();
-	ostring_enable();
-	ostdlib_enable();
-	omath_enable();
-	ofile_enable();
-	opoop_enable();
-	oprocedure_enable();
-	ofunc_enable();
+	BUFF b = buff_enable(3,buffer);
 	signal(SIGINT, Ctrl_C_Handler);
 	signal(SIGTERM, Hang_Up_Handler);
 	/*****************/
@@ -123,6 +121,11 @@ int main(void) {
 		}
 		if(!ostring()->cmp(logic,"time")) {
 			ostdio()->printf("Time: %s\n", oprocedure()->time());
+		}
+		if(!ostring()->cmp(logic,"test")) {
+			ostdio()->printf("Insert Char:\n");
+			b.push(&b.par,ostdio()->getchar());
+			ostdio()->printf("buff:    %s", b.raw(&b.par));
 		}
 
 
