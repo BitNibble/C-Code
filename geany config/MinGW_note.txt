@@ -1,0 +1,35 @@
+Just unpack MinGW on the C:\ drive as shown "C:\MinGW", any of the mingw compiler set works, then on the Geany program put configurations has shown in the "Geany Config.png" image.
+After link to the windows "PATH" environment the "bin" folder where the gcc.exe and mingw32-make.exe files are placed.
+Also remember to place the "makefile" model attached in all working directory projects.
+
+Template for user libraries:
+user_lib -----------> inc
+		|
+		----> src
+
+/******/
+Geany Defaults:
+Compile:
+gcc -Wall -c "%f"
+Build:
+gcc -Wall -o "%e" "%f"
+Lint:
+cppcheck --language=c --enable=warning,style --template=gcc "%f"
+Execute:
+"./%e"
+
+/******/
+After Install run these Commands in msys2.exe :
+pacman -Suy
+pacman -S make
+pacman -S mingw-w64-ucrt-x86_64-gcc
+gcc --version
+pacman -S man-db
+
+/******/
+sudo apt-get install build-essential
+sudo apt-get -y install make
+sudo apt install gcc-multilib g++-multilib
+sudo apt-get update
+sudo apt-get upgrade
+

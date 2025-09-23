@@ -1,0 +1,105 @@
+#!/bin/bash
+#author: sergio manuel salazar dos santos
+#sergio.salazar.santos@gmail.com
+#mobile: 916919898
+#CVS: $Header$
+#help improving is always welcome
+#general purpose execute command
+#####################################################################
+shopt -s -o nounset
+#
+declare -rx SCRIPT=${0##*/}
+#
+if test -z "$BASH"; #-z
+then
+	printf "$SCRIPT please run this script with the BASH shell"
+	exit 192
+fi
+OLD_IFS="$IFS"
+IFS=$'\0'
+#####################################################################
+RED=1
+GREEN=2
+control_c()
+{
+	echo "$(tput setaf $RED)Stopped due to Interrup «Ctrl+C»$(tput sgr0)"
+	IFS="$OLD_IFS"
+	exit #all is well
+}
+trap control_c SIGINT
+if [ -t 0 ]
+then
+	echo "$(tput setaf $RED)---------------------------------------$(tput sgr0)"
+	if (( $# )); 
+	then
+		echo "$(tput setaf $RED)$0 -> $@ -> $#(tput sgr0)"
+		echo "$(tput setaf $RED)---------------------------------------$(tput sgr0)"
+	else
+		echo "Usage: $(tput setaf $RED)$0 exe ......$(tput sgr0)"
+		echo "ARGUMENTS MISSING !!!"
+		echo "$(tput setaf $RED)---------------------------------------$(tput sgr0)"
+		exit
+	fi
+	TERMINALDIR=$(pwd)
+###################################USAGE#########################################
+#example: run mame								#
+#example: run gedit								#
+###################################USAGE#########################################
+	ARGS="$@"
+	COMMAND="$1"
+	COUNT=$(ls /bin /sbin /usr/bin /usr/sbin /usr/games /usr/local/bin /usr/local/sbin | grep ^$COMMAND$ | wc -l)
+	#echo "-$COUNT-"
+	if(( $COUNT ))
+	then
+		case "$#" in
+
+		1)	$COMMAND
+    			;;
+		2)	$COMMAND "$2"
+    			;;
+		3)	$COMMAND "$2" "$3"
+    			;;
+		4)	$COMMAND "$2" "$3" "$4"
+   			;;
+		5)	./$COMMAND "$2" "$3" "$4" "$5"
+   			;;
+		6)	./$COMMAND "$2" "$3" "$4" "$5" "$6"
+   			;;
+		7)	./$COMMAND "$2" "$3" "$4" "$5" "$6" "$7"
+   			;;
+		*)	echo "To many arguments not supported"
+   			;;
+		esac
+	else
+		case "$#" in
+
+		1)	./$COMMAND
+    			;;
+		2)	./$COMMAND "$2"
+    			;;
+		3)	./$COMMAND "$2" "$3"
+    			;;
+		4)	./$COMMAND "$2" "$3" "$4"
+   			;;
+		5)	./$COMMAND "$2" "$3" "$4" "$5"
+   			;;
+		6)	./$COMMAND "$2" "$3" "$4" "$5" "$6"
+   			;;
+		7)	./$COMMAND "$2" "$3" "$4" "$5" "$6" "$7"
+   			;;
+		*)	echo "To many arguments not supported"
+   			;;
+		esac
+	fi
+	IFS="$OLD_IFS"
+else
+	echo "$(tput setaf $RED)---------------------------------------$(tput sgr0)"
+	echo "$(tput setaf $RED)PIPPING$(tput sgr0)"
+	echo "$(tput setaf $RED)---------------------------------------$(tput sgr0)"
+	while read data
+	do
+		echo "$data"
+	done
+	IFS="$OLD_IFS"
+fi
+exit #all is well
