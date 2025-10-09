@@ -1,0 +1,122 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+
+#define NUM_ELEM 10000000
+#define NUM_ITER 13
+
+/* Parameters to print_function.   */
+struct par_passados
+{
+	int tamanho_vector;
+	double *vector;
+	int inicio;
+	int fim;
+};
+//PROTOTIPOS
+//tipo thread
+void* operacao_muito_demorada (void* parameters);
+
+/* The main program.   */
+int main ()
+{
+time_t t0;
+struct rusage usage;
+
+double *dados=malloc(sizeof(double)*NUM_ELEM);
+if(dados==NULL) {
+       perror("malloc");
+       exit(1);
+}
+// criar id de threads
+pthread_t thread1_id;
+pthread_t thread2_id;
+//criar argumentos para threads
+struct par_passados thread1_args;
+struct par_passados thread2_args;
+
+
+printf("%ldkiB allocated\n",sizeof(double)*NUM_ELEM/1024);
+t0=time(NULL);
+
+
+//parametros da thread1
+thread1_args.tamanho_vector=NUM_ELEM;
+thread1_args.vector=dados;
+thread1_args.inicio=0;
+thread1_args.fim=4999999;
+	/* Cria thread1 e executa sua funcao */
+pthread_create (&thread1_id, NULL, &operacao_muito_demorada, &thread1_args);
+
+//parametros da thread2
+thread2_args.tamanho_vector=NUM_ELEM;
+thread2_args.vector=dados;
+thread2_args.inicio=5000000;
+thread2_args.fim=9999999;
+	/* Cria thread2 e executa sua funcao */
+pthread_create (&thread2_id, NULL, &operacao_muito_demorada, &thread2_args);
+
+
+	/* Verrificar que thread1 chega ao fim */
+pthread_join (thread1_id, NULL);
+	/* Verrificar que thread1 chega ao fim  */
+pthread_join (thread2_id, NULL);
+	/* fim execucao threads */
+
+
+/*********************************************/
+if(getrusage(RUSAGE_SELF , &usage)==-1)
+       perror("getrusage");
+printf("%ld seconds elapsed\n", time(NULL)-t0);
+
+printf("user time: \t %3ld.%06ld s\n",
+       usage.ru_utime.tv_sec,usage.ru_utime.tv_usec);
+
+printf("system time: \t %3ld.%06ld s\n",
+       usage.ru_stime.tv_sec,usage.ru_stime.tv_usec);
+
+printf("total: %.3f seconds\n",
+       usage.ru_utime.tv_sec + usage.ru_utime.tv_usec/1.0e6 +
+       usage.ru_stime.tv_sec + usage.ru_stime.tv_usec/1.0e6);
+/**********************/
+
+printf("pos 10 %lf   pos 6000000  %lf",dados[10],dados[6000000]);
+
+return 0;
+
+}
+//FUNCOES
+
+void* operacao_muito_demorada (void* parameters)
+{
+	/* Cast da nossa estrutura externa */
+struct  par_passados* p = (struct  par_passados*) parameters;
+int i;
+int j;
+double *v;
+printf("processing %d elements\n",(p->fim)-(p->inicio));
+
+for(j=0;j<NUM_ITER;++j) {
+       v=p->vector;
+v=v+(p->inicio);
+
+       for(i=p->inicio;i<p->fim;++i) {
+               *v=drand48();
+               v++;
+  }
+
+  v=p->vector;
+v=v+(p->inicio);
+
+  for(i=p->inicio;i<p->fim;++i) {
+         *v=sin(pow(*v,3));
+         v++;
+  }
+}
+return NULL;
+}
+

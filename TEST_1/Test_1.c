@@ -30,6 +30,7 @@
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
 #define buff_size 4
+#define CMD_BUFFER_SIZE 128
 
 static FUNC func;
 circbuff circ;
@@ -43,7 +44,18 @@ struct Example
 	uint32_t* ptr;
 }test;
 
+// Generic command types
+typedef enum {
+	CMD_CHECK,
+	CMD_ECHO,
+    CMD_EXECUTE,    // e.g., AT+RST
+    CMD_QUERY,		// e.g., AT+CWMODE?
+    CMD_QUERY_PARAM,	// e.g., AT+CWMODE=?
+    CMD_SET,			// e.g., AT+CWMODE=1
+} cmd_type_t;
+
 char string[32];
+static char CMD_BUFFER[CMD_BUFFER_SIZE];
 
 int test_int0 = 0;
 int test_int1 = 0;
@@ -58,6 +70,7 @@ unsigned int test_uint3 = 0;
 /*******************************************************/
 void STM32446Gpiosetupreg( volatile uint32_t* reg, uint32_t size_block, uint32_t data, uint32_t pin );
 void STM32446PinBlock( volatile uint32_t* dest, uint32_t size_block, uint32_t data, uint32_t pin );
+char* cmd_build_va(const char* cmd_str, cmd_type_t type, const char* fmt, ...);
 
 /*******************************************************/
 
@@ -148,7 +161,8 @@ while yey
 		printf( "num0: %d \n", test_uint0 );
 		printf( "num1: %d \n", test_uint1 );
 		printf( "num2: %d \n", test_uint2 );
-		printf( "num3: %d \n", test_uint3 );
+		printf( ":%s", cmd_build_va("CMD", CMD_SET, "%d,%d", 1,2) );
+		printf( "/**************************************************/");
 
 		continue;
 	}
@@ -185,6 +199,53 @@ void STM32446PinBlock( volatile uint32_t* dest, uint32_t size_block, uint32_t da
 	*dest |= (data << pin);
 }
 
+// Flexible builder with va_list
+char* cmd_build_va(const char* cmd_str, cmd_type_t type, const char* fmt, ...) {
+	va_list args;
+	char argbuf[CMD_BUFFER_SIZE];  // temporary buffer for arguments
+	va_start(args, fmt);
+	if (fmt) {
+		vsnprintf(argbuf, CMD_BUFFER_SIZE, fmt, args);
+	}
+	va_end(args);
+	CMD_BUFFER[0] = '\0';
+    unsigned int n = 0; // number of chars written
+    (void)n;
+    switch(type) {
+    	case CMD_SET:
+            n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "AT+%s=%s\r\n", cmd_str, argbuf);
+            break;
+
+        case CMD_CHECK:
+            n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "AT\r\n");
+            break;
+
+        case CMD_ECHO:
+        	n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "%s\r\n", cmd_str);
+            break;
+
+        case CMD_EXECUTE:
+        	n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "AT+%s\r\n", cmd_str);
+            break;
+
+        case CMD_QUERY:
+        	n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "AT+%s?\r\n", cmd_str);
+            break;
+
+        case CMD_QUERY_PARAM:
+        	n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "AT+%s=?\r\n", cmd_str);
+            break;
+
+        default:
+            n = snprintf(CMD_BUFFER, CMD_BUFFER_SIZE, "AT\r\n");
+            break;
+    }
+    if(n < CMD_BUFFER_SIZE){
+		CMD_BUFFER[n] = '\0';
+	}
+
+    return CMD_BUFFER;
+}
 
 
 /*******************************************************/
