@@ -55,31 +55,31 @@ void FICHEIROopenp(void)
 		if(step==1){
 			setup.par.fp = fopen(setup.par.filename, setup.par.permission);
 			if(setup.par.fp){
-				fprintf(stderr, "Opening file: %s\n", setup.par.filename);
+				fprintf(stderr, "1-Opening file: %s\n", setup.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen, %d\n", errno);
+				fprintf(stderr, "1-FICHEIROopen, %d\n", errno);
 				step=2;
 			}
 		}
 		if(step==2){
 			setup.par.fp = fopen(setup.par.filename, "a+");
 			if(setup.par.fp){
-				fprintf(stderr, "Re-Opening file: %s\n", setup.par.filename);
+				fprintf(stderr, "2-Re-Opening file: %s\n", setup.par.filename);
 				FICHEIROclose();
 				step=3;
 			}else{
-				fprintf(stderr, "FICHEIROopen, %d\n", errno);
+				fprintf(stderr, "2-FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
 		if(step==3){
 			setup.par.fp = fopen(setup.par.filename, setup.par.permission);
 			if(setup.par.fp){
-				fprintf(stderr, "Opening file: %s\n", setup.par.filename);
+				fprintf(stderr, "3-Opening file: %s\n", setup.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen, %d\n", errno);
+				fprintf(stderr, "3-FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
@@ -105,31 +105,31 @@ void FICHEIROopen(const char *filename, const char *permission)
 		if(step==1){
 			setup.par.fp = fopen(setup.par.filename, setup.par.permission);
 			if(setup.par.fp){
-				fprintf(stderr, "Opening file: %s\n", setup.par.filename);
+				fprintf(stderr, "1-Opening file: %s\n", setup.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen, %d\n", errno);
+				fprintf(stderr, "1-FICHEIROopen, %d\n", errno);
 				step=2;
 			}
 		}
 		if(step==2){
 			setup.par.fp = fopen(setup.par.filename, "a+");
 			if(setup.par.fp){
-				fprintf(stderr, "Re-Opening file: %s\n", setup.par.filename);
+				fprintf(stderr, "2-Re-Opening file: %s\n", setup.par.filename);
 				FICHEIROclose();
 				step=3;
 			}else{
-				fprintf(stderr, "FICHEIROopen, %d\n", errno);
+				fprintf(stderr, "2-FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
 		if(step==3){
 			setup.par.fp = fopen(setup.par.filename, setup.par.permission);
 			if(setup.par.fp){
-				fprintf(stderr, "Opening file: %s\n", setup.par.filename);
+				fprintf(stderr, "3-Opening file: %s\n", setup.par.filename);
 				step=0;
 			}else{
-				fprintf(stderr, "FICHEIROopen, %d\n", errno);
+				fprintf(stderr, "3-FICHEIROopen, %d\n", errno);
 				step=0;
 			}
 		}
