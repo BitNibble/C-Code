@@ -141,7 +141,7 @@ char* FUNCftos(FILE* stream)
 	int i = 0, block = 0, NBytes = 0;
 	char caracter = '\0';
 	if(value) free(value);
-	for(value = NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)) != EOF; i++){
+	for(value = NULL, i=0, block=8, NBytes=0; (caracter=getc(stream)); i++){
 		if(i>NBytes-1){
 			NBytes+=block;
 			value=(char*)realloc(value, NBytes*sizeof(char));
@@ -204,7 +204,7 @@ int FUNCreadint(int nmin, int nmax)
 	int num;
 	int flag;
 	for(flag=1; flag;){
-		for( num=0; !scanf("%d",&num); getchar())
+		for( num=0; !scanf("%d",&num); (void)getchar())
 			;
 		//printf("num: %d nmin: %d nmax: %d\n",num, nmin, nmax);
 		if((num < nmin) || (num > nmax))
