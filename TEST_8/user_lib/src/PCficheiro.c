@@ -183,7 +183,7 @@ int FICHEIROfputs(const char* s)
 void FICHEIROprintf(const char* fmt, ...)
 {
 	va_list args;
-    va_start(args, fmt);
+	va_start(args, fmt);
 	vfprintf(setup.par.fp, fmt, args);
 	va_end(args);
 }
