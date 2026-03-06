@@ -72,7 +72,7 @@ opoop()->pooplfsm( opoop()->seqsnprintf( "seq", cmd, feedback ), "=", STR_SIZE, 
 opoop()->pooplfsm( opoop()->seqsnprintf( "seq_1", cmd, feedback ), "=", STR_SIZE, ofile(), feedback);
 
 logic[0]='\0'; // oneshot
-opoop()->pooplfsm( opoop()->logsnprintf(cmd), "=", STR_SIZE, ofile(), logic );
+opoop()->pooplfsm( opoop()->logsnprintf("log", cmd), "=", STR_SIZE, ofile(), logic );
 
 if(!ostring()->cmp(cmd,"restart")) {
 	ostring()->cpy(feedback, "zero");

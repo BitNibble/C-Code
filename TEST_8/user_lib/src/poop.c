@@ -15,7 +15,7 @@ License:  Free beer
 int _poop_strtotok(char* line, char* token[], const char* parser);
 void _poop_rmcrnl(char* str);
 void _fplfsm(const char* seq_name, const char* search, const size_t line_size, FICHEIRO* file, char* logic, char* feedback);
-char* _logsnprintf(const char* search);
+char* _logsnprintf(const char* log_name, const char* search);
 char* _seqsnprintf(const char* seq_name, const char* search, const char* feedback);
 void _pooplfsm(const char* poopin, const char* parser, const size_t line_size, FICHEIRO* file, char* poopout);
 
@@ -89,10 +89,10 @@ void _fplfsm(const char* seq_name, const char* search, const size_t line_size, F
     file->close();
 }
 
-char* _logsnprintf(const char* search)
+char* _logsnprintf(const char* log_name,  const char* search)
 {
     static char LOG[BUFF_SIZE + 1] = {0};
-    if (snprintf(LOG, BUFF_SIZE, "log+%s", search) > 0) {
+    if (snprintf(LOG, BUFF_SIZE, "%s+%s", log_name, search) > 0) {
         printf("\tlogic: %s\n", LOG);
     }
     else { perror("LOG"); }
