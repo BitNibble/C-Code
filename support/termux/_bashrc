@@ -1,0 +1,102 @@
+#!/data/data/com.termux/files/usr/bin/bash
+#
+export PATH="/data/data/com.termux/files/usr/local/bin:$PATH"
+#
+wdir="/data/data/com.termux/files/home/Documents"
+hdir="/data/data/com.termux/files/home"
+fdir="/data/data/com.termux/files"
+tdir="/data/data/com.termux"
+bdir="/data/data/com.termux/files/usr/bin"
+lbdir="/data/data/com.termux/files/usr/local/bin"
+#
+#
+app() {
+    cmd="$1"
+    shift
+    if [ -x "$lbdir/app/$cmd" ]; then
+        "$lbdir/app/$cmd" "$@"
+    else
+        echo "app: command '$cmd' not found"
+        return 1
+    fi
+}
+#
+system() {
+    cmd="$1"
+    shift
+    if [ -x "$lbdir/system/$cmd" ]; then
+        "$lbdir/system/$cmd" "$@"
+    else
+        echo "system: command '$cmd' not found"
+        return 1
+    fi
+}
+#
+doc() {
+    cmd="$1"
+    shift
+    if [ -x "$lbdir/doc/$cmd" ]; then
+        "$lbdir/doc/$cmd" "$@"
+    else
+        echo "doc: command '$cmd' not found"
+        return 1
+    fi
+}
+#
+dev() {
+    cmd="$1"
+    shift
+    if [ -x "$lbdir/dev/$cmd" ]; then
+        "$lbdir/dev/$cmd" "$@"
+    else
+        echo "dev: command '$cmd' not found"
+        return 1
+    fi
+}
+#
+net() {
+    cmd="$1"
+    shift
+    if [ -x "$lbdir/net/$cmd" ]; then
+        "$lbdir/net/$cmd" "$@"
+    else
+        echo "net: command '$cmd' not found"
+        return 1
+    fi
+}
+#
+shell() {
+    local cmd="$1"
+    shift
+
+    # Help
+    if [ "$cmd" = "-h" ] || [ "$cmd" = "--help" ]; then
+        cat <<EOF
+Usage: builtin [OPTIONS] COMMAND [ARGS...]
+Options:
+  -h, --help    Show this help
+  -l, --list    List all Bash builtins
+EOF
+        return 0
+    fi
+
+    # List
+    if [ "$cmd" = "-l" ] || [ "$cmd" = "--list" ]; then
+        compgen -b
+        return 0
+    fi
+
+    # Execute builtin safely
+    if [ "$(type -t "$cmd")" = "builtin" ]; then
+	    builtin "$cmd" "$@"
+    else
+	    echo "builtin: '$cmd' is not a shell builtin"
+	    return 0
+    fi
+}
+#
+#
+# run this on git repo folders:
+# git remote set-url origin git@github.com:BitNibble/<repo>.git
+#
+#

@@ -1,0 +1,26 @@
+#!/data/data/com.termux/files/usr/bin/bash
+#
+DEST="/data/data/com.termux/files/storage/microSD/termux/files/home/"
+SOURCE="/data/data/com.termux/files/home/"
+#
+rsync -rv --delete \
+    --no-perms --no-owner --no-group \
+    --exclude='.bash_history' \
+    --exclude='.gitconfig' \
+    --exclude='.lesshst' \
+    --exclude='.ssh' \
+    --exclude='.suroot' \
+    --exclude='.termux' \
+    --exclude='.viminfo' \
+    "$SOURCE" "$DEST"
+#
+#rsync -av --delete \
+#	--exclude='.bash_history' \ # --exclude='.bashrc' \
+#	--exclude='.gitconfig' \
+#	--exclude='.lesshst' \
+#	--exclude='.ssh' \
+#	--exclude='.suroot' \
+#	--exclude='.termux' \
+#	--exclude='.viminfo' \
+#	"$SOURCE" "$DEST"
+#

@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/bash
+#
+# Safe, handles empty argument
+ls -la "${1:-.}"
+#
+#

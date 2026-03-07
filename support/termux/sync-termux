@@ -1,0 +1,7 @@
+#!/data/data/com.termux/files/usr/bin/bash
+#
+SOURCE="/data/data/com.termux/files/storage/microSD/termux/files/home/"
+DEST="/data/data/com.termux/files/home/"
+#
+rsync -av "$SOURCE" "$DEST"
+#
