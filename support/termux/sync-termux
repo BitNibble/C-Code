@@ -1,7 +1,9 @@
 #!/data/data/com.termux/files/usr/bin/bash
 #
+source /data/data/com.termux/files/usr/local/etc/oo_namespace.sh
+#
 SOURCE="/data/data/com.termux/files/storage/microSD/termux/files/home/"
 DEST="/data/data/com.termux/files/home/"
 #
-rsync -av "$SOURCE" "$DEST"
+system rsync -av "$SOURCE" "$DEST"
 #
