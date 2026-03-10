@@ -89,6 +89,7 @@ ns() {
         return 1
     fi
 
+<<<<<<< HEAD
     # color only if stdout is a terminal
     local blue white reset
     if [ -t 1 ]; then
@@ -101,11 +102,17 @@ ns() {
         reset=''
     fi
 
+=======
+>>>>>>> dd6656f459aa5dbd33d6355232f3dc2b857541ed
     # top-level call: list only directories (sub-namespaces)
     if [ $# -eq 0 ]; then
         for d in "$path"/*/; do
             [ -d "$d" ] || continue
+<<<<<<< HEAD
             printf "%b%s%b\n" "$blue" "$(system basename "$d")" "$reset"
+=======
+            system basename "$d"
+>>>>>>> dd6656f459aa5dbd33d6355232f3dc2b857541ed
         done
         return
     fi
@@ -113,11 +120,15 @@ ns() {
     # inside namespace: list everything (dirs + commands)
     for item in "$path"/*; do
         [ -e "$item" ] || continue
+<<<<<<< HEAD
         if [ -d "$item" ]; then
             printf "%b%s%b\n" "$blue" "$(system basename "$item")" "$reset"
         else
             printf "%b%s%b\n" "$white" "$(system basename "$item")" "$reset"
         fi
+=======
+        system basename "$item"
+>>>>>>> dd6656f459aa5dbd33d6355232f3dc2b857541ed
     done
 }
 #
@@ -178,6 +189,10 @@ _ns_complete() {
     # feed completion
     COMPREPLY=("${items[@]}")
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd6656f459aa5dbd33d6355232f3dc2b857541ed
 # register completions for all namespaces dynamically
 for ns_dir in "$lbdir"/*/; do
     [ -d "$ns_dir" ] || continue
