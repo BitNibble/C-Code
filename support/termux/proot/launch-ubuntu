@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/bash
+pkill -9 pulseaudio
+#
+pulseaudio --start --exit-idle-time=-1 --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1"
+#
+proot-distro login ubuntu
+# proot-distro login ubuntu --user sergio
+#
+# note: chmode +x launch-ubuntu
+#

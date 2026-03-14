@@ -4,6 +4,5 @@ source /data/data/com.termux/files/usr/local/etc/oo_namespace.sh
 #
 SOURCE="/data/data/com.termux/files/storage/microSD/termux/files/home/"
 DEST="/data/data/com.termux/files/home/"
-#
-system rsync -av "$SOURCE" "$DEST"
+tool rsync -av "$SOURCE" "$DEST"
 #

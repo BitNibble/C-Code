@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/bash
+#
+source /data/data/com.termux/files/usr/local/etc/oo_namespace.sh
+#
+# Safe, handles empty argument
+fs query ls -la "${1:-.}"
+#
+#

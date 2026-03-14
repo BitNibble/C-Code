@@ -5,7 +5,7 @@ source /data/data/com.termux/files/usr/local/etc/oo_namespace.sh
 DEST="/data/data/com.termux/files/storage/microSD/termux/files/home/"
 SOURCE="/data/data/com.termux/files/home/"
 #
-system rsync -rv --delete \
+tool rsync -rv --delete \
     --no-perms --no-owner --no-group \
     --exclude='.bash_history' \
     --exclude='.gitconfig' \

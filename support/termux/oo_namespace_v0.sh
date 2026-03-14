@@ -25,62 +25,56 @@ export PATH="$lbdir:$PATH"
 _ns_exec() {
     local path="$1"
     shift
-    local part target
+    local cmd
 
+    # walk through namespace path components
     while [ $# -gt 0 ]; do
-        part="$1"
+        cmd="$1"
         shift
-        target="$path/$part"
 
-        # namespace
-        if [ -d "$target" ]; then
-            path="$target"
+        if [ -d "$path/$cmd" ]; then
+            # normal sub-namespace traversal → continue silently
+            path="$path/$cmd"
             continue
         fi
 
-        # command
-        if [ -f "$target" ]; then
-            if [ -x "$target" ]; then
-                "$target" "$@"
-                return
-            else
-                echo "$part: not executable"
-                return 126
-            fi
+        if [ -x "$path/$cmd" ]; then
+            # normal execution → silent
+            "$path/$cmd" "$@"
+            return
         fi
 
-        # not found
-        echo "$part: not found"
+        if [ -f "$path/$cmd" ] && [ ! -x "$path/$cmd" ]; then
+            # file exists but not executable → unexpected
+            printf '%s [%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "WARN" "$cmd: exists but not executable in $path" >> "$oodir/oo.log"
+            echo "$cmd: not executable"
+            return 126
+        fi
+
+        # command does not exist → unexpected
+        printf '%s [%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "WARN" "$cmd: command not found in $path" >> "$oodir/oo.log"
+        echo "$cmd: command not found"
         return 127
     done
 
-    # reached a directory with no command
-    echo "directory: $path"
+    # all arguments consumed, path is directory → listing happens normally, silent
+    # if we ever reach here in some unexpected state
+    if [ ! -d "$path" ]; then
+        printf '%s [%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "WARN" "Unexpected termination: path=$path is not a directory" >> "$oodir/oo.log"
+        echo "Unexpected error"
+        return 2
+    fi
 }
 #
-#app() { _ns_exec "$lbdir/app" "$@"; }
-#dev() { _ns_exec "$lbdir/dev" "$@"; }
-#doc() { _ns_exec "$lbdir/doc" "$@"; }
-#fs() { _ns_exec "$lbdir/fs" "$@"; }
-#info() { _ns_exec "$lbdir/info" "$@"; }
-#net() { _ns_exec "$lbdir/net" "$@"; }
-#sys() { _ns_exec "$lbdir/sys" "$@"; }
-#info() { _ns_exec "$lbdir/info" "$@"; }
-#txt() { _ns_exec "$lbdir/txt" "$@"; }
-#for d in "$lbdir"/*; do
-#    [ -d "$d" ] || continue
-#    name=$(basename "$d")
-#
-#    eval "$name() { _ns_exec \"$d\" \"\$@\"; }"
-#done
-for d in "$lbdir"/*; do
-    [ -d "$d" ] || continue   # skip files
-    name=$(basename "$d")     # take only directory name
-    # optional: enforce valid shell function name
-    [[ $name =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]] || continue
-
-    eval "$name() { _ns_exec \"$d\" \"\$@\"; }"
-done
+sys() { _ns_exec "$lbdir/sys" "$@"; }
+txt() { _ns_exec "$lbdir/txt" "$@"; }
+fs() { _ns_exec "$lbdir/fs" "$@"; }
+app() { _ns_exec "$lbdir/app" "$@"; }
+doc() { _ns_exec "$lbdir/doc" "$@"; }
+dev() { _ns_exec "$lbdir/dev" "$@"; }
+net() { _ns_exec "$lbdir/net" "$@"; }
+tool() { _ns_exec "$lbdir/tool" "$@"; }
+info() { _ns_exec "$lbdir/info" "$@"; }
 #
 #
 ns() {
@@ -93,6 +87,7 @@ ns() {
 
     # unexpected: namespace does not exist
     if [ ! -d "$path" ]; then
+        printf '%s [%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "WARN" "ns: namespace not found: $*" >> "$oodir/oo.log"
         echo "ns: namespace not found: $*"
         return 1
     fi
@@ -174,7 +169,7 @@ _ns_complete() {
 
     # unexpected: namespace missing
     if [ ! -d "$ns_path" ]; then
-        echo "namespace not found: '$ns_name'"
+        printf '%s [%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "WARN" "completion: namespace not found: $ns_name" >> "$oodir/oo.log"
         return
     fi
 
